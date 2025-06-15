@@ -22,30 +22,36 @@ enum layers {
 	_OTHERS,
 };
 
-#define MY_CTL_C C(KC_C)
-#define MY_CTL_V C(KC_V)
-// #define MY_F5    KC_F5
-#define MY_SFTAB S(KC_TAB)
-#define MY_E     LCTL_T(KC_E)
-#define MY_A     LSFT_T(KC_A)
-#define MY_I     LSFT_T(KC_I)
-#define MY_T     LCTL_T(KC_T)
-
-#define THUMB_L4 KC_BSPC
-#define THUMB_L3 LT(1, KC_BSPC)
-#define THUMB_L2 LT(4, KC_DEL)
-#define THUMB_L1 TG(3)
-#define THUMB_R1 KC_ENTER
-#define THUMB_R2 OSL(5)
-#define THUMB_R3 LT(6, KC_SPACE)
-#define THUMB_R4 TG(6)
-
-#define DF_F5_F2 LT(8, KC_F5)
+enum tap_dance_codes {
+  DNC_CTRL_C,
+  // DNC_CTRL_V,
+  // DANCE_2,
+  // DANCE_3,
+  // DANCE_4,
+  // DANCE_5,
+  // DANCE_6,
+  // DANCE_7,
+  // DANCE_8,
+  // DANCE_9,
+  // DANCE_10,
+  // DANCE_11,
+  // DANCE_12,
+  // DANCE_13,
+};
 
 enum custom_keycodes {
-	MCR_3DOTS,
-	MCR_AACT,
-	MCR_CAO = SAFE_RANGE,
+	MCR_3DOTS = SAFE_RANGE,
+	MCR_A_ACUTE,
+	MCR_E_ACUTE,
+	MCR_I_ACUTE,
+	MCR_O_ACUTE,
+	MCR_U_ACUTE,
+	MCR_A_CIRC,
+	MCR_E_CIRC,
+	MCR_O_CIRC,
+	MCR_A_TILDE,
+	MCR_O_TILDE,
+	MCR_CAO,
 	MCR_COES,
 	MCR_E,
 	MCR_ING,
@@ -54,6 +60,27 @@ enum custom_keycodes {
 	MCR_QU,
 	MCR_TH,
 };
+
+#define MY_CTL_C TD(DNC_CTRL_C)
+#define MY_CTL_V TD(DNC_CTRL_V)
+#define MY_SFTAB S(KC_TAB)
+#define MY_E     LCTL_T(KC_E)
+#define MY_A     LSFT_T(KC_A)
+#define MY_O     LCTL_T(LSFT_T(KC_O))
+#define MY_I     LSFT_T(KC_I)
+#define MY_T     LCTL_T(KC_T)
+
+#define THUMB_L4 KC_BSPC
+#define THUMB_L3 LT(_ALPHA_B, KC_BSPC)
+#define THUMB_L2 LT(_SHORTCUTS, KC_DEL)
+#define THUMB_L1 TG(_NUMPAD)
+#define THUMB_R1 KC_ENTER
+#define THUMB_R2 OSL(_SYMBOLS)
+#define THUMB_R3 LT(_NAVVOL, KC_SPACE)
+#define THUMB_R4 TG(_NAVVOL)
+
+// #define MY_F5    KC_F5
+#define DF_F5_F2 LT(8, KC_F5)
 
 //--------------------------------------------------------//
 //                         LAYERS                         //
@@ -68,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
 	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                 |    Y    |   R   |   S   |   L   |   W   |  AltGr   |
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
-	 * | Alt+Tab |   P    |    O    |  Ctl/E  |  Sft/A  |    §    |                                 |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
+	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                 |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
 	 * |---------+--------+---------+---------+---------+---------+---------------.  ,--------------+---------+-------+-------+-------+-------+----------|
 	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |  RGB   | BOOT |  | BOOT  | RGB  |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
 	 * `----------------------------+---------+---------+---------+--------+------|  |-------+------+---------+-------+-------+--------------------------'
@@ -81,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
 		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_RALT,
-		A(KC_TAB),KC_P    , KC_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
+		A(KC_TAB),KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , RM_TOGG , QK_BOOT , QK_BOOT , RM_NEXT , KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, XXXXXXX ,
 		KC_KB_MUTE,XXXXXXX, XXXXXXX , XXXXXXX , XXXXXXX ,                                                             XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
@@ -356,7 +383,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 const uint16_t PROGMEM cmb_LS_W[]     = { KC_L, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_DF_Z[]     = { KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM cmb_tmbs_L7[]  = { THUMB_L3, THUMB_R3, COMBO_END};
+const uint16_t PROGMEM cmb_tmbs_mcr[] = { THUMB_L3, THUMB_R3, COMBO_END};
 const uint16_t PROGMEM cmb_lessthan[] = { KC_LT, KC_LPRN, COMBO_END};
 // const uint16_t PROGMEM combo6[] = { LSFT(KC_9), BR_LBRC, COMBO_END};
 // const uint16_t PROGMEM combo7[] = { BR_LCBR, LSFT(KC_8), COMBO_END};
@@ -368,7 +395,9 @@ const uint16_t PROGMEM cmb_RL_comma[] = { KC_R, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_RSL_dot[]  = { KC_R, KC_S, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_ET_H[]     = { MY_E, MY_T, COMBO_END};
 const uint16_t PROGMEM cmb_ON_J[]     = { KC_O, KC_N, COMBO_END};
-// const uint16_t PROGMEM cmb_RAaacute[] = { MY_A), KC_S, COMBO_END};
+
+const uint16_t PROGMEM cmb_SA_A_circ[] = { KC_S, MY_A, COMBO_END};
+
 // const uint16_t PROGMEM combo17[] = { KC_S, MT(MOD_LCTL, KC_E), COMBO_END};
 // const uint16_t PROGMEM combo18[] = { KC_S, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
 // const uint16_t PROGMEM combo19[] = { KC_HASH, BR_SCLN, COMBO_END};
@@ -382,7 +411,9 @@ const uint16_t PROGMEM cmb_ON_J[]     = { KC_O, KC_N, COMBO_END};
 // const uint16_t PROGMEM combo27[] = { KC_AT, BR_SCLN, COMBO_END};
 // const uint16_t PROGMEM combo28[] = { KC_PERC, KC_AT, COMBO_END};
 const uint16_t PROGMEM cmb_AI_QU[] = { MY_A, MY_I, COMBO_END};
-const uint16_t PROGMEM cmb_RAaacute[] = { KC_R, MY_A, COMBO_END};
+
+const uint16_t PROGMEM cmb_RA_A_acute[] = { KC_R, MY_A, COMBO_END};
+
 // const uint16_t PROGMEM combo31[] = { MT(MOD_LCTL, KC_E), KC_R, COMBO_END};
 // const uint16_t PROGMEM combo32[] = { KC_R, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
 // const uint16_t PROGMEM combo33[] = { KC_P, KC_R, COMBO_END};
@@ -410,7 +441,7 @@ const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
 combo_t key_combos[] = {
     COMBO(cmb_LS_W,     KC_W),
     COMBO(cmb_DF_Z,     KC_Z),
-    COMBO(cmb_tmbs_L7,  OSL(7)),
+    COMBO(cmb_tmbs_mcr, OSL(_MACROS)),
     COMBO(cmb_lessthan, KC_RABK),
     // COMBO(combo6, KC_RPRN),
     // COMBO(combo7, BR_RCBR),
@@ -422,12 +453,14 @@ combo_t key_combos[] = {
     COMBO(cmb_RSL_dot,  KC_DOT),
     COMBO(cmb_ET_H,     KC_H),
     COMBO(cmb_ON_J,     KC_J),
-    // COMBO(cmb_RAaacute, MCR_AACT),
+	
+    COMBO(cmb_SA_A_circ, MCR_A_CIRC),
+	
     // COMBO(combo17, ST_MACRO_1),
     // COMBO(combo18, ST_MACRO_2),
     // COMBO(combo19, ST_MACRO_3),
     // COMBO(combo20, ST_MACRO_4),
-    // COMBO(cmb_ITN_TH,   MCR_TH),
+    // COMBO(combo21, ST_MACRO_5),
     // COMBO(combo22, ST_MACRO_6),
     // COMBO(combo23, ST_MACRO_7),
     // COMBO(combo24, ST_MACRO_8),
@@ -436,14 +469,16 @@ combo_t key_combos[] = {
     // COMBO(combo27, ST_MACRO_11),
     // COMBO(combo28, ST_MACRO_12),
     COMBO(cmb_AI_QU,    MCR_QU),
-    COMBO(cmb_RAaacute, MCR_AACT),
+	
+    COMBO(cmb_RA_A_acute, MCR_A_ACUTE),
+	
     // COMBO(combo31, ST_MACRO_15),
     // COMBO(combo32, ST_MACRO_16),
     // COMBO(combo33, ST_MACRO_17),
     // COMBO(combo34, ST_MACRO_18),
     // COMBO(combo35, ST_MACRO_19),
     // COMBO(combo36, ST_MACRO_20),
-    COMBO(cmb_ITN_TH, MCR_TH),
+    COMBO(cmb_ITN_TH,   MCR_TH),
     COMBO(cmb_3dots,    MCR_3DOTS),
     COMBO(cmb_79_comma, KC_COMMA),
     COMBO(cmb_789_dot,  KC_DOT),
@@ -468,15 +503,38 @@ combo_t key_combos[] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	static bool R_is_held = false;
+	static bool S_is_held = false;
+	static bool L_is_held = false;
+
 	const uint8_t mods = get_mods();
 	const uint8_t oneshot_mods = get_oneshot_mods();
 	
 	switch (keycode) {
-    // case MCR_AACT:
-    // if (record->event.pressed) {
-		// SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_A));
-    // }
-    // break;
+		case KC_S: // Circunflex accent
+			S_is_held = record->event.pressed;
+			break;
+
+		case MY_A: { // Â
+			static uint8_t registered_key = MY_A;
+			if (record->event.pressed) {
+				if (S_is_held) {
+					// registered_key = 
+					send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
+				}
+				// registered_key = (S_is_held) ? KC_PGDN : MY_A;
+				// register_code(registered_key);
+			} else {
+				unregister_code(registered_key);
+			}
+		} return false;
+			
+		case MCR_A_CIRC:
+		if (record->event.pressed) {
+			send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
+			// SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_A));
+		}
+		break;
     // case ST_MACRO_1:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_E));
@@ -542,9 +600,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			send_string_with_delay("qu", 10);
 		}
 		break;
-		case MCR_AACT:
+		case MCR_A_ACUTE:
 		if (record->event.pressed) {
-		  SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
+			// SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
+			send_string_with_delay(SS_TAP(X_LBRC) "a", 10);
 		}
 		break;
     // case ST_MACRO_15:
@@ -618,13 +677,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		break;
 		case MCR_CAO:
 		if (record->event.pressed) {
-			// SEND_STRING(SS_TAP(X_SCLN) SS_DELAY(10) SS_TAP(X_QUOTE) SS_DELAY(10) SS_TAP(X_A) SS_DELAY(10) SS_TAP(X_O));
 			send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
 		}
 		break;
 		case MCR_COES:
 		if (record->event.pressed) {
-			SEND_STRING(SS_TAP(X_SCLN) SS_DELAY(10) SS_TAP(X_QUOTE) SS_DELAY(10) SS_TAP(X_O) SS_DELAY(10) SS_TAP(X_E) SS_DELAY(10) SS_TAP(X_S));
+			send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "oes", 10);
 		}
 		break;
 		case MCR_PX:
@@ -931,3 +989,97 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	}
 	return true;
 }
+
+//--------------------------------------------------------//
+//                        TAP DANCE                       //
+//--------------------------------------------------------//
+
+typedef struct {
+    bool is_press_action;
+    uint8_t step;
+} tap;
+
+enum {
+    SINGLE_TAP = 1,
+    SINGLE_HOLD,
+    DOUBLE_TAP,
+    DOUBLE_HOLD,
+    DOUBLE_SINGLE_TAP,
+    MORE_TAPS
+};
+
+// static tap dance_state[14];
+static tap dance_state[1];
+
+uint8_t dance_step(tap_dance_state_t *state);
+
+uint8_t dance_step(tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (state->interrupted || !state->pressed) return SINGLE_TAP;
+        else return SINGLE_HOLD;
+    } else if (state->count == 2) {
+        if (state->interrupted) return DOUBLE_SINGLE_TAP;
+        else if (state->pressed) return DOUBLE_HOLD;
+        else return DOUBLE_TAP;
+    }
+    return MORE_TAPS;
+}
+
+//--------------------------------------------------------//
+
+void on_dance_0(tap_dance_state_t *state, void *user_data);
+void dance_0_finished(tap_dance_state_t *state, void *user_data);
+void dance_0_reset(tap_dance_state_t *state, void *user_data);
+
+void on_dance_0(tap_dance_state_t *state, void *user_data) {
+    if(state->count == 3) {
+        tap_code16(LCTL(KC_C));
+        tap_code16(LCTL(KC_C));
+        tap_code16(LCTL(KC_C));
+    }
+    if(state->count > 3) {
+        tap_code16(LCTL(KC_C));
+    }
+}
+
+void dance_0_finished(tap_dance_state_t *state, void *user_data) {
+    dance_state[0].step = dance_step(state);
+    switch (dance_state[0].step) {
+        case SINGLE_TAP:  register_code16(LCTL(KC_C)); break;
+        case SINGLE_HOLD: register_code16(LCTL(KC_X)); break;
+        case DOUBLE_TAP:  register_code16(LCTL(KC_X)); break;
+        case DOUBLE_HOLD: register_code16(LCTL(LSFT(KC_C))); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_C)); register_code16(LCTL(KC_C));
+    }
+}
+
+void dance_0_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (dance_state[0].step) {
+        case SINGLE_TAP:  unregister_code16(LCTL(KC_C)); break;
+        case SINGLE_HOLD: unregister_code16(LCTL(KC_X)); break;
+        case DOUBLE_TAP:  unregister_code16(LCTL(KC_X)); break;
+        case DOUBLE_HOLD: unregister_code16(LCTL(LSFT(KC_C))); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_C)); break;
+    }
+    dance_state[0].step = 0;
+}
+
+//--------------------------------------------------------//
+
+tap_dance_action_t tap_dance_actions[] = {
+        [DNC_CTRL_C] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
+        // [DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_finished, dance_1_reset),
+        // [DANCE_2] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_2, dance_2_finished, dance_2_reset),
+        // [DANCE_3] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_3_finished, dance_3_reset),
+        // [DANCE_4] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_4, dance_4_finished, dance_4_reset),
+        // [DANCE_5] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_5, dance_5_finished, dance_5_reset),
+        // [DANCE_6] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_6, dance_6_finished, dance_6_reset),
+        // [DANCE_7] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_7, dance_7_finished, dance_7_reset),
+        // [DANCE_8] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_8, dance_8_finished, dance_8_reset),
+        // [DANCE_9] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_9, dance_9_finished, dance_9_reset),
+        // [DANCE_10] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_10, dance_10_finished, dance_10_reset),
+        // [DANCE_11] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_11, dance_11_finished, dance_11_reset),
+        // [DANCE_12] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_12, dance_12_finished, dance_12_reset),
+        // [DANCE_13] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_13, dance_13_finished, dance_13_reset),
+};
