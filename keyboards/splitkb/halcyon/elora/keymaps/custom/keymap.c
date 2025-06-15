@@ -24,7 +24,7 @@ enum layers {
 
 #define MY_CTL_C C(KC_C)
 #define MY_CTL_V C(KC_V)
-#define MY_F5    KC_F5
+// #define MY_F5    KC_F5
 #define MY_SFTAB S(KC_TAB)
 #define MY_E     LCTL_T(KC_E)
 #define MY_A     LSFT_T(KC_A)
@@ -39,6 +39,8 @@ enum layers {
 #define THUMB_R2 OSL(5)
 #define THUMB_R3 LT(6, KC_SPACE)
 #define THUMB_R4 TG(6)
+
+#define DF_F5_F2 LT(8, KC_F5)
 
 enum custom_keycodes {
 	MCR_3DOTS,
@@ -77,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------'                                                                         `-----------------------------------'
 	 */
     [_ALPHA_A] = LAYOUT_elora_hlc(
-		MY_CTL_C, MY_CTL_V, MY_F5   , KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
+		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
 		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_RALT,
 		A(KC_TAB),KC_P    , KC_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , RM_TOGG , QK_BOOT , QK_BOOT , RM_NEXT , KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
@@ -466,7 +468,10 @@ combo_t key_combos[] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
+	const uint8_t mods = get_mods();
+	const uint8_t oneshot_mods = get_oneshot_mods();
+	
+	switch (keycode) {
     // case MCR_AACT:
     // if (record->event.pressed) {
 		// SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_A));
@@ -532,16 +537,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_LSFT(SS_TAP(X_O)));
     // }
     // break;
-    case MCR_QU:
-    if (record->event.pressed) {
-		send_string_with_delay("qu", 10);
-    }
-    break;
-    case MCR_AACT:
-    if (record->event.pressed) {
-      SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
-    }
-    break;
+		case MCR_QU:
+		if (record->event.pressed) {
+			send_string_with_delay("qu", 10);
+		}
+		break;
+		case MCR_AACT:
+		if (record->event.pressed) {
+		  SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
+		}
+		break;
     // case ST_MACRO_15:
     // if (record->event.pressed) {
       // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_TAP(X_E));
@@ -572,25 +577,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_O));
     // }
     // break;
-    case MCR_TH:
-    if (record->event.pressed) {
-		if ((mods | oneshot_mods) & (MOD_MASK_SHIFT) { // Is shift held?
-			// Temporarily delete shift
-			del_oneshot_mods(MOD_MASK_SHIFT);
-			unregister_mods(MOD_MASK_SHIFT);  
-			send_string_with_delay("Th", 10);
-			register_mods(mods); // Restore mods.
-		  } else {
-			send_string_with_delay("th", 10);
-		  }
-		// SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_H));
-    }
-    break;
-    case MCR_3DOTS:
-    if (record->event.pressed) {
-		send_string_with_delay("...", 10);
-    }
-    break;
+		case MCR_TH:
+		if (record->event.pressed) {
+			if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
+				// Temporarily delete shift
+				del_oneshot_mods(MOD_MASK_SHIFT);
+				unregister_mods(MOD_MASK_SHIFT);  
+				send_string_with_delay("Th", 10);
+				register_mods(mods); // Restore mods.
+			} else {
+				send_string_with_delay("th", 10);
+			}
+			// SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_H));
+		}
+		break;
+		case MCR_3DOTS:
+		if (record->event.pressed) {
+			send_string_with_delay("...", 10);
+		}
+		break;
     // case ST_MACRO_23:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_TAP(X_LEFT));
@@ -601,32 +606,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_C)SS_DELAY(10)  SS_TAP(X_K));
     // }
     // break;
-    case MCR_ING:
-    if (record->event.pressed) {
-		send_string_with_delay("ing", 10);
-    }
-    break;
-    case MCR_GHT:
-    if (record->event.pressed) {
-		send_string_with_delay("ght", 10);
-    }
-    break;
-    case MCR_CAO:
-    if (record->event.pressed) {
-		// SEND_STRING(SS_TAP(X_SCLN) SS_DELAY(10) SS_TAP(X_QUOTE) SS_DELAY(10) SS_TAP(X_A) SS_DELAY(10) SS_TAP(X_O));
-		send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
-    }
-    break;
-    case MCR_COES:
-    if (record->event.pressed) {
-		SEND_STRING(SS_TAP(X_SCLN) SS_DELAY(10) SS_TAP(X_QUOTE) SS_DELAY(10) SS_TAP(X_O) SS_DELAY(10) SS_TAP(X_E) SS_DELAY(10) SS_TAP(X_S));
-    }
-    break;
-    case MCR_PX:
-    if (record->event.pressed) {
-		send_string_with_delay("px", 10);
-    }
-    break;
+		case MCR_ING:
+		if (record->event.pressed) {
+			send_string_with_delay("ing", 10);
+		}
+		break;
+		case MCR_GHT:
+		if (record->event.pressed) {
+			send_string_with_delay("ght", 10);
+		}
+		break;
+		case MCR_CAO:
+		if (record->event.pressed) {
+			// SEND_STRING(SS_TAP(X_SCLN) SS_DELAY(10) SS_TAP(X_QUOTE) SS_DELAY(10) SS_TAP(X_A) SS_DELAY(10) SS_TAP(X_O));
+			send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
+		}
+		break;
+		case MCR_COES:
+		if (record->event.pressed) {
+			SEND_STRING(SS_TAP(X_SCLN) SS_DELAY(10) SS_TAP(X_QUOTE) SS_DELAY(10) SS_TAP(X_O) SS_DELAY(10) SS_TAP(X_E) SS_DELAY(10) SS_TAP(X_S));
+		}
+		break;
+		case MCR_PX:
+		if (record->event.pressed) {
+			send_string_with_delay("px", 10);
+		}
+		break;
     // case ST_MACRO_30:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_R))SS_DELAY(10)  SS_LSFT(SS_TAP(X_4))SS_DELAY(10)  SS_TAP(X_SPACE));
@@ -758,21 +763,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
     // break;
 
-    // case DUAL_FUNC_0:
-      // if (record->tap.count > 0) {
-        // if (record->event.pressed) {
-          // register_code16(KC_F5);
-        // } else {
-          // unregister_code16(KC_F5);
-        // }
-      // } else {
-        // if (record->event.pressed) {
-          // register_code16(KC_F2);
-        // } else {
-          // unregister_code16(KC_F2);
-        // }  
-      // }  
-      // return false;
+    case DF_F5_F2:
+		if (record->tap.count > 0) {
+			if (record->event.pressed) {
+				register_code16(KC_F5);
+			} else {
+				unregister_code16(KC_F5);
+			}
+		} else {
+			if (record->event.pressed) {
+				register_code16(KC_F2);
+			} else {
+				unregister_code16(KC_F2);
+			}  
+		}  
+		return false;
     // case DUAL_FUNC_1:
       // if (record->tap.count > 0) {
         // if (record->event.pressed) {
@@ -923,8 +928,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // }  
       // }  
       // return false;
-  }
-  return true;
+	}
+	return true;
 }
-
-
