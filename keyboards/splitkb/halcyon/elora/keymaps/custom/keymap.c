@@ -67,6 +67,7 @@ enum tap_dance_codes {
 #define DF_F5_F2 LT(8, KC_F5)
 #define DF_HOME  LT(8, KC_HOME)
 #define DF_END   LT(8, KC_END)
+#define DF_Scirc LT(8, KC_S)
 
 enum custom_keycodes {
 	MCR_3DOTS = SAFE_RANGE,
@@ -88,6 +89,7 @@ enum custom_keycodes {
 	MCR_PX,
 	MCR_QU,
 	MCR_TH,
+	MY_CIRC,
 };
 
 //--------------------------------------------------------//
@@ -392,10 +394,10 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 const uint16_t PROGMEM cmb_LS_W[]     = { KC_L, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_DF_Z[]     = { KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_tmbs_mcr[] = { THUMB_L3, THUMB_R3, COMBO_END};
-const uint16_t PROGMEM cmb_lessthan[] = { KC_LT, KC_LPRN, COMBO_END};
-// const uint16_t PROGMEM combo6[] = { LSFT(KC_9), BR_LBRC, COMBO_END};
-// const uint16_t PROGMEM combo7[] = { BR_LCBR, LSFT(KC_8), COMBO_END};
-// const uint16_t PROGMEM combo8[] = { BR_LBRC, BR_LCBR, COMBO_END};
+const uint16_t PROGMEM cmb_Ranglbrk[] = { KC_LABK, KC_LABK, COMBO_END};
+const uint16_t PROGMEM cmb_Rparnts[]  = { KC_LABK, BR_LCBR, COMBO_END};
+const uint16_t PROGMEM cmb_Rbracket[] = { BR_LCBR, BR_LBRC, COMBO_END};
+const uint16_t PROGMEM cmb_Rcrlybrc[] = { BR_LBRC, KC_ASTR, COMBO_END};
 const uint16_t PROGMEM cmb_RS_Y[]     = { KC_R, KC_S, COMBO_END};
 // const uint16_t PROGMEM combo10[] = { MT(MOD_LSFT, KC_A), BR_SECT, COMBO_END};
 // const uint16_t PROGMEM combo11[] = { KC_B, MT(MOD_RSFT, KC_I), COMBO_END};
@@ -451,10 +453,10 @@ combo_t key_combos[] = {
     COMBO(cmb_LS_W,     KC_W),
     COMBO(cmb_DF_Z,     KC_Z),
     COMBO(cmb_tmbs_mcr, OSL(_MACROS)),
-    COMBO(cmb_lessthan, KC_RABK),
-    // COMBO(combo6, KC_RPRN),
-    // COMBO(combo7, BR_RCBR),
-    // COMBO(combo8, BR_RBRC),
+    COMBO(cmb_Ranglbrk, KC_RABK),
+    COMBO(cmb_Rparnts,  KC_RPRN),
+    COMBO(cmb_Rbracket, BR_RCBR),
+    COMBO(cmb_Rcrlybrc, BR_RBRC),
     COMBO(cmb_RS_Y,     KC_Y),
     // COMBO(combo10, OSM(MOD_LSFT)),
     // COMBO(combo11, OSM(MOD_RSFT)),
@@ -521,25 +523,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t oneshot_mods = get_oneshot_mods();
 	
 	switch (keycode) {
-		case KC_S: // Circumflex accent
+		case MY_CIRC: // Circumflex accent
 			S_is_held = record->event.pressed;
 			break;
 
-		case MY_A: {
+		case MY_A:
 			// static uint8_t registered_key = MY_A;
 			// static int registered_key = MY_A;
 			if (record->event.pressed) {
 				if (S_is_held) { // S + A = Â
 					// registered_key = MCR_A_CIRC;
 					send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
-				} else {
-					// registered_key = (S_is_held) ? KC_PGDN : KC_A;
-					register_code16(MY_A);
+					return false;
+				// } else {
+				// 	// registered_key = (S_is_held) ? KC_PGDN : KC_A;
+				// 	register_code16(MY_A);
 				}
-			} else {
-				unregister_code16(MY_A);
+			// } else {
+			// 	unregister_code16(MY_A);
 			}
-		} return false;
+			break;
 		
 		// case MCR_A_CIRC:
 		// if (record->event.pressed) {
@@ -976,6 +979,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					unregister_code16(RCTL(KC_END));
 				}
 			}
+			return false;
+			
+		case DF_Scirc:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(KC_S);
+				} else {
+					unregister_code16(KC_S);
+				}
+			} else {
+				if (record->event.pressed) {
+					register_code16(MY_CIRC);
+				} else {
+					unregister_code16(MY_CIRC);
+				}  
+			}  
 			return false;
 	}
 	return true;
