@@ -463,7 +463,7 @@ combo_t key_combos[] = {
     COMBO(cmb_ET_H,     KC_H),
     COMBO(cmb_ON_J,     KC_J),
 	
-    COMBO(cmb_SA_A_circ, MCR_A_CIRC),
+    // COMBO(cmb_SA_A_circ, MCR_A_CIRC),
 	
     // COMBO(combo17, ST_MACRO_1),
     // COMBO(combo18, ST_MACRO_2),
@@ -527,26 +527,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 		case MY_A: {
 			// static uint8_t registered_key = MY_A;
-			static int registered_key = MY_A;
+			// static int registered_key = MY_A;
 			if (record->event.pressed) {
 				if (S_is_held) { // S + A = Â
-					registered_key = MCR_A_CIRC;
-					// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
+					// registered_key = MCR_A_CIRC;
+					send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
+				} else {
+					// registered_key = (S_is_held) ? KC_PGDN : KC_A;
+					register_code16(MY_A);
 				}
-				// registered_key = (S_is_held) ? KC_PGDN : KC_A;
-				register_code16(registered_key);
 			} else {
-				register_code16(registered_key);
+				unregister_code16(MY_A);
 			}
-		}// return false;
-	}
-	
-	switch (keycode) {
-		case MCR_A_CIRC:
-		if (record->event.pressed) {
-			send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
-		}
-		break;
+		} return false;
+		
+		// case MCR_A_CIRC:
+		// if (record->event.pressed) {
+			// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
+		// }
+		// break;
     // case ST_MACRO_1:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_E));
