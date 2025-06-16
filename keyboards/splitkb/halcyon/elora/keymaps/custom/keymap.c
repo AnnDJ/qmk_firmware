@@ -54,6 +54,10 @@ enum tap_dance_codes {
 #define THUMB_L3 LT(_ALPHA_B, KC_BSPC)
 #define THUMB_L2 LT(_SHORTCUTS, KC_DEL)
 #define THUMB_L1 TG(_NUMPAD)
+#define THUMB_LA RM_TOGG
+#define THUMB_LB TG(_GIMP)
+#define THUMB_RB RM_PREV
+#define THUMB_RA RM_NEXT
 #define THUMB_R1 KC_ENTER
 #define THUMB_R2 OSL(_SYMBOLS)
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
@@ -61,6 +65,8 @@ enum tap_dance_codes {
 
 // #define MY_F5    KC_F5
 #define DF_F5_F2 LT(8, KC_F5)
+#define DF_HOME  LT(8, KC_HOME)
+#define DF_END   LT(8, KC_END)
 
 enum custom_keycodes {
 	MCR_3DOTS = SAFE_RANGE,
@@ -99,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
 	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                 |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
 	 * |---------+--------+---------+---------+---------+---------+---------------.  ,--------------+---------+-------+-------+-------+-------+----------|
-	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |  RGB   | BOOT |  | BOOT  | RGB  |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
+	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |  RGB   |  L2  |  | RGB-  | RGB+ |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
 	 * `----------------------------+---------+---------+---------+--------+------|  |-------+------+---------+-------+-------+--------------------------'
 	 *                              | _______ |  Bksp   | L1/Bksp | L4/Del |  L3  |  | Enter |  L5  | L6/Space|  L6   | _____ |
 	 *                              `---------------------------------------------'  `----------------------------------------'
@@ -111,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
 		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_RALT,
 		A(KC_TAB),KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
-		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , RM_TOGG , QK_BOOT , QK_BOOT , RM_NEXT , KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
+		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, XXXXXXX ,
 		KC_KB_MUTE,XXXXXXX, XXXXXXX , XXXXXXX , XXXXXXX ,                                                             XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
 	),
@@ -271,11 +277,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
 	[_NAVVOL] = LAYOUT_elora_hlc(
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , XXXXXXX , KC_PGUP , XXXXXXX , KC_MPRV , KC_MNXT ,
-		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , _______ , KC_PGDN , _______ , KC_K    , KC_MPLY ,
+		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , DF_HOME , KC_PGDN , DF_END  , KC_K    , KC_MPLY ,
 		_______ , _______ , _______ ,OSM(MOD_LCTL),OSM(MOD_LSFT), XXXXXXX ,                                         XXXXXXX , KC_LEFT , KC_UP   , KC_RIGHT, KC_M    , KC_MUTE ,
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX , KC_DOWN , XXXXXXX , KC_VOLD , KC_VOLU ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-        KC_KB_MUTE,_______, _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
+        _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
 	/*
@@ -308,26 +314,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Other functions
 	 *
-	 * ,-------------------------------------------.                              ,-------------------------------------------.
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-	 * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-	 *                        |      |      |      |      |      |  |      |      |      |      |      |
-	 *                        `----------------------------------'  `----------------------------------'
-	 * ,-----------------------------------.                                              ,-----------------------------------.
-	 * |      |      |       |      |      |                                              |      |      |       |      |      |
-	 * `-----------------------------------'                                              `-----------------------------------'
+	 * ,-----------------------------------------------.                              ,----------------------------------------------.
+	 * |        |      |      |       |       |        |                              |      |  Ins  |       |       |       |       |
+	 * |--------+------+------+-------+-------+--------|                              |------+-------+-------+-------+-------+-------|
+	 * |        |      |      | Ctl+A | Ctl+W | Ctl+F4 |                              |      |       |       |       |       |       |
+	 * |--------+------+------+-------+-------+--------|                              |------+-------+-------+-------+-------+-------|
+	 * |        |      |      | Ctl+S | Ctl+Z | Ctl+Y  |                              |      | Ctl+I | Ctl+U | Ctl+/ |       |       |
+	 * |--------+------+------+-------+-------+--------+-------------.  ,-------------+------+-------+-------+-------+-------+-------|
+	 * |        |      |      |       |       |        |      |      |  |      |      |      | Ctl+B | Ctl+T | Ctl+8 | Ctl+9 | Ctl+0 |
+	 * `----------------------+-------+-------+--------+------+------|  |------+------+------+-------+-------+-----------------------'
+	 *                        |       |       |        |      |      |  |      |      |      |       |       |
+	 *                        `--------------------------------------'  `------------------------------------'
+	 * ,-----------------------------------.                                                     ,-----------------------------------.
+	 * |      |      |       |      |      |                                                     |      |      |       |      |      |
+	 * `-----------------------------------'                                                     `-----------------------------------'
 	 */
 	[_OTHERS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , KC_INS  , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , C(KC_A) , C(KC_W) , A(KC_F4),                                         XXXXXXX , _______ , _______ , _______ , XXXXXXX , _______ ,
+		_______ , _______ , _______ , C(KC_S) , C(KC_Z) , C(KC_Y) ,                                         XXXXXXX , C(KC_I) , C(KC_U) ,C(BR_SLSH),XXXXXXX , XXXXXXX ,
+		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , C(KC_B) , C(KC_T) , C(KC_8) , C(KC_9) , C(KC_0) ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -426,12 +432,11 @@ const uint16_t PROGMEM cmb_ITN_TH[] = { MY_I, MY_T, KC_N, COMBO_END};
 const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END}; // FIX
 const uint16_t PROGMEM cmb_79_comma[] = { KC_7, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
-// const uint16_t PROGMEM combo41[] = { KC_U, KC_M, COMBO_END};
+const uint16_t PROGMEM cmb_UM_CpWrd[] = { KC_U, KC_M, COMBO_END};
 // const uint16_t PROGMEM combo42[] = { KC_S, MT(MOD_RCTL, KC_T), COMBO_END};
-// const uint16_t PROGMEM combo43[] = { BR_SECT, KC_B, COMBO_END};
+const uint16_t PROGMEM cmb_SSB_CpLk[] = { BR_SECT, KC_B, COMBO_END};
 // const uint16_t PROGMEM combo44[] = { KC_DELETE, LCTL(KC_BSPC), COMBO_END};
 // const uint16_t PROGMEM combo45[] = { KC_ESCAPE, KC_DELETE, COMBO_END};
-// const uint16_t PROGMEM combo46[] = { KC_C, KC_K, COMBO_END};
 // const uint16_t PROGMEM combo47[] = { KC_HASH, KC_AT, COMBO_END};
 // const uint16_t PROGMEM combo48[] = { KC_8, KC_9, COMBO_END};
 // const uint16_t PROGMEM combo49[] = { KC_EXLM, BR_SLSH, COMBO_END};
@@ -439,6 +444,8 @@ const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
 // const uint16_t PROGMEM combo51[] = { BR_QUES, KC_EXLM, COMBO_END};
 // const uint16_t PROGMEM combo52[] = { KC_4, KC_5, COMBO_END};
 const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
+const uint16_t PROGMEM cmb_LBOOT[]    = { THUMB_LA, THUMB_LB, COMBO_END};
+const uint16_t PROGMEM cmb_RBOOT[]    = { THUMB_RA, THUMB_RB, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(cmb_LS_W,     KC_W),
@@ -484,12 +491,11 @@ combo_t key_combos[] = {
     COMBO(cmb_3dots,    MCR_3DOTS),
     COMBO(cmb_79_comma, KC_COMMA),
     COMBO(cmb_789_dot,  KC_DOT),
-    // COMBO(combo41, CW_TOGG),
+    COMBO(cmb_UM_CpWrd, CW_TOGG),
     // COMBO(combo42, ST_MACRO_23),
-    // COMBO(combo43, KC_CAPS),
+    COMBO(cmb_SSB_CpLk, KC_CAPS),
     // COMBO(combo44, TG(8)),
     // COMBO(combo45, TO(2)),
-    // COMBO(combo46, ST_MACRO_24),
     // COMBO(combo47, KC_PLUS),
     // COMBO(combo48, KC_KP_PLUS),
     // COMBO(combo49, KC_EQUAL),
@@ -497,6 +503,8 @@ combo_t key_combos[] = {
     // COMBO(combo51, BR_COLN),
     // COMBO(combo52, BR_COLN),
     COMBO(cmb_MD_V,     KC_V),
+    COMBO(cmb_LBOOT,    QK_BOOT),
+    COMBO(cmb_RBOOT,    QK_BOOT),
 };
 
 //--------------------------------------------------------//
@@ -513,11 +521,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t oneshot_mods = get_oneshot_mods();
 	
 	switch (keycode) {
-		case KC_S: // Circunflex accent
+		case KC_S: // Circumflex accent
 			S_is_held = record->event.pressed;
 			break;
 
-		case KC_A: {
+		case MY_A: {
 			// static uint8_t registered_key = MY_A;
 			static int registered_key = MY_A;
 			if (record->event.pressed) {
@@ -600,16 +608,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
     // break;
 		case MCR_QU:
-		if (record->event.pressed) {
-			send_string_with_delay("qu", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay("qu", 10);
+			}
+			break;
 		case MCR_A_ACUTE:
-		if (record->event.pressed) {
-			// SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
-			send_string_with_delay(SS_TAP(X_LBRC) "a", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				// SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
+				send_string_with_delay(SS_TAP(X_LBRC) "a", 10);
+			}
+			break;
     // case ST_MACRO_15:
     // if (record->event.pressed) {
       // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_TAP(X_E));
@@ -641,59 +649,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
     // break;
 		case MCR_TH:
-		if (record->event.pressed) {
-			if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
-				// Temporarily delete shift
-				del_oneshot_mods(MOD_MASK_SHIFT);
-				unregister_mods(MOD_MASK_SHIFT);  
-				send_string_with_delay("Th", 10);
-				register_mods(mods); // Restore mods.
-			} else {
-				send_string_with_delay("th", 10);
+			if (record->event.pressed) {
+				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
+					// Temporarily delete shift
+					del_oneshot_mods(MOD_MASK_SHIFT);
+					unregister_mods(MOD_MASK_SHIFT);  
+					send_string_with_delay("Th", 10);
+					register_mods(mods); // Restore mods.
+				} else {
+					send_string_with_delay("th", 10);
+				}
+				// SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_H));
 			}
-			// SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_H));
-		}
-		break;
+			break;
 		case MCR_3DOTS:
-		if (record->event.pressed) {
-			send_string_with_delay("...", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay("...", 10);
+			}
+			break;
     // case ST_MACRO_23:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_TAP(X_LEFT));
     // }
     // break;
-    // case ST_MACRO_24:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_C)SS_DELAY(10)  SS_TAP(X_K));
-    // }
-    // break;
 		case MCR_ING:
-		if (record->event.pressed) {
-			send_string_with_delay("ing", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay("ing", 10);
+			}
+			break;
 		case MCR_GHT:
-		if (record->event.pressed) {
-			send_string_with_delay("ght", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay("ght", 10);
+			}
+			break;
 		case MCR_CAO:
-		if (record->event.pressed) {
-			send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
+			}
+			break;
 		case MCR_COES:
-		if (record->event.pressed) {
-			send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "oes", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "oes", 10);
+			}
+			break;
 		case MCR_PX:
-		if (record->event.pressed) {
-			send_string_with_delay("px", 10);
-		}
-		break;
+			if (record->event.pressed) {
+				send_string_with_delay("px", 10);
+			}
+			break;
     // case ST_MACRO_30:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_R))SS_DELAY(10)  SS_LSFT(SS_TAP(X_4))SS_DELAY(10)  SS_TAP(X_SPACE));
@@ -825,21 +828,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
     // break;
 
-    case DF_F5_F2:
-		if (record->tap.count > 0) {
-			if (record->event.pressed) {
-				register_code16(KC_F5);
+		case DF_F5_F2:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(KC_F5);
+				} else {
+					unregister_code16(KC_F5);
+				}
 			} else {
-				unregister_code16(KC_F5);
-			}
-		} else {
-			if (record->event.pressed) {
-				register_code16(KC_F2);
-			} else {
-				unregister_code16(KC_F2);
+				if (record->event.pressed) {
+					register_code16(KC_F2);
+				} else {
+					unregister_code16(KC_F2);
+				}  
 			}  
-		}  
-		return false;
+			return false;
     // case DUAL_FUNC_1:
       // if (record->tap.count > 0) {
         // if (record->event.pressed) {
@@ -852,21 +855,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           // register_code16(KC_LEFT_ALT);
         // } else {
           // unregister_code16(KC_LEFT_ALT);
-        // }  
-      // }  
-      // return false;
-    // case DUAL_FUNC_2:
-      // if (record->tap.count > 0) {
-        // if (record->event.pressed) {
-          // layer_move(3);
-        // } else {
-          // layer_move(3);
-        // }
-      // } else {
-        // if (record->event.pressed) {
-          // layer_on(4);
-        // } else {
-          // layer_off(4);
         // }  
       // }  
       // return false;
@@ -960,36 +948,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // }  
       // }  
       // return false;
-    // case DUAL_FUNC_9:
-      // if (record->tap.count > 0) {
-        // if (record->event.pressed) {
-          // register_code16(KC_HOME);
-        // } else {
-          // unregister_code16(KC_HOME);
-        // }
-      // } else {
-        // if (record->event.pressed) {
-          // register_code16(RCTL(KC_HOME));
-        // } else {
-          // unregister_code16(RCTL(KC_HOME));
-        // }  
-      // }  
-      // return false;
-    // case DUAL_FUNC_10:
-      // if (record->tap.count > 0) {
-        // if (record->event.pressed) {
-          // register_code16(KC_END);
-        // } else {
-          // unregister_code16(KC_END);
-        // }
-      // } else {
-        // if (record->event.pressed) {
-          // register_code16(RCTL(KC_END));
-        // } else {
-          // unregister_code16(RCTL(KC_END));
-        // }  
-      // }  
-      // return false;
+		case DF_HOME:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(KC_HOME);
+				} else {
+					unregister_code16(KC_HOME);
+				}
+			} else {
+				if (record->event.pressed) {
+					register_code16(RCTL(KC_HOME));
+				} else {
+					unregister_code16(RCTL(KC_HOME));
+				}
+			}
+			return false;
+		case DF_END:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(KC_END);
+				} else {
+					unregister_code16(KC_END);
+				}
+			} else {
+				if (record->event.pressed) {
+					register_code16(RCTL(KC_END));
+				} else {
+					unregister_code16(RCTL(KC_END));
+				}
+			}
+			return false;
 	}
 	return true;
 }
