@@ -27,22 +27,23 @@ typedef struct {
     uint8_t step;
 } tap;
 
-static tap dance_state[10];
+static tap dance_state[9];
 enum tap_dance_codes {
   DNC_CTRL_C,
   DNC_CTRL_V,
-  DANCE_2,
+  DNC_CTRL_H,
+  DNC_CTRL_F,
+  DNC_CTRL_T,
   DANCE_3,
   DANCE_4,
   DANCE_5,
-  DANCE_6,
-  DANCE_7,
-  DANCE_8,
   DANCE_9,
 };
 
 #define MY_CTL_C TD(DNC_CTRL_C)
 #define MY_CTL_V TD(DNC_CTRL_V)
+#define MY_CTL_H TD(DNC_CTRL_H)
+#define MY_CTL_F TD(DNC_CTRL_F)
 #define MY_SFTAB S(KC_TAB)
 #define MY_E     LCTL_T(KC_E)
 #define MY_A     LSFT_T(KC_A)
@@ -63,7 +64,6 @@ enum tap_dance_codes {
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
 #define THUMB_R4 TG(_NAVVOL)
 
-// #define MY_F5    KC_F5
 #define DF_F5_F2 LT(8, KC_F5)
 #define DF_HOME  LT(8, KC_HOME)
 #define DF_END   LT(8, KC_END)
@@ -76,7 +76,6 @@ enum custom_keycodes {
 	MCR_I_ACUTE,
 	MCR_O_ACUTE,
 	MCR_U_ACUTE,
-	MCR_A_CIRC,
 	MCR_E_CIRC,
 	MCR_O_CIRC,
 	MCR_A_TILDE,
@@ -89,6 +88,11 @@ enum custom_keycodes {
 	MCR_PX,
 	MCR_QU,
 	MCR_TH,
+	MCR_squz,
+	MCR_tird,
+	MCR_brk,
+	MCR_rqv,
+	MCR_nota,
 	MY_CIRC,
 };
 
@@ -103,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * ,----------------------------------------------------------.                                 ,----------------------------------------------------.
 	 * |  Ctl+C* | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                 |    <    |   (   |   [   |   {   |   *   |   Alt    |
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
-	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                 |    Y    |   R   |   S   |   L   |   W   |  AltGr   |
+	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                 |    Y    |   R   |  S/^  |   L   |   W   |  AltGr   |
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
 	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                 |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
 	 * |---------+--------+---------+---------+---------+---------+---------------.  ,--------------+---------+-------+-------+-------+-------+----------|
@@ -117,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
-		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_RALT,
+		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , DF_Scirc, KC_L    , KC_W    , KC_RALT,
 		A(KC_TAB),KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, XXXXXXX ,
@@ -208,26 +212,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Shortcuts
 	 *
-	 * ,-------------------------------------------.                              ,-------------------------------------------.
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-	 * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-	 *                        |      |      |      |      |      |  |      |      |      |      |      |
-	 *                        `----------------------------------'  `----------------------------------'
-	 * ,-----------------------------------.                                              ,-----------------------------------.
-	 * |      |      |       |      |      |                                              |      |      |       |      |      |
-	 * `-----------------------------------'                                              `-----------------------------------'
+	 * ,---------------------------------------------------.                              ,----------------------------------------------.
+	 * |        |        |        |       |       |        |                              |      |  Ins  |       |       |       |       |
+	 * |--------+--------+--------+-------+-------+--------|                              |------+-------+-------+-------+-------+-------|
+	 * |        |        | Ctl+T* | Ctl+A | Ctl+W | Ctl+F4 |                              |      |       |       |       |       |       |
+	 * |--------+--------+--------+-------+-------+--------|                              |------+-------+-------+-------+-------+-------|
+	 * |        | Ctl+H* | Ctl+F* | Ctl+S | Ctl+Z | Ctl+Y  |                              |      | Ctl+I | Ctl+U | Ctl+/ |       |       |
+	 * |--------+--------+--------+-------+-------+--------+-------------.  ,-------------+------+-------+-------+-------+-------+-------|
+	 * |        |        |        |       |       |        |      |      |  |      |      |      | Ctl+B | Ctl+T | Ctl+8 | Ctl+9 | Ctl+0 |
+	 * `--------------------------+-------+-------+--------+------+------|  |------+------+------+-------+-------+-----------------------'
+	 *                            |       |       |        |      |      |  |      |      |      |       |       |
+	 *                            `--------------------------------------'  `------------------------------------'
+	 * ,-----------------------------------.                                                         ,-----------------------------------.
+	 * |      |      |       |      |      |                                                         |      |      |       |      |      |
+	 * `-----------------------------------'                                                         `-----------------------------------'
 	 */
 	[_SHORTCUTS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , KC_INS  , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , C(KC_A) , C(KC_W) , A(KC_F4),                                         XXXXXXX , _______ , _______ , _______ , XXXXXXX , _______ ,
+		_______ , MY_CTL_H, MY_CTL_F, C(KC_S) , C(KC_Z) , C(KC_Y) ,                                         XXXXXXX , C(KC_I) , C(KC_U) ,C(BR_SLSH),XXXXXXX , XXXXXXX ,
+		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , C(KC_B) , C(KC_T) , C(KC_8) , C(KC_9) , C(KC_0) ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -289,26 +293,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Macros
 	 *
-	 * ,-------------------------------------------.                              ,-------------------------------------------.
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-	 * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-	 * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-	 * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-	 *                        |      |      |      |      |      |  |      |      |      |      |      |
+	 * ,-------------------------------------------.                              ,--------------------------------------------.
+	 * |        |      |      |      |      |      |                              |     |      |       |       |      |        |
+	 * |--------+------+------+------+------+------|                              |-----+------+-------+-------+------+--------|
+	 * |        |      |      |      |      |      |                              |     |  ^^  |  (?)  | []()  |      |        |
+	 * |--------+------+------+------+------+------|                              |-----+------+-------+-------+------+--------|
+	 * |        |      |      |      |      |      |                              | >~< | = =  | (...) | ,rqv  |      |        |
+	 * |--------+------+------+------+------+------+-------------.  ,-------------+-----+------+-------+-------+------+--------|
+	 * |        |      |      |      |      |      |      |      |  |      |      |     |  ¬¬  |  *|*  | ,nota |      |        |
+	 * `----------------------+------+------+------+------+------|  |------+------+-----+------+-------+-----------------------'
+	 *                        |      |      |      |      |      |  |      |      |     |      |       |
 	 *                        `----------------------------------'  `----------------------------------'
-	 * ,-----------------------------------.                                              ,-----------------------------------.
-	 * |      |      |       |      |      |                                              |      |      |       |      |      |
-	 * `-----------------------------------'                                              `-----------------------------------'
+	 * ,-----------------------------------.                                               ,-----------------------------------.
+	 * |      |      |       |      |      |                                               |      |      |       |      |      |
+	 * `-----------------------------------'                                               `-----------------------------------'
 	 */
 	[_MACROS] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         MCR_squz, MCR_tird, MCR_brk , MCR_rqv , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MCR_nota, _______ , _______ ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -317,13 +321,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * Other functions
 	 *
 	 * ,-----------------------------------------------.                              ,----------------------------------------------.
-	 * |        |      |      |       |       |        |                              |      |  Ins  |       |       |       |       |
+	 * |        |      |      |       |       |        |                              |      |       |       |       |       |       |
 	 * |--------+------+------+-------+-------+--------|                              |------+-------+-------+-------+-------+-------|
-	 * |        |      |      | Ctl+A | Ctl+W | Ctl+F4 |                              |      |       |       |       |       |       |
+	 * |        |      |      |       |       |        |                              |      |       |       |       |       |       |
 	 * |--------+------+------+-------+-------+--------|                              |------+-------+-------+-------+-------+-------|
-	 * |        |      |      | Ctl+S | Ctl+Z | Ctl+Y  |                              |      | Ctl+I | Ctl+U | Ctl+/ |       |       |
+	 * |        |      |      |       |       |        |                              |      |       |       |       |       |       |
 	 * |--------+------+------+-------+-------+--------+-------------.  ,-------------+------+-------+-------+-------+-------+-------|
-	 * |        |      |      |       |       |        |      |      |  |      |      |      | Ctl+B | Ctl+T | Ctl+8 | Ctl+9 | Ctl+0 |
+	 * |        |      |      |       |       |        |      |      |  |      |      |      |       |       |       |       |       |
 	 * `----------------------+-------+-------+--------+------+------|  |------+------+------+-------+-------+-----------------------'
 	 *                        |       |       |        |      |      |  |      |      |      |       |       |
 	 *                        `--------------------------------------'  `------------------------------------'
@@ -332,10 +336,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------'                                                     `-----------------------------------'
 	 */
 	[_OTHERS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , KC_INS  , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , C(KC_A) , C(KC_W) , A(KC_F4),                                         XXXXXXX , _______ , _______ , _______ , XXXXXXX , _______ ,
-		_______ , _______ , _______ , C(KC_S) , C(KC_Z) , C(KC_Y) ,                                         XXXXXXX , C(KC_I) , C(KC_U) ,C(BR_SLSH),XXXXXXX , XXXXXXX ,
-		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , C(KC_B) , C(KC_T) , C(KC_8) , C(KC_9) , C(KC_0) ,
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -394,10 +398,10 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 const uint16_t PROGMEM cmb_LS_W[]     = { KC_L, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_DF_Z[]     = { KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_tmbs_mcr[] = { THUMB_L3, THUMB_R3, COMBO_END};
-const uint16_t PROGMEM cmb_Ranglbrk[] = { KC_LABK, KC_LABK, COMBO_END};
-const uint16_t PROGMEM cmb_Rparnts[]  = { KC_LABK, BR_LCBR, COMBO_END};
-const uint16_t PROGMEM cmb_Rbracket[] = { BR_LCBR, BR_LBRC, COMBO_END};
-const uint16_t PROGMEM cmb_Rcrlybrc[] = { BR_LBRC, KC_ASTR, COMBO_END};
+const uint16_t PROGMEM cmb_Ranglbrk[] = { KC_LT, KC_LPRN, COMBO_END};
+const uint16_t PROGMEM cmb_Rparnts[]  = { KC_LPRN, BR_LBRC, COMBO_END};
+const uint16_t PROGMEM cmb_Rbracket[] = { BR_LBRC, BR_LCBR, COMBO_END};
+const uint16_t PROGMEM cmb_Rcrlybrc[] = { BR_LCBR, KC_ASTR, COMBO_END};
 const uint16_t PROGMEM cmb_RS_Y[]     = { KC_R, KC_S, COMBO_END};
 // const uint16_t PROGMEM combo10[] = { MT(MOD_LSFT, KC_A), BR_SECT, COMBO_END};
 // const uint16_t PROGMEM combo11[] = { KC_B, MT(MOD_RSFT, KC_I), COMBO_END};
@@ -406,7 +410,7 @@ const uint16_t PROGMEM cmb_RSL_dot[]  = { KC_R, KC_S, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_ET_H[]     = { MY_E, MY_T, COMBO_END};
 const uint16_t PROGMEM cmb_ON_J[]     = { KC_O, KC_N, COMBO_END};
 
-const uint16_t PROGMEM cmb_SA_A_circ[] = { KC_S, MY_A, COMBO_END};
+// const uint16_t PROGMEM cmb_SA_A_circ[] = { KC_S, MY_A, COMBO_END};
 
 // const uint16_t PROGMEM combo17[] = { KC_S, MT(MOD_LCTL, KC_E), COMBO_END};
 // const uint16_t PROGMEM combo18[] = { KC_S, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
@@ -431,7 +435,7 @@ const uint16_t PROGMEM cmb_RA_A_acute[] = { KC_R, MY_A, COMBO_END};
 // const uint16_t PROGMEM combo35[] = { KC_L, MT(MOD_LSFT, KC_A), COMBO_END};
 // const uint16_t PROGMEM combo36[] = { KC_L, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
 const uint16_t PROGMEM cmb_ITN_TH[] = { MY_I, MY_T, KC_N, COMBO_END};
-const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END}; // FIX
+const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END};
 const uint16_t PROGMEM cmb_79_comma[] = { KC_7, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_UM_CpWrd[] = { KC_U, KC_M, COMBO_END};
@@ -439,12 +443,12 @@ const uint16_t PROGMEM cmb_UM_CpWrd[] = { KC_U, KC_M, COMBO_END};
 const uint16_t PROGMEM cmb_SSB_CpLk[] = { BR_SECT, KC_B, COMBO_END};
 // const uint16_t PROGMEM combo44[] = { KC_DELETE, LCTL(KC_BSPC), COMBO_END};
 // const uint16_t PROGMEM combo45[] = { KC_ESCAPE, KC_DELETE, COMBO_END};
-// const uint16_t PROGMEM combo47[] = { KC_HASH, KC_AT, COMBO_END};
-// const uint16_t PROGMEM combo48[] = { KC_8, KC_9, COMBO_END};
-// const uint16_t PROGMEM combo49[] = { KC_EXLM, BR_SLSH, COMBO_END};
-// const uint16_t PROGMEM combo50[] = { KC_5, KC_6, COMBO_END};
-// const uint16_t PROGMEM combo51[] = { BR_QUES, KC_EXLM, COMBO_END};
-// const uint16_t PROGMEM combo52[] = { KC_4, KC_5, COMBO_END};
+const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};
+const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
+const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};
+const uint16_t PROGMEM cmb_56_equal[] = { KC_5, KC_6, COMBO_END};
+const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};
+const uint16_t PROGMEM cmb_45_colon[] = { KC_4, KC_5, COMBO_END};
 const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
 const uint16_t PROGMEM cmb_LBOOT[]    = { THUMB_LA, THUMB_LB, COMBO_END};
 const uint16_t PROGMEM cmb_RBOOT[]    = { THUMB_RA, THUMB_RB, COMBO_END};
@@ -455,8 +459,8 @@ combo_t key_combos[] = {
     COMBO(cmb_tmbs_mcr, OSL(_MACROS)),
     COMBO(cmb_Ranglbrk, KC_RABK),
     COMBO(cmb_Rparnts,  KC_RPRN),
-    COMBO(cmb_Rbracket, BR_RCBR),
-    COMBO(cmb_Rcrlybrc, BR_RBRC),
+    COMBO(cmb_Rbracket, BR_RBRC),
+    COMBO(cmb_Rcrlybrc, BR_RCBR),
     COMBO(cmb_RS_Y,     KC_Y),
     // COMBO(combo10, OSM(MOD_LSFT)),
     // COMBO(combo11, OSM(MOD_RSFT)),
@@ -498,12 +502,12 @@ combo_t key_combos[] = {
     COMBO(cmb_SSB_CpLk, KC_CAPS),
     // COMBO(combo44, TG(8)),
     // COMBO(combo45, TO(2)),
-    // COMBO(combo47, KC_PLUS),
-    // COMBO(combo48, KC_KP_PLUS),
-    // COMBO(combo49, KC_EQUAL),
-    // COMBO(combo50, KC_EQUAL),
-    // COMBO(combo51, BR_COLN),
-    // COMBO(combo52, BR_COLN),
+    COMBO(cmb_hsat_pls, KC_PLUS),
+    COMBO(cmb_89_plus,  KC_KP_PLUS),
+    COMBO(cmb_excsl_eq, KC_EQUAL),
+    COMBO(cmb_56_equal, KC_EQUAL),
+    COMBO(cmb_bang_cln, BR_COLN),
+    COMBO(cmb_45_colon, BR_COLN),
     COMBO(cmb_MD_V,     KC_V),
     COMBO(cmb_LBOOT,    QK_BOOT),
     COMBO(cmb_RBOOT,    QK_BOOT),
@@ -516,33 +520,33 @@ combo_t key_combos[] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	// static bool R_is_held = false;
-	static bool S_is_held = false;
+	// static bool S_is_held = false;
 	// static bool L_is_held = false;
 
 	const uint8_t mods = get_mods();
 	const uint8_t oneshot_mods = get_oneshot_mods();
 	
 	switch (keycode) {
-		case MY_CIRC: // Circumflex accent
-			S_is_held = record->event.pressed;
-			break;
+		// case MY_CIRC: // Circumflex accent
+			// S_is_held = record->event.pressed;
+			// break;
 
-		case MY_A:
+		// case MY_A:
 			// static uint8_t registered_key = MY_A;
 			// static int registered_key = MY_A;
-			if (record->event.pressed) {
-				if (S_is_held) { // S + A = Â
+			// if (record->event.pressed) {
+				// if (S_is_held) { // S + A = Â
 					// registered_key = MCR_A_CIRC;
-					send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
-					return false;
+					// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
+					// return false;
 				// } else {
-				// 	// registered_key = (S_is_held) ? KC_PGDN : KC_A;
-				// 	register_code16(MY_A);
-				}
+					// registered_key = (S_is_held) ? KC_PGDN : KC_A;
+					// register_code16(MY_A);
+				// }
 			// } else {
-			// 	unregister_code16(MY_A);
-			}
-			break;
+				// unregister_code16(MY_A);
+			// }
+			// break;
 		
 		// case MCR_A_CIRC:
 		// if (record->event.pressed) {
@@ -789,46 +793,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_RBRC)SS_DELAY(10)  SS_TAP(X_BSLS)SS_DELAY(10)  SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0))SS_DELAY(10)  SS_TAP(X_LEFT));
     // }
     // break;
-    // case ST_MACRO_48:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_RSFT(SS_TAP(X_DOT))SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_RSFT(SS_TAP(X_COMMA)));
-    // }
-    // break;
-    // case ST_MACRO_49:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_EQUAL)SS_DELAY(10)  SS_TAP(X_SPACE)SS_DELAY(10)  SS_TAP(X_EQUAL));
-    // }
-    // break;
-    // case ST_MACRO_50:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_TAP(X_DOT)SS_DELAY(10)  SS_TAP(X_DOT)SS_DELAY(10)  SS_TAP(X_DOT)SS_DELAY(10)  SS_LSFT(SS_TAP(X_0)));
-    // }
-    // break;
-    // case ST_MACRO_51:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_COMMA)SS_DELAY(10)  SS_TAP(X_R)SS_DELAY(10)  SS_TAP(X_Q)SS_DELAY(10)  SS_TAP(X_V)SS_DELAY(200)  SS_LCTL(SS_TAP(X_9))  SS_DELAY(200) SS_TAP(X_ENTER));
-    // }
-    // break;
-    // case ST_MACRO_52:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_DOT)SS_DELAY(10)  SS_TAP(X_C)SS_DELAY(10)  SS_TAP(X_O)SS_DELAY(10)  SS_TAP(X_M));
-    // }
-    // break;
+		case MCR_squz:
+			if (record->event.pressed) {
+				send_string_with_delay(">~<", 10);
+				// SEND_STRING(SS_RSFT(SS_TAP(X_DOT))SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_RSFT(SS_TAP(X_COMMA)));
+			}
+			break;
+		case MCR_tird:
+			if (record->event.pressed) {
+				send_string_with_delay("= =", 10);
+			}
+			break;
+		case MCR_brk:
+			if (record->event.pressed) {
+				send_string_with_delay("(...)", 10);
+			}
+			break;
+		case MCR_rqv:
+			if (record->event.pressed) { // ,rqv | Ctrl+9 | Enter
+				send_string_with_delay(",rqv" SS_DELAY(200) SS_LCTL(SS_TAP(X_9)) SS_DELAY(200) SS_TAP(X_ENTER), 10);
+			}
+			break;
     // case ST_MACRO_53:
     // if (record->event.pressed) {
       // SEND_STRING(SS_RALT(SS_TAP(X_6))SS_DELAY(10)  SS_RALT(SS_TAP(X_6)));
     // }
     // break;
-    // case ST_MACRO_54:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_8))SS_DELAY(10)  SS_LSFT(SS_TAP(X_8))SS_DELAY(10)  SS_TAP(X_LEFT));
-    // }
-    // break;
-    // case ST_MACRO_55:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_COMMA)SS_DELAY(10)  SS_TAP(X_N)SS_DELAY(10)  SS_TAP(X_O)SS_DELAY(10)  SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_A));
-    // }
-    // break;
+		// case ST_MACRO_54:
+			// if (record->event.pressed) {
+				// SEND_STRING(SS_LSFT(SS_TAP(X_8))SS_DELAY(10)  SS_LSFT(SS_TAP(X_8))SS_DELAY(10)  SS_TAP(X_LEFT));
+			// }
+			// break;
+		case MCR_nota:
+			if (record->event.pressed) {
+				send_string_with_delay(",nota", 10);
+			}
+			break;
+
 
 		case DF_F5_F2:
 			if (record->tap.count > 0) {
@@ -845,21 +846,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}  
 			}  
 			return false;
-    // case DUAL_FUNC_1:
-      // if (record->tap.count > 0) {
-        // if (record->event.pressed) {
-          // register_code16(LALT(KC_TAB));
-        // } else {
-          // unregister_code16(LALT(KC_TAB));
-        // }
-      // } else {
-        // if (record->event.pressed) {
-          // register_code16(KC_LEFT_ALT);
-        // } else {
-          // unregister_code16(KC_LEFT_ALT);
-        // }  
-      // }  
-      // return false;
     // case DUAL_FUNC_3:
       // if (record->tap.count > 0) {
         // if (record->event.pressed) {
@@ -1107,42 +1093,116 @@ void dnc_ctrl_v_reset(tap_dance_state_t *state, void *user_data) {
 
 //--------------------------------------------------------//
 
-void on_dance_2(tap_dance_state_t *state, void *user_data);
-void dance_2_finished(tap_dance_state_t *state, void *user_data);
-void dance_2_reset(tap_dance_state_t *state, void *user_data);
+void on_dnc_ctrl_h(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_h_finished(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_h_reset(tap_dance_state_t *state, void *user_data);
 
-void on_dance_2(tap_dance_state_t *state, void *user_data) {
+void on_dnc_ctrl_h(tap_dance_state_t *state, void *user_data) {
     if(state->count == 3) {
-        tap_code16(KC_MS_WH_DOWN);
-        tap_code16(KC_MS_WH_DOWN);
-        tap_code16(KC_MS_WH_DOWN);
+        tap_code16(LCTL(KC_H));
+        tap_code16(LCTL(KC_H));
+        tap_code16(LCTL(KC_H));
     }
     if(state->count > 3) {
-        tap_code16(KC_MS_WH_DOWN);
+        tap_code16(LCTL(KC_H));
     }
 }
 
-void dance_2_finished(tap_dance_state_t *state, void *user_data) {
+void dnc_ctrl_h_finished(tap_dance_state_t *state, void *user_data) {
     dance_state[2].step = dance_step(state);
     switch (dance_state[2].step) {
-        case SINGLE_TAP: register_code16(KC_MS_WH_DOWN); break;
-        case SINGLE_HOLD: register_code16(KC_MS_WH_DOWN); break;
-        case DOUBLE_TAP: register_code16(KC_MS_WH_UP); break;
-        case DOUBLE_HOLD: register_code16(KC_MS_WH_UP); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(KC_MS_WH_DOWN); register_code16(KC_MS_WH_DOWN);
+        case SINGLE_TAP: register_code16(LCTL(KC_H)); break;
+        case SINGLE_HOLD: register_code16(LCTL(LSFT(KC_H))); break;
+        case DOUBLE_TAP: register_code16(LCTL(LSFT(KC_H))); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_H)); register_code16(LCTL(KC_H));
     }
 }
 
-void dance_2_reset(tap_dance_state_t *state, void *user_data) {
+void dnc_ctrl_h_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
     switch (dance_state[2].step) {
-        case SINGLE_TAP: unregister_code16(KC_MS_WH_DOWN); break;
-        case SINGLE_HOLD: unregister_code16(KC_MS_WH_DOWN); break;
-        case DOUBLE_TAP: unregister_code16(KC_MS_WH_UP); break;
-        case DOUBLE_HOLD: unregister_code16(KC_MS_WH_UP); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(KC_MS_WH_DOWN); break;
+        case SINGLE_TAP: unregister_code16(LCTL(KC_H)); break;
+        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(KC_H))); break;
+        case DOUBLE_TAP: unregister_code16(LCTL(LSFT(KC_H))); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_H)); break;
     }
     dance_state[2].step = 0;
+}
+
+//--------------------------------------------------------//
+
+void on_dnc_ctrl_f(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_f_finished(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_f_reset(tap_dance_state_t *state, void *user_data);
+
+void on_dnc_ctrl_f(tap_dance_state_t *state, void *user_data) {
+    if(state->count == 3) {
+        tap_code16(LCTL(KC_F));
+        tap_code16(LCTL(KC_F));
+        tap_code16(LCTL(KC_F));
+    }
+    if(state->count > 3) {
+        tap_code16(LCTL(KC_F));
+    }
+}
+
+void dnc_ctrl_f_finished(tap_dance_state_t *state, void *user_data) {
+    dance_state[3].step = dance_step(state);
+    switch (dance_state[3].step) {
+        case SINGLE_TAP: register_code16(LCTL(KC_F)); break;
+        case SINGLE_HOLD: register_code16(LCTL(LSFT(KC_F))); break;
+        case DOUBLE_TAP: register_code16(LCTL(LSFT(KC_F))); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_F)); register_code16(LCTL(KC_F));
+    }
+}
+
+void dnc_ctrl_f_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (dance_state[3].step) {
+        case SINGLE_TAP: unregister_code16(LCTL(KC_F)); break;
+        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(KC_F))); break;
+        case DOUBLE_TAP: unregister_code16(LCTL(LSFT(KC_F))); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_F)); break;
+    }
+    dance_state[3].step = 0;
+}
+
+//--------------------------------------------------------//
+
+void on_dnc_ctrl_t(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_t_finished(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_t_reset(tap_dance_state_t *state, void *user_data);
+
+void on_dnc_ctrl_t(tap_dance_state_t *state, void *user_data) {
+    if(state->count == 3) {
+        tap_code16(LCTL(KC_T));
+        tap_code16(LCTL(KC_T));
+        tap_code16(LCTL(KC_T));
+    }
+    if(state->count > 3) {
+        tap_code16(LCTL(KC_T));
+    }
+}
+
+void dnc_ctrl_t_finished(tap_dance_state_t *state, void *user_data) {
+    dance_state[4].step = dance_step(state);
+    switch (dance_state[4].step) {
+        case SINGLE_TAP: register_code16(LCTL(KC_T)); break;
+        case SINGLE_HOLD: register_code16(LCTL(LSFT(KC_T))); break;
+        case DOUBLE_TAP: register_code16(LCTL(LSFT(KC_T))); break;
+        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_T)); register_code16(LCTL(KC_T));
+    }
+}
+
+void dnc_ctrl_t_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (dance_state[4].step) {
+        case SINGLE_TAP: unregister_code16(LCTL(KC_T)); break;
+        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(KC_T))); break;
+        case DOUBLE_TAP: unregister_code16(LCTL(LSFT(KC_T))); break;
+        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_T)); break;
+    }
+    dance_state[4].step = 0;
 }
 
 //--------------------------------------------------------//
@@ -1163,8 +1223,8 @@ void on_dance_4(tap_dance_state_t *state, void *user_data) {
 }
 
 void dance_4_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[3].step = dance_step(state);
-    switch (dance_state[3].step) {
+    dance_state[5].step = dance_step(state);
+    switch (dance_state[5].step) {
         case SINGLE_TAP: register_code16(KC_M); break;
         case DOUBLE_TAP: register_code16(KC_Q); break;
         case DOUBLE_SINGLE_TAP: tap_code16(KC_M); register_code16(KC_M);
@@ -1173,12 +1233,12 @@ void dance_4_finished(tap_dance_state_t *state, void *user_data) {
 
 void dance_4_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
-    switch (dance_state[3].step) {
+    switch (dance_state[5].step) {
         case SINGLE_TAP: unregister_code16(KC_M); break;
         case DOUBLE_TAP: unregister_code16(KC_Q); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(KC_M); break;
     }
-    dance_state[3].step = 0;
+    dance_state[5].step = 0;
 }
 
 //--------------------------------------------------------//
@@ -1199,8 +1259,8 @@ void on_dance_5(tap_dance_state_t *state, void *user_data) {
 }
 
 void dance_5_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[4].step = dance_step(state);
-    switch (dance_state[4].step) {
+    dance_state[6].step = dance_step(state);
+    switch (dance_state[6].step) {
         case SINGLE_TAP: register_code16(LSFT(KC_H)); break;
         case DOUBLE_TAP: register_code16(LSFT(KC_V)); break;
         case DOUBLE_SINGLE_TAP: tap_code16(LSFT(KC_H)); register_code16(LSFT(KC_H));
@@ -1209,126 +1269,12 @@ void dance_5_finished(tap_dance_state_t *state, void *user_data) {
 
 void dance_5_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
-    switch (dance_state[4].step) {
+    switch (dance_state[6].step) {
         case SINGLE_TAP: unregister_code16(LSFT(KC_H)); break;
         case DOUBLE_TAP: unregister_code16(LSFT(KC_V)); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(LSFT(KC_H)); break;
     }
-    dance_state[4].step = 0;
-}
-
-//--------------------------------------------------------//
-
-void on_dance_6(tap_dance_state_t *state, void *user_data);
-void dance_6_finished(tap_dance_state_t *state, void *user_data);
-void dance_6_reset(tap_dance_state_t *state, void *user_data);
-
-void on_dance_6(tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(LCTL(KC_T));
-        tap_code16(LCTL(KC_T));
-        tap_code16(LCTL(KC_T));
-    }
-    if(state->count > 3) {
-        tap_code16(LCTL(KC_T));
-    }
-}
-
-void dance_6_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[5].step = dance_step(state);
-    switch (dance_state[5].step) {
-        case SINGLE_TAP: register_code16(LCTL(KC_T)); break;
-        case SINGLE_HOLD: register_code16(LCTL(LSFT(KC_T))); break;
-        case DOUBLE_TAP: register_code16(LCTL(LSFT(KC_T))); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_T)); register_code16(LCTL(KC_T));
-    }
-}
-
-void dance_6_reset(tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[5].step) {
-        case SINGLE_TAP: unregister_code16(LCTL(KC_T)); break;
-        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(KC_T))); break;
-        case DOUBLE_TAP: unregister_code16(LCTL(LSFT(KC_T))); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_T)); break;
-    }
-    dance_state[5].step = 0;
-}
-
-//--------------------------------------------------------//
-
-void on_dance_7(tap_dance_state_t *state, void *user_data);
-void dance_7_finished(tap_dance_state_t *state, void *user_data);
-void dance_7_reset(tap_dance_state_t *state, void *user_data);
-
-void on_dance_7(tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(LCTL(KC_H));
-        tap_code16(LCTL(KC_H));
-        tap_code16(LCTL(KC_H));
-    }
-    if(state->count > 3) {
-        tap_code16(LCTL(KC_H));
-    }
-}
-
-void dance_7_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[6].step = dance_step(state);
-    switch (dance_state[6].step) {
-        case SINGLE_TAP: register_code16(LCTL(KC_H)); break;
-        case SINGLE_HOLD: register_code16(LCTL(LSFT(KC_H))); break;
-        case DOUBLE_TAP: register_code16(LCTL(LSFT(KC_H))); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_H)); register_code16(LCTL(KC_H));
-    }
-}
-
-void dance_7_reset(tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[6].step) {
-        case SINGLE_TAP: unregister_code16(LCTL(KC_H)); break;
-        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(KC_H))); break;
-        case DOUBLE_TAP: unregister_code16(LCTL(LSFT(KC_H))); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_H)); break;
-    }
     dance_state[6].step = 0;
-}
-
-//--------------------------------------------------------//
-
-void on_dance_8(tap_dance_state_t *state, void *user_data);
-void dance_8_finished(tap_dance_state_t *state, void *user_data);
-void dance_8_reset(tap_dance_state_t *state, void *user_data);
-
-void on_dance_8(tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(LCTL(KC_F));
-        tap_code16(LCTL(KC_F));
-        tap_code16(LCTL(KC_F));
-    }
-    if(state->count > 3) {
-        tap_code16(LCTL(KC_F));
-    }
-}
-
-void dance_8_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[7].step = dance_step(state);
-    switch (dance_state[7].step) {
-        case SINGLE_TAP: register_code16(LCTL(KC_F)); break;
-        case SINGLE_HOLD: register_code16(LCTL(LSFT(KC_F))); break;
-        case DOUBLE_TAP: register_code16(LCTL(LSFT(KC_F))); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(LCTL(KC_F)); register_code16(LCTL(KC_F));
-    }
-}
-
-void dance_8_reset(tap_dance_state_t *state, void *user_data) {
-    wait_ms(10);
-    switch (dance_state[7].step) {
-        case SINGLE_TAP: unregister_code16(LCTL(KC_F)); break;
-        case SINGLE_HOLD: unregister_code16(LCTL(LSFT(KC_F))); break;
-        case DOUBLE_TAP: unregister_code16(LCTL(LSFT(KC_F))); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(LCTL(KC_F)); break;
-    }
-    dance_state[7].step = 0;
 }
 
 //--------------------------------------------------------//
@@ -1349,8 +1295,8 @@ void on_dance_9(tap_dance_state_t *state, void *user_data) {
 }
 
 void dance_9_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[8].step = dance_step(state);
-    switch (dance_state[8].step) {
+    dance_state[7].step = dance_step(state);
+    switch (dance_state[7].step) {
         case SINGLE_TAP: register_code16(LALT(LCTL(LSFT(KC_2)))); break;
         case SINGLE_HOLD: register_code16(LALT(LCTL(LSFT(KC_0)))); break;
         case DOUBLE_TAP: register_code16(LALT(LCTL(LSFT(KC_0)))); break;
@@ -1361,14 +1307,14 @@ void dance_9_finished(tap_dance_state_t *state, void *user_data) {
 
 void dance_9_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
-    switch (dance_state[8].step) {
+    switch (dance_state[7].step) {
         case SINGLE_TAP: unregister_code16(LALT(LCTL(LSFT(KC_2)))); break;
         case SINGLE_HOLD: unregister_code16(LALT(LCTL(LSFT(KC_0)))); break;
         case DOUBLE_TAP: unregister_code16(LALT(LCTL(LSFT(KC_0)))); break;
         case DOUBLE_HOLD: unregister_code16(LALT(LCTL(LSFT(KC_1)))); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(LALT(LCTL(LSFT(KC_2)))); break;
     }
-    dance_state[8].step = 0;
+    dance_state[7].step = 0;
 }
 
 //--------------------------------------------------------//
@@ -1389,8 +1335,8 @@ void on_dance_12(tap_dance_state_t *state, void *user_data) {
 }
 
 void dance_12_finished(tap_dance_state_t *state, void *user_data) {
-    dance_state[9].step = dance_step(state);
-    switch (dance_state[9].step) {
+    dance_state[8].step = dance_step(state);
+    switch (dance_state[8].step) {
         case SINGLE_TAP: register_code16(KC_MEDIA_PLAY_PAUSE); break;
         case SINGLE_HOLD: register_code16(KC_MEDIA_STOP); break;
         case DOUBLE_TAP: register_code16(KC_MEDIA_STOP); break;
@@ -1400,23 +1346,22 @@ void dance_12_finished(tap_dance_state_t *state, void *user_data) {
 
 void dance_12_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
-    switch (dance_state[9].step) {
+    switch (dance_state[8].step) {
         case SINGLE_TAP: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
         case SINGLE_HOLD: unregister_code16(KC_MEDIA_STOP); break;
         case DOUBLE_TAP: unregister_code16(KC_MEDIA_STOP); break;
         case DOUBLE_SINGLE_TAP: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
     }
-    dance_state[9].step = 0;
+    dance_state[8].step = 0;
 }
 
 tap_dance_action_t tap_dance_actions[] = {
         [DNC_CTRL_C] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_c, dnc_ctrl_c_finished, dnc_ctrl_c_reset),
         [DNC_CTRL_V] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_v, dnc_ctrl_v_finished, dnc_ctrl_v_reset),
-        // [DANCE_2] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_2, dance_2_finished, dance_2_reset),
+        [DNC_CTRL_H] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_h, dnc_ctrl_h_finished, dnc_ctrl_h_reset),
+        [DNC_CTRL_F] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_f, dnc_ctrl_f_finished, dnc_ctrl_f_reset),
+        [DNC_CTRL_T] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_t, dnc_ctrl_t_finished, dnc_ctrl_t_reset),
         // [DANCE_4] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_4, dance_4_finished, dance_4_reset),
         // [DANCE_5] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_5, dance_5_finished, dance_5_reset),
-        // [DANCE_6] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_6, dance_6_finished, dance_6_reset),
-        // [DANCE_7] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_7, dance_7_finished, dance_7_reset),
-        // [DANCE_8] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_8, dance_8_finished, dance_8_reset),
         // [DANCE_9] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_9, dance_9_finished, dance_9_reset),
 };
