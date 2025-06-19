@@ -2,6 +2,8 @@
 // #define TAPPING_TERM 210
 // #define TAPPING_TERM_PER_KEY
 
+#define COMBO_ALLOW_ACTION_KEYS
+
 // #undef MOUSEKEY_INTERVAL
 // #define MOUSEKEY_INTERVAL 12
 

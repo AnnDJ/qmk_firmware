@@ -67,19 +67,12 @@ enum tap_dance_codes {
 #define DF_F5_F2 LT(8, KC_F5)
 #define DF_HOME  LT(8, KC_HOME)
 #define DF_END   LT(8, KC_END)
-#define DF_Scirc LT(8, KC_S)
+#define MY_R     LT(8, KC_R)
+#define MY_S     LT(8, KC_S)
+#define MY_L     LT(8, KC_L)
 
 enum custom_keycodes {
 	MC_3DOTS = SAFE_RANGE,
-	MC_A_ACUTE,
-	MC_E_ACUTE,
-	MC_I_ACUTE,
-	MC_O_ACUTE,
-	MC_U_ACUTE,
-	MC_E_CIRC,
-	MC_O_CIRC,
-	MC_A_TILDE,
-	MC_O_TILDE,
 	MC_CAO,
 	MC_COES,
 	MC_RS,
@@ -96,7 +89,6 @@ enum custom_keycodes {
 	MC_break,
 	MC_rqv,
 	MC_nota,
-	MY_CIRC,
 };
 
 //--------------------------------------------------------//
@@ -110,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * ,----------------------------------------------------------.                                 ,----------------------------------------------------.
 	 * |  Ctl+C* | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                 |    <    |   (   |   [   |   {   |   *   |   Alt    |
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
-	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                 |    Y    |   R   |  S/^  |   L   |   W   |  AltGr   |
+	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                 |    Y    |  R/´  |  S/^  |  L/~  |   W   |  AltGr   |
 	 * |---------+--------+---------+---------+---------+---------|                                 |---------+-------+-------+-------+-------+----------|
 	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                 |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
 	 * |---------+--------+---------+---------+---------+---------+---------------.  ,--------------+---------+-------+-------+-------+-------+----------|
@@ -124,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
-		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , DF_Scirc, KC_L    , KC_W    , KC_RALT,
+		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , MY_R    , MY_S    , MY_L    , KC_W    , KC_RALT,
 		A(KC_TAB),KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, XXXXXXX ,
@@ -195,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------|                                     |---------+-------+-------+-------+-----+-----|
 	 * | _______ | ______ |    %    |    :    |    H    |   _e_   |                                     |    /    |   4   |   5   |   6   |  -  | ___ |
 	 * |---------+--------+---------+---------+---------+---------+---------------.  ,------------------+---------+-------+-------+-------+-----+-----|
-	 * | _______ |   K    |         |         |    X    | _______ | ______ | ____ |  | _____ | ________ |         |   1   |   2   |   3   |  =  | ___ |
+	 * | _______ |   K    |         |         |    X    | _______ | ______ | ____ |  | _____ | ________ |         |   1   |   2   |   3   |     | ___ |
 	 * `----------------------------+---------+---------+---------+--------+------|  |-------+----------+---------+-------+-------+-------------------'
 	 *                              | _______ |   ???   |   ???   |   ???  |  ??  |  | Enter | L5/Enter | L6/Space|   0   | _____ |
 	 *                              `---------------------------------------------'  `--------------------------------------------'
@@ -207,7 +199,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , XXXXXXX , MC_PX   , MC_RS   , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
 		_______ , _______ , _______ , _______ , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
-		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , KC_PEQL , _______ ,
+		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , XXXXXXX , _______ ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , KC_0    , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -287,7 +279,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NAVVOL] = LAYOUT_elora_hlc(
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , XXXXXXX , KC_PGUP , XXXXXXX , KC_MPRV , KC_MNXT ,
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , DF_HOME , KC_PGDN , DF_END  , KC_K    , KC_MPLY ,
-		_______ , _______ , _______ ,OSM(MOD_LCTL),OSM(MOD_LSFT), XXXXXXX ,                                         XXXXXXX , KC_LEFT , KC_UP   , KC_RIGHT, KC_M    , KC_MUTE ,
+		_______,_______,_______,OSM(MOD_LCTL),OSM(MOD_LSFT),XXXXXXX,                                        XXXXXXX , KC_LEFT , KC_UP   , KC_RIGHT, KC_M    , KC_MUTE ,
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX , KC_DOWN , XXXXXXX , KC_VOLD , KC_VOLU ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
@@ -313,7 +305,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
 	[_MACROS] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
-		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , XXXXXXX , MC_doubt, MC_link , XXXXXXX , XXXXXXX ,
+		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , _______ , MC_doubt, MC_link , XXXXXXX , XXXXXXX ,
 		_______ , XXXXXXX , _______ , _______ , _______ , _______ ,                                         MC_squez, MC_tired, MC_break, MC_rqv  , XXXXXXX , XXXXXXX ,
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_nota , XXXXXXX , XXXXXXX ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
@@ -398,23 +390,35 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 //                         COMBOS                         //
 //--------------------------------------------------------//
 
-const uint16_t PROGMEM cmb_LS_W[]     = { KC_L, KC_S, COMBO_END};
+const uint16_t PROGMEM cmb_RS_Y[]     = { MY_R, MY_S, COMBO_END};
+const uint16_t PROGMEM cmb_LS_W[]     = { MY_L, MY_S, COMBO_END};
+const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
 const uint16_t PROGMEM cmb_DF_Z[]     = { KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM cmb_tmbs_mcr[] = { THUMB_L3, THUMB_R3, COMBO_END};
+const uint16_t PROGMEM cmb_ET_H[]     = { MY_E, MY_T, COMBO_END};
+const uint16_t PROGMEM cmb_ON_J[]     = { KC_O, KC_N, COMBO_END};
+const uint16_t PROGMEM cmb_AI_QU[] = { MY_A, MY_I, COMBO_END};
+const uint16_t PROGMEM cmb_ITN_TH[] = { MY_I, MY_T, KC_N, COMBO_END};
+
 const uint16_t PROGMEM cmb_Ranglbrk[] = { KC_LT, KC_LPRN, COMBO_END};
 const uint16_t PROGMEM cmb_Rparnts[]  = { KC_LPRN, BR_LBRC, COMBO_END};
 const uint16_t PROGMEM cmb_Rbracket[] = { BR_LBRC, BR_LCBR, COMBO_END};
 const uint16_t PROGMEM cmb_Rcrlybrc[] = { BR_LCBR, KC_ASTR, COMBO_END};
-const uint16_t PROGMEM cmb_RS_Y[]     = { KC_R, KC_S, COMBO_END};
+const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END};
+const uint16_t PROGMEM cmb_RL_comma[] = { MY_R, MY_L, COMBO_END};
+const uint16_t PROGMEM cmb_RSL_dot[]  = { MY_R, MY_S, MY_L, COMBO_END};
+const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};
+const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};
+const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};
+const uint16_t PROGMEM cmb_79_comma[] = { KC_7, KC_9, COMBO_END};
+const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
+const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
+const uint16_t PROGMEM cmb_56_equal[] = { KC_5, KC_6, COMBO_END};
+const uint16_t PROGMEM cmb_45_colon[] = { KC_4, KC_5, COMBO_END};
+
+const uint16_t PROGMEM cmb_tmbs_mcr[] = { THUMB_L3, THUMB_R3, COMBO_END};
+
 // const uint16_t PROGMEM combo10[] = { MT(MOD_LSFT, KC_A), BR_SECT, COMBO_END};
 // const uint16_t PROGMEM combo11[] = { KC_B, MT(MOD_RSFT, KC_I), COMBO_END};
-const uint16_t PROGMEM cmb_RL_comma[] = { KC_R, KC_L, COMBO_END};
-const uint16_t PROGMEM cmb_RSL_dot[]  = { KC_R, KC_S, KC_L, COMBO_END};
-const uint16_t PROGMEM cmb_ET_H[]     = { MY_E, MY_T, COMBO_END};
-const uint16_t PROGMEM cmb_ON_J[]     = { KC_O, KC_N, COMBO_END};
-
-// const uint16_t PROGMEM cmb_SA_A_circ[] = { KC_S, MY_A, COMBO_END};
-
 // const uint16_t PROGMEM combo17[] = { KC_S, MT(MOD_LCTL, KC_E), COMBO_END};
 // const uint16_t PROGMEM combo18[] = { KC_S, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
 // const uint16_t PROGMEM combo19[] = { KC_HASH, BR_SCLN, COMBO_END};
@@ -427,53 +431,50 @@ const uint16_t PROGMEM cmb_ON_J[]     = { KC_O, KC_N, COMBO_END};
 // const uint16_t PROGMEM combo26[] = { KC_ASTR, KC_UNDS, COMBO_END};
 // const uint16_t PROGMEM combo27[] = { KC_AT, BR_SCLN, COMBO_END};
 // const uint16_t PROGMEM combo28[] = { KC_PERC, KC_AT, COMBO_END};
-const uint16_t PROGMEM cmb_AI_QU[] = { MY_A, MY_I, COMBO_END};
-
-const uint16_t PROGMEM cmb_RA_A_acute[] = { KC_R, MY_A, COMBO_END};
-
 // const uint16_t PROGMEM combo31[] = { MT(MOD_LCTL, KC_E), KC_R, COMBO_END};
 // const uint16_t PROGMEM combo32[] = { KC_R, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
 // const uint16_t PROGMEM combo33[] = { KC_P, KC_R, COMBO_END};
 // const uint16_t PROGMEM combo34[] = { MT(MOD_LSFT, KC_A), KC_S, KC_R, COMBO_END};
 // const uint16_t PROGMEM combo35[] = { KC_L, MT(MOD_LSFT, KC_A), COMBO_END};
 // const uint16_t PROGMEM combo36[] = { KC_L, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
-const uint16_t PROGMEM cmb_ITN_TH[] = { MY_I, MY_T, KC_N, COMBO_END};
-const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END};
-const uint16_t PROGMEM cmb_79_comma[] = { KC_7, KC_9, COMBO_END};
-const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_UM_CpWrd[] = { KC_U, KC_M, COMBO_END};
 // const uint16_t PROGMEM combo42[] = { KC_S, MT(MOD_RCTL, KC_T), COMBO_END};
 const uint16_t PROGMEM cmb_SSB_CpLk[] = { BR_SECT, KC_B, COMBO_END};
 // const uint16_t PROGMEM combo44[] = { KC_DELETE, LCTL(KC_BSPC), COMBO_END};
 // const uint16_t PROGMEM combo45[] = { KC_ESCAPE, KC_DELETE, COMBO_END};
-const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};
-const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
-const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};
-const uint16_t PROGMEM cmb_56_equal[] = { KC_5, KC_6, COMBO_END};
-const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};
-const uint16_t PROGMEM cmb_45_colon[] = { KC_4, KC_5, COMBO_END};
-const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
 const uint16_t PROGMEM cmb_LBOOT[]    = { THUMB_LA, THUMB_LB, COMBO_END};
 const uint16_t PROGMEM cmb_RBOOT[]    = { THUMB_RA, THUMB_RB, COMBO_END};
 
 combo_t key_combos[] = {
+    COMBO(cmb_RS_Y,     KC_Y),
     COMBO(cmb_LS_W,     KC_W),
+    COMBO(cmb_MD_V,     KC_V),
     COMBO(cmb_DF_Z,     KC_Z),
-    COMBO(cmb_tmbs_mcr, OSL(_MACROS)),
+    COMBO(cmb_ET_H,     KC_H),
+    COMBO(cmb_ON_J,     KC_J),
+    COMBO(cmb_AI_QU,    MC_QU),
+    COMBO(cmb_ITN_TH,   MC_TH),
+
     COMBO(cmb_Ranglbrk, KC_RABK),
     COMBO(cmb_Rparnts,  KC_RPRN),
     COMBO(cmb_Rbracket, BR_RBRC),
     COMBO(cmb_Rcrlybrc, BR_RCBR),
-    COMBO(cmb_RS_Y,     KC_Y),
-    // COMBO(combo10, OSM(MOD_LSFT)),
-    // COMBO(combo11, OSM(MOD_RSFT)),
+    COMBO(cmb_3dots,    MC_3DOTS),
     COMBO(cmb_RL_comma, KC_COMMA),
     COMBO(cmb_RSL_dot,  KC_DOT),
-    COMBO(cmb_ET_H,     KC_H),
-    COMBO(cmb_ON_J,     KC_J),
+    COMBO(cmb_hsat_pls, KC_PLUS),
+    COMBO(cmb_excsl_eq, KC_EQUAL),
+    COMBO(cmb_bang_cln, BR_COLN),
+    COMBO(cmb_79_comma, KC_COMMA),
+    COMBO(cmb_789_dot,  KC_DOT),
+    COMBO(cmb_89_plus,  KC_KP_PLUS),
+    COMBO(cmb_56_equal, KC_EQUAL),
+    COMBO(cmb_45_colon, BR_COLN),
+
+    COMBO(cmb_tmbs_mcr, OSL(_MACROS)),
 	
-    // COMBO(cmb_SA_A_circ, MC_A_CIRC),
-	
+    // COMBO(combo10, OSM(MOD_LSFT)),
+    // COMBO(combo11, OSM(MOD_RSFT)),
     // COMBO(combo17, ST_MACRO_1),
     // COMBO(combo18, ST_MACRO_2),
     // COMBO(combo19, ST_MACRO_3),
@@ -486,32 +487,17 @@ combo_t key_combos[] = {
     // COMBO(combo26, ST_MACRO_10),
     // COMBO(combo27, ST_MACRO_11),
     // COMBO(combo28, ST_MACRO_12),
-    COMBO(cmb_AI_QU,    MC_QU),
-	
-    COMBO(cmb_RA_A_acute, MC_A_ACUTE),
-	
     // COMBO(combo31, ST_MACRO_15),
     // COMBO(combo32, ST_MACRO_16),
     // COMBO(combo33, ST_MACRO_17),
     // COMBO(combo34, ST_MACRO_18),
     // COMBO(combo35, ST_MACRO_19),
     // COMBO(combo36, ST_MACRO_20),
-    COMBO(cmb_ITN_TH,   MC_TH),
-    COMBO(cmb_3dots,    MC_3DOTS),
-    COMBO(cmb_79_comma, KC_COMMA),
-    COMBO(cmb_789_dot,  KC_DOT),
     COMBO(cmb_UM_CpWrd, CW_TOGG),
     // COMBO(combo42, ST_MACRO_23),
     COMBO(cmb_SSB_CpLk, KC_CAPS),
     // COMBO(combo44, TG(8)),
     // COMBO(combo45, TO(2)),
-    COMBO(cmb_hsat_pls, KC_PLUS),
-    COMBO(cmb_89_plus,  KC_KP_PLUS),
-    COMBO(cmb_excsl_eq, KC_EQUAL),
-    COMBO(cmb_56_equal, KC_EQUAL),
-    COMBO(cmb_bang_cln, BR_COLN),
-    COMBO(cmb_45_colon, BR_COLN),
-    COMBO(cmb_MD_V,     KC_V),
     COMBO(cmb_LBOOT,    QK_BOOT),
     COMBO(cmb_RBOOT,    QK_BOOT),
 };
@@ -522,40 +508,10 @@ combo_t key_combos[] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	// static bool R_is_held = false;
-	// static bool S_is_held = false;
-	// static bool L_is_held = false;
-
 	const uint8_t mods = get_mods();
 	const uint8_t oneshot_mods = get_oneshot_mods();
 	
 	switch (keycode) {
-		// case MY_CIRC: // Circumflex accent
-			// S_is_held = record->event.pressed;
-			// break;
-
-		// case MY_A:
-			// static uint8_t registered_key = MY_A;
-			// static int registered_key = MY_A;
-			// if (record->event.pressed) {
-				// if (S_is_held) { // S + A = Â
-					// registered_key = MC_A_CIRC;
-					// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
-					// return false;
-				// } else {
-					// registered_key = (S_is_held) ? KC_PGDN : KC_A;
-					// register_code16(MY_A);
-				// }
-			// } else {
-				// unregister_code16(MY_A);
-			// }
-			// break;
-		
-		// case MC_A_CIRC:
-		// if (record->event.pressed) {
-			// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
-		// }
-		// break;
     // case ST_MACRO_1:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_E));
@@ -618,13 +574,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // break;
 		case MC_QU:
 			if (record->event.pressed) {
-				send_string_with_delay("qu", 10);
+				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
+					// Temporarily delete shift
+					del_oneshot_mods(MOD_MASK_SHIFT);
+					unregister_mods(MOD_MASK_SHIFT);  
+					send_string_with_delay("Qu", 10);
+					register_mods(mods); // Restore mods
+				} else {
+					send_string_with_delay("qu", 10);
+				}
 			}
 			break;
-		case MC_A_ACUTE:
+		case MC_TH:
 			if (record->event.pressed) {
-				// SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
-				send_string_with_delay(SS_TAP(X_LBRC) "a", 10);
+				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
+					// Temporarily delete shift
+					del_oneshot_mods(MOD_MASK_SHIFT);
+					unregister_mods(MOD_MASK_SHIFT);  
+					send_string_with_delay("Th", 10);
+					register_mods(mods); // Restore mods
+				} else {
+					send_string_with_delay("th", 10);
+				}
+			}
+			break;
+		case MC_3DOTS:
+			if (record->event.pressed) {
+				send_string_with_delay("...", 10);
 			}
 			break;
     // case ST_MACRO_15:
@@ -657,25 +633,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_O));
     // }
     // break;
-		case MC_TH:
-			if (record->event.pressed) {
-				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
-					// Temporarily delete shift
-					del_oneshot_mods(MOD_MASK_SHIFT);
-					unregister_mods(MOD_MASK_SHIFT);  
-					send_string_with_delay("Th", 10);
-					register_mods(mods); // Restore mods.
-				} else {
-					send_string_with_delay("th", 10);
-				}
-				// SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_H));
-			}
-			break;
-		case MC_3DOTS:
-			if (record->event.pressed) {
-				send_string_with_delay("...", 10);
-			}
-			break;
     // case ST_MACRO_23:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_TAP(X_LEFT));
@@ -709,7 +666,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case MC_RS:
 			if (record->event.pressed) {
 				send_string_with_delay("R$ ", 10);
-				// SEND_STRING(SS_LSFT(SS_TAP(X_R))SS_DELAY(10)  SS_LSFT(SS_TAP(X_4))SS_DELAY(10)  SS_TAP(X_SPACE));
 			}
 			break;
 		case MC_E:
@@ -788,21 +744,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
     // break;
 		case MC_doubt:
-			if (record->event.pressed) {
-				send_string_with_delay("(?)", 10);
-				// SEND_STRING(SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_INTERNATIONAL_1))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0)));
+			if (record->event.pressed) { // (?)
+				send_string_with_delay("(" SS_LSFT(SS_TAP(X_INTERNATIONAL_1)) ")", 10);
 			}
 			break;
 		case MC_link:
-			if (record->event.pressed) {
-				send_string_with_delay("[]()" SS_TAP(X_LEFT), 10);
-				// SEND_STRING(SS_TAP(X_RBRC)SS_DELAY(10)  SS_TAP(X_BSLS)SS_DELAY(10)  SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0))SS_DELAY(10)  SS_TAP(X_LEFT));
+			if (record->event.pressed) { // [](|)
+				send_string_with_delay(SS_TAP(X_RBRC) SS_TAP(X_BSLS) "()" SS_TAP(X_LEFT), 10);
 			}
 			break;
 		case MC_squez:
-			if (record->event.pressed) {
-				send_string_with_delay(">~<", 10);
-				// SEND_STRING(SS_RSFT(SS_TAP(X_DOT))SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_RSFT(SS_TAP(X_COMMA)));
+			if (record->event.pressed) { // >~<
+				send_string_with_delay(">" SS_TAP(X_QUOTE)  SS_TAP(X_QUOTE) "<", 10);
 			}
 			break;
 		case MC_tired:
@@ -973,7 +926,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			}
 			return false;
 			
-		case DF_Scirc:
+		case MY_R:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(KC_R);
+				} else {
+					unregister_code16(KC_R);
+				}
+			} else {
+				if (record->event.pressed) {
+					register_code16(BR_ACUT);
+				} else {
+					unregister_code16(BR_ACUT);
+				}  
+			}  
+			return false;
+		case MY_S:
 			if (record->tap.count > 0) {
 				if (record->event.pressed) {
 					register_code16(KC_S);
@@ -982,9 +950,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 			} else {
 				if (record->event.pressed) {
-					register_code16(MY_CIRC);
+					register_code16(BR_CIRC);
 				} else {
-					unregister_code16(MY_CIRC);
+					unregister_code16(BR_CIRC);
+				}  
+			}  
+			return false;
+		case MY_L:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(KC_L);
+				} else {
+					unregister_code16(KC_L);
+				}
+			} else {
+				if (record->event.pressed) {
+					register_code16(BR_TILD);
+				} else {
+					unregister_code16(BR_TILD);
 				}  
 			}  
 			return false;
