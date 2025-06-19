@@ -70,29 +70,32 @@ enum tap_dance_codes {
 #define DF_Scirc LT(8, KC_S)
 
 enum custom_keycodes {
-	MCR_3DOTS = SAFE_RANGE,
-	MCR_A_ACUTE,
-	MCR_E_ACUTE,
-	MCR_I_ACUTE,
-	MCR_O_ACUTE,
-	MCR_U_ACUTE,
-	MCR_E_CIRC,
-	MCR_O_CIRC,
-	MCR_A_TILDE,
-	MCR_O_TILDE,
-	MCR_CAO,
-	MCR_COES,
-	MCR_E,
-	MCR_ING,
-	MCR_GHT,
-	MCR_PX,
-	MCR_QU,
-	MCR_TH,
-	MCR_squz,
-	MCR_tird,
-	MCR_brk,
-	MCR_rqv,
-	MCR_nota,
+	MC_3DOTS = SAFE_RANGE,
+	MC_A_ACUTE,
+	MC_E_ACUTE,
+	MC_I_ACUTE,
+	MC_O_ACUTE,
+	MC_U_ACUTE,
+	MC_E_CIRC,
+	MC_O_CIRC,
+	MC_A_TILDE,
+	MC_O_TILDE,
+	MC_CAO,
+	MC_COES,
+	MC_RS,
+	MC_E,
+	MC_ING,
+	MC_GHT,
+	MC_PX,
+	MC_QU,
+	MC_TH,
+	MC_doubt,
+	MC_link,
+	MC_squez,
+	MC_tired,
+	MC_break,
+	MC_rqv,
+	MC_nota,
 	MY_CIRC,
 };
 
@@ -149,8 +152,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_ALPHA_B] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , KC_C    , KC_K    , KC_X    , _______ , _______ ,
-		MY_SFTAB, _______ , KC_Q    , KC_H    , KC_G    , _______ ,                                         KC_MINUS, MCR_ING , MCR_GHT , KC_Z    , BR_CCED , _______ ,
-		MY_SFTAB, _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MCR_CAO , MCR_COES, _______ , _______ ,
+		MY_SFTAB, _______ , KC_Q    , KC_H    , KC_G    , _______ ,                                         KC_MINUS, MC_ING  , MC_GHT  , KC_Z    , BR_CCED , _______ ,
+		MY_SFTAB, _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MC_CAO  , MC_COES , _______ , _______ ,
 							_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -202,8 +205,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
 	[_NUMPAD] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , XXXXXXX , MCR_PX  , _______ , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
-		_______ , _______ , _______ , _______ , KC_H    , MCR_E   ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
+		_______ , _______ , XXXXXXX , MC_PX   , MC_RS   , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
+		_______ , _______ , _______ , _______ , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
 		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , KC_PEQL , _______ ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , KC_0    , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
@@ -293,26 +296,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Macros
 	 *
-	 * ,-------------------------------------------.                              ,--------------------------------------------.
-	 * |        |      |      |      |      |      |                              |     |      |       |       |      |        |
-	 * |--------+------+------+------+------+------|                              |-----+------+-------+-------+------+--------|
-	 * |        |      |      |      |      |      |                              |     |  ^^  |  (?)  | []()  |      |        |
-	 * |--------+------+------+------+------+------|                              |-----+------+-------+-------+------+--------|
-	 * |        |      |      |      |      |      |                              | >~< | = =  | (...) | ,rqv  |      |        |
-	 * |--------+------+------+------+------+------+-------------.  ,-------------+-----+------+-------+-------+------+--------|
-	 * |        |      |      |      |      |      |      |      |  |      |      |     |  ¬¬  |  *|*  | ,nota |      |        |
-	 * `----------------------+------+------+------+------+------|  |------+------+-----+------+-------+-----------------------'
-	 *                        |      |      |      |      |      |  |      |      |     |      |       |
-	 *                        `----------------------------------'  `----------------------------------'
-	 * ,-----------------------------------.                                               ,-----------------------------------.
-	 * |      |      |       |      |      |                                               |      |      |       |      |      |
-	 * `-----------------------------------'                                               `-----------------------------------'
+	 * ,-----------------------------------------.                              ,--------------------------------------------.
+	 * |      |     |      |       |      |      |                              |     |      |       |       |      |        |
+	 * |------+-----+------+-------+------+------|                              |-----+------+-------+-------+------+--------|
+	 * |      |     |      | {{|}} | _=>_ |      |                              |     |  ^^  |  (?)  | []()  |      |        |
+	 * |------+-----+------+-------+------+------|                              |-----+------+-------+-------+------+--------|
+	 * |      |     | $(|) | $this |  ->  | \**  |                              | >~< | = =  | (...) | ,rqv  |      |        |
+	 * |------+-----+------+-------+------+------+-------------.  ,-------------+-----+------+-------+-------+------+--------|
+	 * | </|> | <|> |      |  \*   |  *\  |      |      |      |  |      |      |     |  ¬¬  |  *|*  | ,nota |      |        |
+	 * `-------------------+-------+------+------+------+------|  |------+------+-----+------+-------+-----------------------'
+	 *                     |       |      |      |      |      |  |      |      |     |      |       |
+	 *                     `-----------------------------------'  `----------------------------------'
+	 * ,-----------------------------------.                                             ,-----------------------------------.
+	 * |      |      |       |      |      |                                             |      |      |       |      |      |
+	 * `-----------------------------------'                                             `-----------------------------------'
 	 */
 	[_MACROS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         MCR_squz, MCR_tird, MCR_brk , MCR_rqv , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MCR_nota, _______ , _______ ,
+		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , XXXXXXX , MC_doubt, MC_link , XXXXXXX , XXXXXXX ,
+		_______ , XXXXXXX , _______ , _______ , _______ , _______ ,                                         MC_squez, MC_tired, MC_break, MC_rqv  , XXXXXXX , XXXXXXX ,
+		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_nota , XXXXXXX , XXXXXXX ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -469,7 +472,7 @@ combo_t key_combos[] = {
     COMBO(cmb_ET_H,     KC_H),
     COMBO(cmb_ON_J,     KC_J),
 	
-    // COMBO(cmb_SA_A_circ, MCR_A_CIRC),
+    // COMBO(cmb_SA_A_circ, MC_A_CIRC),
 	
     // COMBO(combo17, ST_MACRO_1),
     // COMBO(combo18, ST_MACRO_2),
@@ -483,9 +486,9 @@ combo_t key_combos[] = {
     // COMBO(combo26, ST_MACRO_10),
     // COMBO(combo27, ST_MACRO_11),
     // COMBO(combo28, ST_MACRO_12),
-    COMBO(cmb_AI_QU,    MCR_QU),
+    COMBO(cmb_AI_QU,    MC_QU),
 	
-    COMBO(cmb_RA_A_acute, MCR_A_ACUTE),
+    COMBO(cmb_RA_A_acute, MC_A_ACUTE),
 	
     // COMBO(combo31, ST_MACRO_15),
     // COMBO(combo32, ST_MACRO_16),
@@ -493,8 +496,8 @@ combo_t key_combos[] = {
     // COMBO(combo34, ST_MACRO_18),
     // COMBO(combo35, ST_MACRO_19),
     // COMBO(combo36, ST_MACRO_20),
-    COMBO(cmb_ITN_TH,   MCR_TH),
-    COMBO(cmb_3dots,    MCR_3DOTS),
+    COMBO(cmb_ITN_TH,   MC_TH),
+    COMBO(cmb_3dots,    MC_3DOTS),
     COMBO(cmb_79_comma, KC_COMMA),
     COMBO(cmb_789_dot,  KC_DOT),
     COMBO(cmb_UM_CpWrd, CW_TOGG),
@@ -536,7 +539,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			// static int registered_key = MY_A;
 			// if (record->event.pressed) {
 				// if (S_is_held) { // S + A = Â
-					// registered_key = MCR_A_CIRC;
+					// registered_key = MC_A_CIRC;
 					// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
 					// return false;
 				// } else {
@@ -548,7 +551,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			// }
 			// break;
 		
-		// case MCR_A_CIRC:
+		// case MC_A_CIRC:
 		// if (record->event.pressed) {
 			// send_string_with_delay(SS_LSFT(SS_TAP(X_QUOTE)) "a", 10);
 		// }
@@ -613,12 +616,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_LSFT(SS_TAP(X_O)));
     // }
     // break;
-		case MCR_QU:
+		case MC_QU:
 			if (record->event.pressed) {
 				send_string_with_delay("qu", 10);
 			}
 			break;
-		case MCR_A_ACUTE:
+		case MC_A_ACUTE:
 			if (record->event.pressed) {
 				// SEND_STRING(SS_TAP(X_LBRC) SS_DELAY(10) SS_TAP(X_A));
 				send_string_with_delay(SS_TAP(X_LBRC) "a", 10);
@@ -654,7 +657,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_O));
     // }
     // break;
-		case MCR_TH:
+		case MC_TH:
 			if (record->event.pressed) {
 				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
 					// Temporarily delete shift
@@ -668,7 +671,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				// SEND_STRING(SS_TAP(X_T)SS_DELAY(10)  SS_TAP(X_H));
 			}
 			break;
-		case MCR_3DOTS:
+		case MC_3DOTS:
 			if (record->event.pressed) {
 				send_string_with_delay("...", 10);
 			}
@@ -678,41 +681,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_TAP(X_LEFT));
     // }
     // break;
-		case MCR_ING:
+		case MC_ING:
 			if (record->event.pressed) {
 				send_string_with_delay("ing", 10);
 			}
 			break;
-		case MCR_GHT:
+		case MC_GHT:
 			if (record->event.pressed) {
 				send_string_with_delay("ght", 10);
 			}
 			break;
-		case MCR_CAO:
+		case MC_CAO:
 			if (record->event.pressed) {
 				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
 			}
 			break;
-		case MCR_COES:
+		case MC_COES:
 			if (record->event.pressed) {
 				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "oes", 10);
 			}
 			break;
-		case MCR_PX:
+		case MC_PX:
 			if (record->event.pressed) {
 				send_string_with_delay("px", 10);
 			}
 			break;
-    // case ST_MACRO_30:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_R))SS_DELAY(10)  SS_LSFT(SS_TAP(X_4))SS_DELAY(10)  SS_TAP(X_SPACE));
-    // }
-    // break;
-    // case MCR_E:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_SPACE)SS_DELAY(10)  SS_TAP(X_E)SS_DELAY(10)  SS_TAP(X_SPACE));
-    // }
-    // break;
+		case MC_RS:
+			if (record->event.pressed) {
+				send_string_with_delay("R$ ", 10);
+				// SEND_STRING(SS_LSFT(SS_TAP(X_R))SS_DELAY(10)  SS_LSFT(SS_TAP(X_4))SS_DELAY(10)  SS_TAP(X_SPACE));
+			}
+			break;
+		case MC_E:
+			if (record->event.pressed) {
+				send_string_with_delay(" e ", 10);
+			}
+			break;
     // case ST_MACRO_32:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_S)))SS_DELAY(100)  SS_LALT(SS_TAP(X_TAB))SS_DELAY(100)  SS_TAP(X_F5));
@@ -783,33 +787,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_QUOTE)));
     // }
     // break;
-    // case ST_MACRO_46:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_INTERNATIONAL_1))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0)));
-    // }
-    // break;
-    // case ST_MACRO_47:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_RBRC)SS_DELAY(10)  SS_TAP(X_BSLS)SS_DELAY(10)  SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0))SS_DELAY(10)  SS_TAP(X_LEFT));
-    // }
-    // break;
-		case MCR_squz:
+		case MC_doubt:
+			if (record->event.pressed) {
+				send_string_with_delay("(?)", 10);
+				// SEND_STRING(SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_INTERNATIONAL_1))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0)));
+			}
+			break;
+		case MC_link:
+			if (record->event.pressed) {
+				send_string_with_delay("[]()" SS_TAP(X_LEFT), 10);
+				// SEND_STRING(SS_TAP(X_RBRC)SS_DELAY(10)  SS_TAP(X_BSLS)SS_DELAY(10)  SS_LSFT(SS_TAP(X_9))SS_DELAY(10)  SS_LSFT(SS_TAP(X_0))SS_DELAY(10)  SS_TAP(X_LEFT));
+			}
+			break;
+		case MC_squez:
 			if (record->event.pressed) {
 				send_string_with_delay(">~<", 10);
 				// SEND_STRING(SS_RSFT(SS_TAP(X_DOT))SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_QUOTE)SS_DELAY(10)  SS_RSFT(SS_TAP(X_COMMA)));
 			}
 			break;
-		case MCR_tird:
+		case MC_tired:
 			if (record->event.pressed) {
 				send_string_with_delay("= =", 10);
 			}
 			break;
-		case MCR_brk:
+		case MC_break:
 			if (record->event.pressed) {
 				send_string_with_delay("(...)", 10);
 			}
 			break;
-		case MCR_rqv:
+		case MC_rqv:
 			if (record->event.pressed) { // ,rqv | Ctrl+9 | Enter
 				send_string_with_delay(",rqv" SS_DELAY(200) SS_LCTL(SS_TAP(X_9)) SS_DELAY(200) SS_TAP(X_ENTER), 10);
 			}
@@ -824,7 +830,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				// SEND_STRING(SS_LSFT(SS_TAP(X_8))SS_DELAY(10)  SS_LSFT(SS_TAP(X_8))SS_DELAY(10)  SS_TAP(X_LEFT));
 			// }
 			// break;
-		case MCR_nota:
+		case MC_nota:
 			if (record->event.pressed) {
 				send_string_with_delay(",nota", 10);
 			}
