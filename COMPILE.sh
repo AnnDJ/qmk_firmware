@@ -44,7 +44,7 @@ then
 
 	mv splitkb_halcyon_elora_rev2_custom.uf2 splitkb_halcyon_elora_rev2_custom_trackpad.uf2
 
-	echo "Second half moved\n"
+	echo -e "Second half moved\n"
 
 fi
 
