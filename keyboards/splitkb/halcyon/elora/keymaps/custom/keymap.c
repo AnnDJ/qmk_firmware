@@ -56,7 +56,7 @@ enum tap_dance_codes {
 
 #define THUMB_L4 KC_BSPC
 #define THUMB_L3 LT(_ALPHA_B, KC_BSPC)
-#define THUMB_L2 LT(_SHORTCUTS, KC_DEL)
+#define THUMB_L2 LT(_SHORTCUTS, KC_BSPC)
 #define THUMB_L1 TG(_NUMPAD)
 #define THUMB_LA RM_TOGG
 #define THUMB_LB TG(_GIMP)
@@ -66,6 +66,9 @@ enum tap_dance_codes {
 #define THUMB_R2 OSL(_SYMBOLS)
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
 #define THUMB_R4 TG(_NAVVOL)
+
+#define THM_L2nv LT(_SHORTCUTS, KC_DEL)
+#define THM_R3nm LT(_NAVVOL, KC_0)
 
 #define DF_F5_F2 LT(8, KC_F5)
 #define DF_HOME  LT(8, KC_HOME)
@@ -85,6 +88,10 @@ enum custom_keycodes {
 	MC_PX,
 	MC_QU,
 	MC_TH,
+	MC_2parntes,
+	MC_2brackts,
+	MC_2crlbrks,
+	MC_2quotes,
 	MC_doubt,
 	MC_link,
 	MC_squez,
@@ -104,20 +111,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Alpha A: Base layer
 	 *
-	 * ,----------------------------------------------------------.                                  ,----------------------------------------------------.
-	 * |  Ctl+C* | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                  |    <    |   (   |   [   |   {   |   *   |   Alt    |
-	 * |---------+--------+---------+---------+---------+---------|                                  |---------+-------+-------+-------+-------+----------|
-	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                  |    Y    |  R/´  |  S/^  |  L/~  |   W   |  AltGr   |
-	 * |---------+--------+---------+---------+---------+---------|                                  |---------+-------+-------+-------+-------+----------|
-	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                  |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
-	 * |---------+--------+---------+---------+---------+---------+---------------.  ,---------------+---------+-------+-------+-------+-------+----------|
-	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |  RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
-	 * `----------------------------+---------+---------+---------+--------+------|  |-------+-------+---------+-------+-------+--------------------------'
-	 *                              | _______ |  Bksp   | L1/Bksp | L4/Del |  L3  |  | Enter |  L5   | L6/Space|  L6   | _____ |
-	 *                              `---------------------------------------------'  `-----------------------------------------'
-	 * ,-----------------------------------.                                                                          ,-----------------------------------.
-	 * | Mute |      |       |      |      |                                                                          |      |      |       |      |      |
-	 * `-----------------------------------'                                                                          `-----------------------------------'
+	 * ,----------------------------------------------------------.                                   ,----------------------------------------------------.
+	 * |  Ctl+C* | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                   |    <    |   (   |   [   |   {   |   *   |   Alt    |
+	 * |---------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
+	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                   |    Y    |  R/´  |  S/^  |  L/~  |   W   |  AltGr   |
+	 * |---------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
+	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                   |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
+	 * |---------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
+	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
+	 * `----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
+	 *                              | _______ |  Bksp   | L1/Bksp | L4/Bksp |  L3  |  | Enter |  L5   | L6/Space|  L6   | _____ |
+	 *                              `----------------------------------------------'  `-----------------------------------------'
+	 * ,-----------------------------------.                                                                           ,-----------------------------------.
+	 * | Mute |      |       |      |      |                                                                           |      |      |       |      |      |
+	 * `-----------------------------------'                                                                           `-----------------------------------'
 	 */
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
@@ -194,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------+---------------.  ,------------------+---------+-------+-------+-------+-----+-----|
 	 * | _______ |   K    |         |         |    X    | _______ | ______ | ____ |  | _____ | ________ |         |   1   |   2   |   3   |     | ___ |
 	 * `----------------------------+---------+---------+---------+--------+------|  |-------+----------+---------+-------+-------+-------------------'
-	 *                              | _______ |   ???   |   ???   |   ???  |  ??  |  | Enter | L5/Enter | L6/Space|   0   | _____ |
+	 *                              | _______ |   ???   |   ???   | L4/Del |  ??  |  | Enter | L5/Enter | L6 / 0  | Space | _____ |
 	 *                              `---------------------------------------------'  `--------------------------------------------'
 	 * ,-----------------------------------.                                                                      ,-----------------------------------.
 	 * | ____ | ____ | _____ | ____ | ____ |                                                                      | ____ | ____ | _____ | ____ | ____ |
@@ -205,7 +212,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______ , _______ , XXXXXXX , MC_PX   , MC_RS   , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
 		_______ , _______ , _______ , _______ , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
 		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , XXXXXXX , _______ ,
-								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , KC_0    , _______ ,
+								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , THM_R3nm, KC_SPACE, _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -239,27 +246,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Symbols
 	 *
-	 * ,-------------------------------------------.                              ,-------------------------------------------.
-	 * | ______ | ____ | ____ | ____ |      |      |                              |      |  ´   |  ^   |  ~   |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * | ______ | ____ |  º   |  ª   |  $   |      |                              |  °   |  _   |  #   |  @   |      |        |
-	 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-	 * | ______ |  "   |  %   |  &   |  ;   |  |   |                              |  :   |  ?   |  !   |  /   |      |        |
-	 * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-	 * |        |      |      |      |  *   |      |      |      |  |      |      |      |  +   |  =   |  \   |      |        |
-	 * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-	 *                        |      |      |      |      |      |  |      |      |      |      |      |
-	 *                        `----------------------------------'  `----------------------------------'
-	 * ,-----------------------------------.                                              ,-----------------------------------.
-	 * |      |      |       |      |      |                                              |      |      |       |      |      |
-	 * `-----------------------------------'                                              `-----------------------------------'
+	 * ,-------------------------------------------.                                ,-------------------------------------------.
+	 * | ______ | ____ | ____ | ____ |      |      |                                |      |  ´   |  ^   |  ~   |      |        |
+	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
+	 * | ______ | ____ |  º   |  ª   |  $   |      |                                |  °   |  _   |  #   |  @   |      |        |
+	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
+	 * | ______ |  "   |  %   |  &   |  ;   |  |   |                                |  :   |  ?   |  !   |  /   |      |        |
+	 * |--------+------+------+------+------+------+---------------.  ,-------------+------+------+------+------+------+--------|
+	 * |        |      |      |      |  *   |      |        |      |  |      |      |      |  +   |  =   |  \   |      |        |
+	 * `----------------------+------+------+------+--------+------|  |------+------+------+------+------+----------------------'
+	 *                        |      |      |      | L4/Del |      |  |      |      |      |      |      |
+	 *                        `------------------------------------'  `----------------------------------'
+	 * ,-----------------------------------.                                                ,-----------------------------------.
+	 * |      |      |       |      |      |                                                |      |      |       |      |      |
+	 * `-----------------------------------'                                                `-----------------------------------'
 	 */
 	[_SYMBOLS] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , BR_ACUT , BR_CIRC , BR_TILD , XXXXXXX , XXXXXXX ,
 		_______ , _______ , BR_FORD , BR_MORD , KC_DLR  , XXXXXXX ,                                         BR_DEG  , KC_UNDS , KC_HASH , KC_AT   , XXXXXXX , XXXXXXX ,
 		_______ , BR_DQUO , KC_PERC , KC_AMPR , BR_SCLN , BR_PIPE ,                                         BR_COLN , BR_QUES , KC_EXLM , BR_SLSH , XXXXXXX , XXXXXXX ,
 		_______ , _______ , XXXXXXX , XXXXXXX , KC_ASTR , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , KC_PLUS , KC_EQUAL, BR_BSLS , XXXXXXX , XXXXXXX ,
-								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -420,34 +427,19 @@ const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_56_equal[] = { KC_5, KC_6, COMBO_END};
 const uint16_t PROGMEM cmb_45_colon[] = { KC_4, KC_5, COMBO_END};
 
+const uint16_t PROGMEM cmb_2parntes[] = { KC_LPRN, MY_R, COMBO_END};
+const uint16_t PROGMEM cmb_2brackts[] = { BR_LBRC, MY_S, COMBO_END};
+const uint16_t PROGMEM cmb_2crlbrks[] = { BR_LCBR, MY_L, COMBO_END};
+const uint16_t PROGMEM cmb_2quotes[]  = { MY_S, MY_T, COMBO_END};
+
+const uint16_t PROGMEM cmb_ASS_shft[] = { MY_A, BR_SECT, COMBO_END};
+const uint16_t PROGMEM cmb_BI_shift[] = { KC_B, MY_I, COMBO_END};
+const uint16_t PROGMEM cmb_UM_CpWrd[] = { KC_U, KC_M, COMBO_END};
+const uint16_t PROGMEM cmb_SSB_CpLk[] = { BR_SECT, KC_B, COMBO_END};
+
 const uint16_t PROGMEM cmb_tmbs_mcr[] = { THUMB_L3, THUMB_R3, COMBO_END};
 const uint16_t PROGMEM cmb_tmbs_oth[] = { THUMB_L4, THUMB_R4, COMBO_END};
 
-// const uint16_t PROGMEM combo10[] = { MT(MOD_LSFT, KC_A), BR_SECT, COMBO_END};
-// const uint16_t PROGMEM combo11[] = { KC_B, MT(MOD_RSFT, KC_I), COMBO_END};
-// const uint16_t PROGMEM combo17[] = { KC_S, MT(MOD_LCTL, KC_E), COMBO_END};
-// const uint16_t PROGMEM combo18[] = { KC_S, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
-// const uint16_t PROGMEM combo19[] = { KC_HASH, BR_SCLN, COMBO_END};
-// const uint16_t PROGMEM combo20[] = { KC_AMPR, KC_HASH, COMBO_END};
-// const uint16_t PROGMEM cmb_ITN_TH[]   = { KC_PERC, KC_HASH, COMBO_END};
-// const uint16_t PROGMEM combo22[] = { KC_UNDS, BR_SCLN, COMBO_END};
-// const uint16_t PROGMEM combo23[] = { KC_UNDS, KC_AMPR, COMBO_END};
-// const uint16_t PROGMEM combo24[] = { KC_PERC, KC_UNDS, COMBO_END};
-// const uint16_t PROGMEM combo25[] = { KC_UNDS, KC_HASH, BR_SCLN, COMBO_END};
-// const uint16_t PROGMEM combo26[] = { KC_ASTR, KC_UNDS, COMBO_END};
-// const uint16_t PROGMEM combo27[] = { KC_AT, BR_SCLN, COMBO_END};
-// const uint16_t PROGMEM combo28[] = { KC_PERC, KC_AT, COMBO_END};
-// const uint16_t PROGMEM combo31[] = { MT(MOD_LCTL, KC_E), KC_R, COMBO_END};
-// const uint16_t PROGMEM combo32[] = { KC_R, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
-// const uint16_t PROGMEM combo33[] = { KC_P, KC_R, COMBO_END};
-// const uint16_t PROGMEM combo34[] = { MT(MOD_LSFT, KC_A), KC_S, KC_R, COMBO_END};
-// const uint16_t PROGMEM combo35[] = { KC_L, MT(MOD_LSFT, KC_A), COMBO_END};
-// const uint16_t PROGMEM combo36[] = { KC_L, MT(MOD_LCTL | MOD_LSFT, KC_O), COMBO_END};
-const uint16_t PROGMEM cmb_UM_CpWrd[] = { KC_U, KC_M, COMBO_END};
-// const uint16_t PROGMEM combo42[] = { KC_S, MT(MOD_RCTL, KC_T), COMBO_END};
-const uint16_t PROGMEM cmb_SSB_CpLk[] = { BR_SECT, KC_B, COMBO_END};
-// const uint16_t PROGMEM combo44[] = { KC_DELETE, LCTL(KC_BSPC), COMBO_END};
-// const uint16_t PROGMEM combo45[] = { KC_ESCAPE, KC_DELETE, COMBO_END};
 const uint16_t PROGMEM cmb_LBOOT[]    = { THUMB_LA, THUMB_LB, COMBO_END};
 const uint16_t PROGMEM cmb_RBOOT[]    = { THUMB_RA, THUMB_RB, COMBO_END};
 
@@ -477,34 +469,19 @@ combo_t key_combos[] = {
     COMBO(cmb_56_equal, KC_EQUAL),
     COMBO(cmb_45_colon, BR_COLN),
 
+    COMBO(cmb_2parntes, MC_2parntes),
+    COMBO(cmb_2brackts, MC_2brackts),
+    COMBO(cmb_2crlbrks, MC_2crlbrks),
+    COMBO(cmb_2quotes,  MC_2quotes),
+
+    COMBO(cmb_ASS_shft, OSM(MOD_LSFT)),
+    COMBO(cmb_BI_shift, OSM(MOD_RSFT)),
+    COMBO(cmb_UM_CpWrd, CW_TOGG),
+    COMBO(cmb_SSB_CpLk, KC_CAPS),
+
     COMBO(cmb_tmbs_mcr, OSL(_MACROS)),
     COMBO(cmb_tmbs_oth, TG(_OTHERS)),
 
-    // COMBO(combo10, OSM(MOD_LSFT)),
-    // COMBO(combo11, OSM(MOD_RSFT)),
-    // COMBO(combo17, ST_MACRO_1),
-    // COMBO(combo18, ST_MACRO_2),
-    // COMBO(combo19, ST_MACRO_3),
-    // COMBO(combo20, ST_MACRO_4),
-    // COMBO(combo21, ST_MACRO_5),
-    // COMBO(combo22, ST_MACRO_6),
-    // COMBO(combo23, ST_MACRO_7),
-    // COMBO(combo24, ST_MACRO_8),
-    // COMBO(combo25, ST_MACRO_9),
-    // COMBO(combo26, ST_MACRO_10),
-    // COMBO(combo27, ST_MACRO_11),
-    // COMBO(combo28, ST_MACRO_12),
-    // COMBO(combo31, ST_MACRO_15),
-    // COMBO(combo32, ST_MACRO_16),
-    // COMBO(combo33, ST_MACRO_17),
-    // COMBO(combo34, ST_MACRO_18),
-    // COMBO(combo35, ST_MACRO_19),
-    // COMBO(combo36, ST_MACRO_20),
-    COMBO(cmb_UM_CpWrd, CW_TOGG),
-    // COMBO(combo42, ST_MACRO_23),
-    COMBO(cmb_SSB_CpLk, KC_CAPS),
-    // COMBO(combo44, TG(8)),
-    // COMBO(combo45, TO(2)),
     COMBO(cmb_LBOOT,    QK_BOOT),
     COMBO(cmb_RBOOT,    QK_BOOT),
 };
@@ -519,66 +496,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t oneshot_mods = get_oneshot_mods();
 
 	switch (keycode) {
-    // case ST_MACRO_1:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_E));
-    // }
-    // break;
-    // case ST_MACRO_2:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_TAP(X_O));
-    // }
-    // break;
-    // case ST_MACRO_3:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_A)));
-    // }
-    // break;
-    // case ST_MACRO_4:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_E)));
-    // }
-    // break;
-    // case ST_MACRO_5:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_O)));
-    // }
-    // break;
-    // case ST_MACRO_6:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_LSFT(SS_TAP(X_A)));
-    // }
-    // break;
-    // case ST_MACRO_7:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_LSFT(SS_TAP(X_E)));
-    // }
-    // break;
-    // case ST_MACRO_8:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_LSFT(SS_TAP(X_O)));
-    // }
-    // break;
-    // case ST_MACRO_9:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_LSFT(SS_TAP(X_I)));
-    // }
-    // break;
-    // case ST_MACRO_10:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_LSFT(SS_TAP(X_U)));
-    // }
-    // break;
-    // case ST_MACRO_11:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_LSFT(SS_TAP(X_A)));
-    // }
-    // break;
-    // case ST_MACRO_12:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_LSFT(SS_TAP(X_O)));
-    // }
-    // break;
 		case MC_QU:
 			if (record->event.pressed) {
 				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
@@ -610,41 +527,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				send_string_with_delay("...", 10);
 			}
 			break;
-    // case ST_MACRO_15:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_TAP(X_E));
-    // }
-    // break;
-    // case ST_MACRO_16:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_TAP(X_O));
-    // }
-    // break;
-    // case ST_MACRO_17:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_TAP(X_U));
-    // }
-    // break;
-    // case ST_MACRO_18:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_LBRC)SS_DELAY(10)  SS_TAP(X_I));
-    // }
-    // break;
-    // case ST_MACRO_19:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_A));
-    // }
-    // break;
-    // case ST_MACRO_20:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_TAP(X_QUOTE)SS_DELAY(10)  SS_TAP(X_O));
-    // }
-    // break;
-    // case ST_MACRO_23:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_GRAVE))SS_DELAY(10)  SS_TAP(X_LEFT));
-    // }
-    // break;
 		case MC_ING:
 			if (record->event.pressed) {
 				send_string_with_delay("ing", 10);
@@ -680,21 +562,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				send_string_with_delay(" e ", 10);
 			}
 			break;
-    // case ST_MACRO_32:
-    // if (record->event.pressed) {
-      // SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_S)))SS_DELAY(100)  SS_LALT(SS_TAP(X_TAB))SS_DELAY(100)  SS_TAP(X_F5));
-    // }
-    // break;
-    // case ST_MACRO_33:
+
+    // case ST_MACRO_33: À
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_LBRC))SS_DELAY(10)  SS_LSFT(SS_TAP(X_A)));
     // }
     // break;
-    // case ST_MACRO_34:
+    // case ST_MACRO_34: à
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_LBRC))SS_DELAY(10)  SS_TAP(X_A));
     // }
     // break;
+
     // case ST_MACRO_35:
     // if (record->event.pressed) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_RBRC))SS_DELAY(10)  SS_LSFT(SS_TAP(X_RBRC))SS_DELAY(10)  SS_LSFT(SS_TAP(X_BSLS))SS_DELAY(10)  SS_LSFT(SS_TAP(X_BSLS))SS_DELAY(10)  SS_TAP(X_LEFT)SS_DELAY(10)  SS_TAP(X_LEFT));
@@ -750,6 +629,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // SEND_STRING(SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_QUOTE))SS_DELAY(10)  SS_LSFT(SS_TAP(X_QUOTE)));
     // }
     // break;
+			
+		case MC_2parntes: // (|)
+			if (record->event.pressed) {
+				send_string_with_delay("()" SS_TAP(X_LEFT), 10);
+			}
+			break;
+		case MC_2brackts: // [|]
+			if (record->event.pressed) {
+				send_string_with_delay(SS_TAP(X_RBRC) SS_TAP(X_BSLS) SS_TAP(X_LEFT), 10);
+			}
+			break;
+		case MC_2crlbrks: // {|}
+			if (record->event.pressed) {
+				send_string_with_delay(SS_LSFT(SS_TAP(X_RBRC) SS_TAP(X_BSLS)) SS_TAP(X_LEFT), 10);
+			}
+			break;
+		case MC_2quotes: // "|"
+			if (record->event.pressed) {
+				send_string_with_delay(SS_LSFT(SS_TAP(X_GRAVE) SS_TAP(X_GRAVE)) SS_TAP(X_LEFT), 10);
+			}
+			break;
 		case MC_doubt:
 			if (record->event.pressed) { // (?)
 				send_string_with_delay("(" SS_LSFT(SS_TAP(X_INTERNATIONAL_1)) ")", 10);
@@ -1366,6 +1266,18 @@ tap_dance_action_t tap_dance_actions[] = {
 //                       LAYER COLORS                     //
 //--------------------------------------------------------//
 
+#define LED_TRANS          1,   1,   1
+#define LED_OFF            0,   0,   0
+#define LED_RED            0, 255, 191
+// #define LED_GRAY         0, 0, 0
+// #define LED_DARK_GREEN   0, 0, 0
+// #define LED_LIGHT_BLUE   0, 0, 0
+#define LED_DARK_BLUE    240, 255, 228
+#define LED_LIGHT_GREEN   94, 226, 255
+#define LED_DARK_GREEN   127, 255, 153
+
+
+
 extern rgb_config_t rgb_matrix_config;
 
 void keyboard_post_init_user(void) {
@@ -1374,6 +1286,7 @@ void keyboard_post_init_user(void) {
 
 /*
  * LEDs template
+ * NÃO ESQUECER: VALORES DA ESQUERDA SUBSTITUIRÃO OS DA DIREITA SE NÃO DEFINIDOS!
  *
  *                ,--------------.                      ,--------------.
  *                | 02 | 01 | 00 |                      | 37 | 38 | 39 |
@@ -1394,18 +1307,37 @@ void keyboard_post_init_user(void) {
  */
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
-	[_NAVVOL] = {
+	[_NUMPAD] = {
 		{0,0,255}, {0,0,255}, {0,0,255},
 		{0,0,255}, {0,0,255}, {0,0,255},
 		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
 		{255,255,255}, {255,255,255},
-		{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-		{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-		{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
-		{0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 
 		{0,0,255}, {0,0,255}, {0,0,255},
 		{0,0,255}, {0,0,255}, {0,0,255},
+		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
+		{255,255,255}, {255,255,255},
+		{0,0,0}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {0,0,0}, {0,0,0},
+		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {0,0,0},
+		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {0,0,0},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+	},
+	[_NAVVOL] = {
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
+		{255,255,255}, {255,255,255},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
 		{255,255,255}, {255,255,255},
 		{0,0,0}, {0,0,0}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0},
@@ -1415,24 +1347,21 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 	},
 };
 
-/* void set_layer_color(int layer) {
+void set_layer_color(int layer) {
 	for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
 		HSV hsv = {
 			.h = pgm_read_byte(&ledmap[layer][i][0]),
 			.s = pgm_read_byte(&ledmap[layer][i][1]),
 			.v = pgm_read_byte(&ledmap[layer][i][2]),
 		};
-		if (!hsv.h && !hsv.s && !hsv.v) {
-			rgb_matrix_set_color( i, 0, 0, 0 );
-		} else {
-			RGB rgb = hsv_to_rgb( hsv );
-			float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-			rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+		if (hsv.h == 1 && hsv.s == 1) {
+			return; // LED_TRANS
 		}
+		RGB rgb = hsv_to_rgb(hsv);
+		float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+		rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
 	}
-} */
-
-void set_layer_color(int layer) {
+}/* void set_layer_color(int layer) {
 	for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
 		RGB rgb = {
 			.r = ledmap[layer][i][0],
@@ -1445,45 +1374,37 @@ void set_layer_color(int layer) {
 			rgb_matrix_set_color( i, rgb.r, rgb.g, rgb.b );
 		}
 	}
+} */
+
+void caps_word_set_user(bool active) {
+    if (active) { //When Caps Word activates
+		rgb_matrix_set_color(31, 255, 255, 255);
+    } else { //When Caps Word deactivates
+        rgb_matrix_set_color(31, LED_OFF);
+    }
 }
 
 bool rgb_matrix_indicators_user(void) {
 	switch (biton32(layer_state)) {
 		case _ALPHA_A:
 			if (host_keyboard_led_state().caps_lock) {
-				rgb_matrix_set_color(20, 255, 255, 255);
+				rgb_matrix_set_color(31, 255, 255, 255);
 			}
+			// if (is_caps_word_on()) {
+				// rgb_matrix_set_color(31, 255, 255, 255);
+			// }
 			break;
 		case _NUMPAD:
-			rgb_matrix_set_color(31, RGB_BLUE);
-			rgb_matrix_set_color(32, RGB_AZURE);
-			rgb_matrix_set_color(33, RGB_CYAN);
-			rgb_matrix_set_color(34, RGB_TURQUOISE);
-			rgb_matrix_set_color(35, RGB_TEAL);
-			rgb_matrix_set_color(36, RGB_CHARTREUSE);
-
-			rgb_matrix_set_color(68, RGB_GREEN);
-			rgb_matrix_set_color(69, RGB_SPRINGGREEN);
-			rgb_matrix_set_color(70, RGB_YELLOW);
-			rgb_matrix_set_color(71, RGB_GOLD);
-			rgb_matrix_set_color(72, RGB_GOLDENROD);
-			rgb_matrix_set_color(73, RGB_ORANGE);
-
-			rgb_matrix_set_color(62, RGB_CORAL);
-			rgb_matrix_set_color(63, RGB_RED);
-			rgb_matrix_set_color(64, RGB_PINK);
-			rgb_matrix_set_color(65, RGB_MAGENTA);
-			rgb_matrix_set_color(66, RGB_PURPLE);
-			rgb_matrix_set_color(67, RGB_WHITE);
+			set_layer_color(_NUMPAD);
 			break;
 		case _SHORTCUTS:
-
+			rgb_matrix_set_color(12, 255, 255, 255);
 			break;
 		case _SYMBOLS:
-
+			rgb_matrix_set_color(12, LED_DARK_BLUE);
 			break;
 		case _NAVVOL:
-			// set_layer_color(_NAVVOL);
+			set_layer_color(_NAVVOL);
 			break;
 		case _MACROS:
 
