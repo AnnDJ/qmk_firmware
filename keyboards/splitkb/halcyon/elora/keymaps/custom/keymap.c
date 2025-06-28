@@ -57,7 +57,7 @@ enum tap_dance_codes {
 #define MY_RETRN TO(_ALPHA_A)
 
 #define THUMB_L4 KC_BSPC
-#define THUMB_L3 LT(_ALPHA_B, KC_BSPC)
+#define THUMB_L3 OSL(_ALPHA_B)
 #define THUMB_L2 LT(_SHORTCUTS, KC_BSPC)
 #define THUMB_L1 TG(_NUMPAD)
 #define THUMB_LA RM_TOGG
@@ -68,6 +68,7 @@ enum tap_dance_codes {
 #define THUMB_R2 OSL(_SYMBOLS)
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
 #define THUMB_R4 TG(_NAVVOL)
+#define THUMB_R5 TG(_NAVVOL)
 
 #define THM_L2nv LT(_SHORTCUTS, KC_DEL)
 #define THM_R3nm LT(_NAVVOL, KC_0)
@@ -124,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
 	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
 	 * `----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
-	 *                              | _______ |  Bksp   | L1/Bksp | L4/Bksp |  L3  |  | Enter |  L5   | L6/Space|  L6   | _____ |
+	 *                              | _______ |  Bksp   | AlPHA B | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| _____ |  L6   |
 	 *                              `----------------------------------------------'  `-----------------------------------------'
 	 * ,-----------------------------------.                                                                           ,-----------------------------------.
 	 * | Mute |      |       |      |      |                                                                           |      |      |       |      |      |
@@ -135,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , MY_R    , MY_S    , MY_L    , KC_W    , KC_RALT,
 		A(KC_TAB),KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
-		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, XXXXXXX ,
+		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, THUMB_R5 ,
 		KC_KB_MUTE,XXXXXXX, XXXXXXX , XXXXXXX , XXXXXXX ,                                                             XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
 	),
 
@@ -214,7 +215,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NUMPAD] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , XXXXXXX , MC_PX   , MC_RS   , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
-		_______ , _______ , _______ , _______ , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
+		_______ , _______ , KC_PERC , KC_COLN , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
 		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , XXXXXXX , _______ ,
 								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , THM_R3nm, KC_SPACE, _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
@@ -255,7 +256,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
 	 * | ______ |  "   |  º   |  ª   |  $   |      |                                |  °   |  _   |  #   |  @   |      |        |
 	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
-	 * | ______ |  "   |  %   |  &   |  ;   |  |   |                                |  :   |  ?   |  !   |  /   |      |        |
+	 * | ______ |  À   |  %   |  &   |  ;   |  |   |                                |  :   |  ?   |  !   |  /   |      |        |
 	 * |--------+------+------+------+------+------+---------------.  ,-------------+------+------+------+------+------+--------|
 	 * |        |      |      |      |  *   |      |        |      |  |      |      |      |  +   |  =   |  \   |      |        |
 	 * `----------------------+------+------+------+--------+------|  |------+------+------+------+------+----------------------'
@@ -267,7 +268,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
 	[_SYMBOLS] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , BR_ACUT , BR_CIRC , BR_TILD , XXXXXXX , XXXXXXX ,
-		_______ , BR_DQUO , BR_FORD , BR_MORD , KC_DLR  , XXXXXXX ,                                         BR_DEG  , KC_UNDS , KC_HASH , KC_AT   , XXXXXXX , XXXXXXX ,
+		_______ , BR_DQUO , BR_MORD , BR_FORD , KC_DLR  , XXXXXXX ,                                         BR_DEG  , KC_UNDS , KC_HASH , KC_AT   , XXXXXXX , XXXXXXX ,
 		_______ , MC_Agrve, KC_PERC , KC_AMPR , BR_SCLN , BR_PIPE ,                                         BR_COLN , BR_QUES , KC_EXLM , BR_SLSH , XXXXXXX , XXXXXXX ,
 		_______ , _______ , XXXXXXX , XXXXXXX , KC_ASTR , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , KC_PLUS , KC_EQUAL, BR_BSLS , XXXXXXX , XXXXXXX ,
 								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , _______ , _______ , _______ ,
@@ -295,8 +296,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_NAVVOL] = LAYOUT_elora_hlc(
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX ,                                         XXXXXXX , XXXXXXX , KC_PGUP , XXXXXXX , KC_MPRV , KC_MNXT ,
 		_______ , _______ , XXXXXXX , MY_PVTAB, MY_NXTAB, XXXXXXX ,                                         XXXXXXX , DF_HOME , KC_PGDN , DF_END  , KC_K    , KC_MPLY ,
-		_______,_______,_______,OSM(MOD_LCTL),OSM(MOD_LSFT),XXXXXXX,                                        XXXXXXX , KC_LEFT , KC_UP   , KC_RIGHT, KC_M    , KC_MUTE ,
-		_______ , _______ , XXXXXXX , KC_BRID , KC_BRIU , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX , KC_DOWN , XXXXXXX , KC_VOLD , KC_VOLU ,
+		_______,_______,_______,OSM(MOD_LCTL),OSM(MOD_LSFT),XXXXXXX,                                        XXXXXXX , KC_LEFT , KC_UP   , KC_RIGHT, KC_M    , KC_KB_MUTE,
+		_______ , _______ , XXXXXXX , KC_BRID , KC_BRIU , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX , KC_DOWN , XXXXXXX,KC_KB_VOLUME_DOWN,KC_KB_VOLUME_UP,
 								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -390,15 +391,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = { ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(XXXXXXX, XXXXXXX), ENCODER_CCW_CW(XXXXXXX, XXXXXXX) },
-    [1] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [2] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [3] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [4] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [5] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [6] = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [7] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [8] = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) }
+	[_ALPHA_A]   = { ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(XXXXXXX, XXXXXXX), ENCODER_CCW_CW(XXXXXXX, XXXXXXX) },
+	[_ALPHA_B]   = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_GIMP]      = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_NUMPAD]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_SHORTCUTS] = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_SYMBOLS]   = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_NAVVOL]    = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_MACROS]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_OTHERS]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) }
 };
 #endif // defined(ENCODER_MAP_ENABLE)
 
@@ -1273,15 +1274,16 @@ tap_dance_action_t tap_dance_actions[] = {
 //                       LAYER COLORS                     //
 //--------------------------------------------------------//
 
-#define LED_TRANS          1,   1,   1
 #define LED_OFF            0,   0,   0
-#define LED_RED          120,   0,   0
-// #define LED_GRAY         0, 0, 0
-// #define LED_DARK_GREEN   0, 0, 0
-// #define LED_LIGHT_BLUE   0, 0, 0
-#define LED_DARK_BLUE      0,   0, 228
-#define LED_LIGHT_GREEN  127, 255,  29
-#define LED_DARK_GREEN     0, 153,  17
+#define LED_TRANS          1,   1,   1
+#define LED_WHITE        255, 255, 255
+#define LED_GRAY          97,  97,  97
+#define LED_GOLDEN       189, 181,  30
+#define LED_RED          102,   0,   0
+#define LED_LIGHT_BLUE     0, 167, 209
+#define LED_DARK_BLUE      0,   0, 168
+#define LED_LIGHT_GREEN   99, 199,  22
+#define LED_DARK_GREEN    35, 122,   0
 
 
 
@@ -1317,40 +1319,40 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 	[_NUMPAD] = {
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
-		{255,255,255}, {255,255,255},
+		{LED_TRANS}, {LED_TRANS}, {LED_GOLDEN}, {LED_TRANS}, {LED_TRANS},
+		{LED_DARK_GREEN}, {LED_DARK_GREEN},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
-		{255,255,255}, {255,255,255},
-		{0,0,0}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {0,0,0}, {0,0,0},
-		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {0,0,0},
-		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {0,0,0},
+		{LED_GRAY}, {LED_GRAY}, {LED_LIGHT_GREEN}, {LED_GRAY}, {LED_GRAY},
+		{LED_DARK_GREEN}, {LED_DARK_GREEN},
+		{LED_OFF}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_OFF}, {LED_OFF},
+		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {LED_OFF},
+		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {LED_OFF},
 		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 	},
 	[_NAVVOL] = {
-		{LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE},
-		{LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE},
-		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
-		{255,255,255}, {255,255,255},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_GRAY}, {LED_TRANS}, {LED_TRANS},
+		{LED_GRAY}, {LED_GRAY},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 
-		{LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE},
-		{LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE},
-		{255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255},
-		{255,255,255}, {255,255,255},
-		{0,0,0}, {0,0,0}, {0,255,255}, {0,0,0}, {0,0,0}, {0,0,0},
-		{0,0,0}, {0,255,255}, {0,255,255}, {0,255,255}, {0,0,0}, {0,0,0},
-		{0,0,0}, {0,0,255}, {0,0,255}, {0,0,255}, {0,0,0}, {0,0,0},
-		{0,0,0}, {0,0,0}, {0,0,255}, {0,0,0}, {0,0,0}, {0,0,0},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_GRAY}, {LED_TRANS}, {LED_TRANS},
+		{LED_GRAY}, {LED_GRAY},
+		{LED_OFF}, {LED_OFF}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_DARK_BLUE}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 	},
 };
 
@@ -1376,6 +1378,9 @@ void set_layer_color(int layer) {
 			.g = ledmap[layer][i][1],
 			.b = ledmap[layer][i][2],
 		};
+		if ((rgb.r == 1) && (rgb.g == 1) && (rgb.b == 1)) {
+			continue; // LED_TRANS
+		}
 		if (!rgb.r && !rgb.g && !rgb.b) {
 			rgb_matrix_set_color( i, 0, 0, 0 );
 		} else {
@@ -1387,29 +1392,52 @@ void set_layer_color(int layer) {
 bool rgb_matrix_indicators_user(void) {
 	switch (biton32(layer_state)) {
 		case _ALPHA_A:
-		case _ALPHA_B:
 			if (host_keyboard_led_state().caps_lock) {
-				rgb_matrix_set_color(31, 255, 255, 255);
+				rgb_matrix_set_color(31, LED_WHITE);
+				rgb_matrix_set_color(68, LED_WHITE);
 			}
 			if (is_caps_word_on()) {
-				rgb_matrix_set_color(31, 255, 255, 255);
+				rgb_matrix_set_color(31, LED_WHITE);
+				rgb_matrix_set_color(68, LED_WHITE);
 			}
+			break;
+		case _ALPHA_B:
+			if (host_keyboard_led_state().caps_lock) {
+				rgb_matrix_set_color(31, LED_WHITE);
+				rgb_matrix_set_color(68, LED_WHITE);
+			}
+			if (is_caps_word_on()) {
+				rgb_matrix_set_color(31, LED_WHITE);
+				rgb_matrix_set_color(68, LED_WHITE);
+			}
+			rgb_matrix_set_color(11, LED_GOLDEN);
+			rgb_matrix_set_color(12, LED_GOLDEN);
+			rgb_matrix_set_color(48, LED_GOLDEN);
+			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
 		case _NUMPAD:
 			set_layer_color(_NUMPAD);
-			
 			break;
 		case _SHORTCUTS:
+			rgb_matrix_set_color(11, LED_RED);
 			rgb_matrix_set_color(12, LED_RED);
+			rgb_matrix_set_color(48, LED_RED);
+			rgb_matrix_set_color(49, LED_RED);
 			break;
 		case _SYMBOLS:
+			rgb_matrix_set_color(11, LED_DARK_BLUE);
 			rgb_matrix_set_color(12, LED_DARK_BLUE);
+			rgb_matrix_set_color(48, LED_DARK_BLUE);
+			rgb_matrix_set_color(49, LED_DARK_BLUE);
 			break;
 		case _NAVVOL:
 			set_layer_color(_NAVVOL);
 			break;
 		case _MACROS:
-
+			rgb_matrix_set_color(11, LED_GOLDEN);
+			rgb_matrix_set_color(12, LED_GOLDEN);
+			rgb_matrix_set_color(48, LED_GOLDEN);
+			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
 	}
 	return true;
@@ -1428,9 +1456,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	if (symbols_on != IS_LAYER_ON_STATE(state, _SYMBOLS)) {
 		symbols_on = !symbols_on;
 		if (symbols_on) {  // Just entered the layer
+			rgb_matrix_set_color(11, LED_DARK_BLUE);
 			rgb_matrix_set_color(12, LED_DARK_BLUE);
+			rgb_matrix_set_color(48, LED_DARK_BLUE);
+			rgb_matrix_set_color(49, LED_DARK_BLUE);
 		} else {          // Just exited the layer
+			rgb_matrix_set_color(11, LED_OFF);
 			rgb_matrix_set_color(12, LED_OFF);
+			rgb_matrix_set_color(48, LED_OFF);
+			rgb_matrix_set_color(49, LED_OFF);
 		}
 	}
 
