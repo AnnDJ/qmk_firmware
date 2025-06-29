@@ -11,13 +11,14 @@
 //--------------------------------------------------------//
 
 enum layers {
-    _ALPHA_A = 0,
-    _ALPHA_B,
-    _GIMP,
-    _NUMPAD,
-    _SHORTCUTS,
-    _SYMBOLS,
-    _NAVVOL,
+	_ALPHA_A = 0,
+	_ALPHA_B,
+	_ACCENTS,
+	_GIMP,
+	_NUMPAD,
+	_SHORTCUTS,
+	_SYMBOLS,
+	_NAVVOL,
 	_MACROS,
 	_OTHERS,
 };
@@ -67,7 +68,7 @@ enum tap_dance_codes {
 #define THUMB_R1 KC_ENTER
 #define THUMB_R2 OSL(_SYMBOLS)
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
-#define THUMB_R4 TG(_NAVVOL)
+#define THUMB_R4 OSL(_ACCENTS)
 #define THUMB_R5 TG(_NAVVOL)
 
 #define THM_L2nv LT(_SHORTCUTS, KC_DEL)
@@ -91,6 +92,7 @@ enum custom_keycodes {
 	MC_PX,
 	MC_QU,
 	MC_TH,
+	MC_Icute,
 	MC_Agrve,
 	MC_2parntes,
 	MC_2brackts,
@@ -106,6 +108,7 @@ enum custom_keycodes {
 	MC_astrs,
 	MC_rqv,
 	MC_nota,
+	MC_ALTAB,
 };
 
 //--------------------------------------------------------//
@@ -134,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
 		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , MY_R    , MY_S    , MY_L    , KC_W    , KC_RALT,
-		A(KC_TAB),KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
+		MC_ALTAB, KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, THUMB_R5 ,
 		KC_KB_MUTE,XXXXXXX, XXXXXXX , XXXXXXX , XXXXXXX ,                                                             XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
@@ -144,15 +147,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * Alpha B: Complement to base layer with hard to reach letters
 	 *
 	 * ,---------------------------------------.                              ,------------------------------------.
-	 * |         |     |     |     |     |     |                              |     |     |     |      |     |     |
+	 * | _______ | ___ | ___ | ___ | ___ | ___ |                              | ___ | ___ | ___ | ____ | ___ | ___ |
 	 * |---------+-----+-----+-----+-----+-----|                              |-----+-----+-----+------+-----+-----|
-	 * |         |     |     |     |     |     |                              |     |  C  |  K  |  X   |     |     |
+	 * | _______ | ___ | ___ | ___ | ___ | ___ |                              | ___ |  C  |  K  |  X   | ___ | ___ |
 	 * |---------+-----+-----+-----------+-----|                              |-----+-----+-----+------+-----+-----|
-	 * | Sft+Tab |     |  Q  |  H  |  G  |     |                              | - _ | ing | ght |  Z   |  Ç  |     |
+	 * | Sft+Tab | ___ |  Q  |  H  |  G  | ___ |                              | - _ | ing | ght |  Z   |  Ç  | ___ |
 	 * |---------+-----+-----+-----+-----+-----+-------------.  ,-------------+-----+-----+-----+------+-----+-----|
-	 * | Sft+Tab |     |     |     |     |     |      |      |  |      |      |     |     | ção | ções |     |     |
+	 * | Sft+Tab | ___ | ___ | ___ | ___ | ___ | ____ | ____ |  | ____ | ____ | ___ | ___ | ção | ções | ___ | ___ |
 	 * `---------------------+-----+-----+-----+------+------|  |------+------+-----+-----+-----+------------------'
-	 *                       |     |     |     |      |      |  |      |      |     |     |     |
+	 *                       | ___ | ___ | ___ | ____ | ____ |  | ____ | ____ | ___ | ___ | ___ |
 	 *                       `-------------------------------'  `-------------------------------'
 	 * ,-----------------------------------.                                   ,-----------------------------------.
 	 * |      |      |       |      |      |                                   |      |      |       |      |      |
@@ -164,6 +167,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		MY_SFTAB, _______ , KC_Q    , KC_H    , KC_G    , _______ ,                                         KC_MINUS, MC_ING  , MC_GHT  , KC_Z    , BR_CCED , _______ ,
 		MY_SFTAB, _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MC_CAO  , MC_COES , _______ , _______ ,
 							_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+        _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
+    ),
+
+	/*
+	 * ACCENTS: Accented letters
+	 *
+	 * ,-----------------------------------.                            ,-----------------------------------.
+	 * | ___ | ___ | ___ | ___ | ___ | ___ |                            | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
+	 * | ___ | ___ |  Ô  |  Ê  |  Â  |     |                            | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
+	 * | ___ |  Ú  |  Ó  |  É  |  Á  |  Í  |                            | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * |-----+-----+-----+-----+-----+-----+------------.  ,------------+-----+-----+-----+-----+-----+-----|
+	 * | ___ |     |     |     |  À  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * `-----------------+-----+-----+-----+-----+------|  |------+-----+-----+-----+-----+-----------------'
+	 *                   | ___ | ___ |  Õ  |  Ã  | ____ |  | ____ | ___ | ___ | ___ | ___ |
+	 *                   `------------------------------'  `------------------------------'
+	 * ,-----------------------------------.                            ,-----------------------------------.
+	 * |      |      |       |      |      |                            |      |      |       |      |      |
+	 * `-----------------------------------'                            `-----------------------------------'
+	 */
+	[_ACCENTS] = LAYOUT_elora_hlc(
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Agrve, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -393,6 +423,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 	[_ALPHA_A]   = { ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(XXXXXXX, XXXXXXX), ENCODER_CCW_CW(XXXXXXX, XXXXXXX) },
 	[_ALPHA_B]   = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_ACCENTS]   = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_GIMP]      = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_NUMPAD]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_SHORTCUTS] = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
@@ -495,6 +526,9 @@ combo_t key_combos[] = {
 //                         MACROS                         //
 //--------------------------------------------------------//
 
+// Variables for the Alt Tab function
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	const uint8_t mods = get_mods();
@@ -545,6 +579,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case MC_COES:
 			if (record->event.pressed) {
 				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "oes", 10);
+			}
+			break;
+		case MC_Icute: // í / Í
+			if (record->event.pressed) {
+				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
+					// Temporarily delete shift
+					del_oneshot_mods(MOD_MASK_SHIFT);
+					unregister_mods(MOD_MASK_SHIFT);
+					send_string_with_delay(SS_TAP(X_LBRC) "I", 10);
+					register_mods(mods); // Restore mods
+				} else {
+					send_string_with_delay(SS_TAP(X_LBRC) "i", 10);
+				}
 			}
 			break;
 		case MC_Agrve: // à / À
@@ -886,8 +933,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}  
 			}  
 			return false;
+		case MC_ALTAB:
+			if (record->event.pressed) {
+				if (!is_alt_tab_active) {
+					is_alt_tab_active = true;
+					register_code(KC_LALT);
+				}
+				alt_tab_timer = timer_read();
+				register_code(KC_TAB);
+			} else {
+				unregister_code(KC_TAB);
+			}
+			break;
 	}
 	return true;
+}
+
+// Timer for the Alt Tab function
+void matrix_scan_user(void) {
+	if (is_alt_tab_active) {
+		if (timer_elapsed(alt_tab_timer) > 1000) {
+			unregister_code(KC_LALT);
+			is_alt_tab_active = false;
+		}
+	}
 }
 
 //--------------------------------------------------------//
@@ -1270,6 +1339,7 @@ tap_dance_action_t tap_dance_actions[] = {
         // [DANCE_5] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_5, dance_5_finished, dance_5_reset),
 };
 
+
 //--------------------------------------------------------//
 //                       LAYER COLORS                     //
 //--------------------------------------------------------//
@@ -1277,13 +1347,14 @@ tap_dance_action_t tap_dance_actions[] = {
 #define LED_OFF            0,   0,   0
 #define LED_TRANS          1,   1,   1
 #define LED_WHITE        255, 255, 255
-#define LED_GRAY          97,  97,  97
-#define LED_GOLDEN       189, 181,  30
-#define LED_RED          102,   0,   0
-#define LED_LIGHT_BLUE     0, 167, 209
-#define LED_DARK_BLUE      0,   0, 168
-#define LED_LIGHT_GREEN   99, 199,  22
-#define LED_DARK_GREEN    35, 122,   0
+#define LED_GRAY          71,  71,  71
+#define LED_GOLDEN       158, 150,   0
+#define LED_RED           79,   0,   0
+#define LED_PURPLE        76,   0, 120
+#define LED_LIGHT_BLUE     0, 137, 171
+#define LED_DARK_BLUE      0,   0, 143
+#define LED_LIGHT_GREEN   83, 168,  49
+#define LED_DARK_GREEN    23,  79,   0
 
 
 
@@ -1405,6 +1476,8 @@ bool rgb_matrix_indicators_user(void) {
 			if (host_keyboard_led_state().caps_lock) {
 				rgb_matrix_set_color(31, LED_WHITE);
 				rgb_matrix_set_color(68, LED_WHITE);
+				
+				
 			}
 			if (is_caps_word_on()) {
 				rgb_matrix_set_color(31, LED_WHITE);
@@ -1425,10 +1498,10 @@ bool rgb_matrix_indicators_user(void) {
 			rgb_matrix_set_color(49, LED_RED);
 			break;
 		case _SYMBOLS:
-			rgb_matrix_set_color(11, LED_DARK_BLUE);
-			rgb_matrix_set_color(12, LED_DARK_BLUE);
-			rgb_matrix_set_color(48, LED_DARK_BLUE);
-			rgb_matrix_set_color(49, LED_DARK_BLUE);
+			rgb_matrix_set_color(11, LED_PURPLE);
+			rgb_matrix_set_color(12, LED_PURPLE);
+			rgb_matrix_set_color(48, LED_PURPLE);
+			rgb_matrix_set_color(49, LED_PURPLE);
 			break;
 		case _NAVVOL:
 			set_layer_color(_NAVVOL);
@@ -1439,32 +1512,55 @@ bool rgb_matrix_indicators_user(void) {
 			rgb_matrix_set_color(48, LED_GOLDEN);
 			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
+		case _OTHERS:
+			rgb_matrix_set_color(11, LED_GRAY);
+			rgb_matrix_set_color(12, LED_GRAY);
+			rgb_matrix_set_color(48, LED_GRAY);
+			rgb_matrix_set_color(49, LED_GRAY);
+			break;
 	}
 	return true;
 }
 
 void caps_word_set_user(bool active) {
-    if (!active) { //When Caps Word deactivates
-        rgb_matrix_set_color(31, LED_OFF);
-    }
+	if (!active) { //When Caps Word deactivates
+		rgb_matrix_set_color(31, LED_OFF);
+		rgb_matrix_set_color(68, LED_OFF);
+	}
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
 	// Use 'static' variable to remember the previous status
+	static bool alpha_b_on = false;
 	static bool symbols_on = false;
+
+	if (alpha_b_on != IS_LAYER_ON_STATE(state, _ALPHA_B)) {
+		alpha_b_on = !alpha_b_on;
+		if (alpha_b_on) {  // Just entered the layer
+			rgb_matrix_set_color(11, LED_GOLDEN);
+			rgb_matrix_set_color(12, LED_GOLDEN);
+			rgb_matrix_set_color(48, LED_GOLDEN);
+			rgb_matrix_set_color(49, LED_GOLDEN);
+		} else {          // Just exited the layer
+			rgb_matrix_set_color(48, LED_OFF);
+			rgb_matrix_set_color(49, LED_OFF);
+			rgb_matrix_set_color(11, LED_OFF);
+			rgb_matrix_set_color(12, LED_OFF);
+		}
+	}
 
 	if (symbols_on != IS_LAYER_ON_STATE(state, _SYMBOLS)) {
 		symbols_on = !symbols_on;
 		if (symbols_on) {  // Just entered the layer
-			rgb_matrix_set_color(11, LED_DARK_BLUE);
-			rgb_matrix_set_color(12, LED_DARK_BLUE);
-			rgb_matrix_set_color(48, LED_DARK_BLUE);
-			rgb_matrix_set_color(49, LED_DARK_BLUE);
+			// rgb_matrix_set_color(11, LED_DARK_BLUE);
+			// rgb_matrix_set_color(12, LED_DARK_BLUE);
+			// rgb_matrix_set_color(48, LED_DARK_BLUE);
+			// rgb_matrix_set_color(49, LED_DARK_BLUE);
 		} else {          // Just exited the layer
-			rgb_matrix_set_color(11, LED_OFF);
-			rgb_matrix_set_color(12, LED_OFF);
 			rgb_matrix_set_color(48, LED_OFF);
 			rgb_matrix_set_color(49, LED_OFF);
+			rgb_matrix_set_color(11, LED_OFF);
+			rgb_matrix_set_color(12, LED_OFF);
 		}
 	}
 
