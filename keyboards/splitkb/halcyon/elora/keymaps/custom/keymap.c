@@ -57,8 +57,8 @@ enum tap_dance_codes {
 #define MY_T     LCTL_T(KC_T)
 #define MY_RETRN TO(_ALPHA_A)
 
-#define THUMB_L4 KC_BSPC
-#define THUMB_L3 OSL(_ALPHA_B)
+#define THUMB_L4 OSL(_ALPHA_B)
+#define THUMB_L3 LT(_ALPHA_B, KC_BSPC)
 #define THUMB_L2 LT(_SHORTCUTS, KC_BSPC)
 #define THUMB_L1 TG(_NUMPAD)
 #define THUMB_LA RM_TOGG
@@ -80,6 +80,7 @@ enum tap_dance_codes {
 #define MY_R     LT(8, KC_R)
 #define MY_S     LT(8, KC_S)
 #define MY_L     LT(8, KC_L)
+#define MY_ALTAB LT(8, A(KC_TAB))
 
 enum custom_keycodes {
 	MC_3DOTS = SAFE_RANGE,
@@ -92,7 +93,16 @@ enum custom_keycodes {
 	MC_PX,
 	MC_QU,
 	MC_TH,
+	MC_Acute,
+	MC_Ecute,
 	MC_Icute,
+	MC_Ocute,
+	MC_Ucute,
+	MC_Acirc,
+	MC_Ecirc,
+	MC_Ocirc,
+	MC_Atlde,
+	MC_Otlde,
 	MC_Agrve,
 	MC_2parntes,
 	MC_2brackts,
@@ -128,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
 	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
 	 * `----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
-	 *                              | _______ |  Bksp   | AlPHA B | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| _____ |  L6   |
+	 *                              | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| _____ |  L6   |
 	 *                              `----------------------------------------------'  `-----------------------------------------'
 	 * ,-----------------------------------.                                                                           ,-----------------------------------.
 	 * | Mute |      |       |      |      |                                                                           |      |      |       |      |      |
@@ -137,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
 		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , MY_R    , MY_S    , MY_L    , KC_W    , KC_RALT,
-		MC_ALTAB, KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
+		MY_ALTAB, KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, THUMB_R5 ,
 		KC_KB_MUTE,XXXXXXX, XXXXXXX , XXXXXXX , XXXXXXX ,                                                             XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
@@ -190,10 +200,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
 	[_ACCENTS] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , _______ , _______ , _______ , MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , MC_Ucute, MC_Ocute, MC_Ecute, MC_Acute, MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Agrve, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+								      _______ , MC_Otlde, MC_Atlde, _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -530,35 +540,31 @@ combo_t key_combos[] = {
 bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+void macro_with_shift(const char *string, const char *string_with_shift) {
 	const uint8_t mods = get_mods();
 	const uint8_t oneshot_mods = get_oneshot_mods();
 
+	if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
+		// Temporarily delete shift
+		del_oneshot_mods(MOD_MASK_SHIFT);
+		unregister_mods(MOD_MASK_SHIFT);
+		send_string_with_delay(string_with_shift, 10);
+		register_mods(mods); // Restore mods
+	} else {
+		send_string_with_delay(string, 10);
+	}
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case MC_QU:
 			if (record->event.pressed) {
-				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
-					// Temporarily delete shift
-					del_oneshot_mods(MOD_MASK_SHIFT);
-					unregister_mods(MOD_MASK_SHIFT);
-					send_string_with_delay("Qu", 10);
-					register_mods(mods); // Restore mods
-				} else {
-					send_string_with_delay("qu", 10);
-				}
+				macro_with_shift("qu", "Qu");
 			}
 			break;
 		case MC_TH:
 			if (record->event.pressed) {
-				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
-					// Temporarily delete shift
-					del_oneshot_mods(MOD_MASK_SHIFT);
-					unregister_mods(MOD_MASK_SHIFT);
-					send_string_with_delay("Th", 10);
-					register_mods(mods); // Restore mods
-				} else {
-					send_string_with_delay("th", 10);
-				}
+				macro_with_shift("th", "Th");
 			}
 			break;
 		case MC_ING:
@@ -571,40 +577,69 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				send_string_with_delay("ght", 10);
 			}
 			break;
-		case MC_CAO:
+		case MC_CAO: // ção
 			if (record->event.pressed) {
 				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "ao", 10);
 			}
 			break;
-		case MC_COES:
+		case MC_COES: // ções
 			if (record->event.pressed) {
 				send_string_with_delay(SS_TAP(X_SCLN) SS_TAP(X_QUOTE) "oes", 10);
 			}
 			break;
+		case MC_Acute: // á / Á
+			if (record->event.pressed) {
+				macro_with_shift(SS_TAP(X_LBRC) "a", SS_TAP(X_LBRC) "A");
+			}
+			break;
+		case MC_Ecute: // é / É
+			if (record->event.pressed) {
+				macro_with_shift(SS_TAP(X_LBRC) "e", SS_TAP(X_LBRC) "E");
+			}
+			break;
 		case MC_Icute: // í / Í
 			if (record->event.pressed) {
-				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
-					// Temporarily delete shift
-					del_oneshot_mods(MOD_MASK_SHIFT);
-					unregister_mods(MOD_MASK_SHIFT);
-					send_string_with_delay(SS_TAP(X_LBRC) "I", 10);
-					register_mods(mods); // Restore mods
-				} else {
-					send_string_with_delay(SS_TAP(X_LBRC) "i", 10);
-				}
+				macro_with_shift(SS_TAP(X_LBRC) "i", SS_TAP(X_LBRC) "I");
+			}
+			break;
+		case MC_Ocute: // ó / Ó
+			if (record->event.pressed) {
+				macro_with_shift(SS_TAP(X_LBRC) "o", SS_TAP(X_LBRC) "O");
+			}
+			break;
+		case MC_Ucute: // ú / Ú
+			if (record->event.pressed) {
+				macro_with_shift(SS_TAP(X_LBRC) "u", SS_TAP(X_LBRC) "U");
+			}
+			break;
+		case MC_Acirc: // â / Â
+			if (record->event.pressed) {
+				macro_with_shift(SS_LSFT(SS_TAP(X_QUOT)) "a", SS_LSFT(SS_TAP(X_QUOT)) "A");
+			}
+			break;
+		case MC_Ecirc: // ê / Ê
+			if (record->event.pressed) {
+				macro_with_shift(SS_LSFT(SS_TAP(X_QUOT)) "e", SS_LSFT(SS_TAP(X_QUOT)) "E");
+			}
+			break;
+		case MC_Ocirc: // ô / Ô
+			if (record->event.pressed) {
+				macro_with_shift(SS_LSFT(SS_TAP(X_QUOT)) "o", SS_LSFT(SS_TAP(X_QUOT)) "O");
+			}
+			break;
+		case MC_Atlde: // ã / Ã
+			if (record->event.pressed) {
+				macro_with_shift(SS_TAP(X_QUOT) "a", SS_TAP(X_QUOT) "A");
+			}
+			break;
+		case MC_Otlde: // õ / Õ
+			if (record->event.pressed) {
+				macro_with_shift(SS_TAP(X_QUOT) "o", SS_TAP(X_QUOT) "O");
 			}
 			break;
 		case MC_Agrve: // à / À
 			if (record->event.pressed) {
-				if ((mods | oneshot_mods) & (MOD_MASK_SHIFT)) { // Is shift held?
-					// Temporarily delete shift
-					del_oneshot_mods(MOD_MASK_SHIFT);
-					unregister_mods(MOD_MASK_SHIFT);
-					send_string_with_delay(SS_LSFT(SS_TAP(X_LBRC)) "A", 10);
-					register_mods(mods); // Restore mods
-				} else {
-					send_string_with_delay(SS_LSFT(SS_TAP(X_LBRC)) "a", 10);
-				}
+				macro_with_shift(SS_LSFT(SS_TAP(X_LBRC)) "a", SS_LSFT(SS_TAP(X_LBRC)) "A");
 			}
 			break;
 		case MC_PX:
@@ -915,8 +950,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					register_code16(BR_CIRC);
 				} else {
 					unregister_code16(BR_CIRC);
-				}  
-			}  
+				}
+			}
 			return false;
 		case MY_L:
 			if (record->tap.count > 0) {
@@ -930,21 +965,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					register_code16(BR_TILD);
 				} else {
 					unregister_code16(BR_TILD);
-				}  
-			}  
-			return false;
-		case MC_ALTAB:
-			if (record->event.pressed) {
-				if (!is_alt_tab_active) {
-					is_alt_tab_active = true;
-					register_code(KC_LALT);
 				}
-				alt_tab_timer = timer_read();
-				register_code(KC_TAB);
-			} else {
-				unregister_code(KC_TAB);
 			}
-			break;
+			return false;
+		case MY_ALTAB:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(A(KC_TAB));
+				} else {
+					unregister_code16(A(KC_TAB));
+					unregister_code(KC_TAB);
+				}
+			} else {
+				if (record->event.pressed) {
+					if (!is_alt_tab_active) {
+						is_alt_tab_active = true;
+						register_code(KC_LALT);
+					}
+					alt_tab_timer = timer_read();
+					register_code(KC_TAB);
+				} else {
+					unregister_code(KC_TAB);
+				}
+			}
+			return false;
+		// case MC_ALTAB:
+			// if (record->event.pressed) {
+				// if (!is_alt_tab_active) {
+					// is_alt_tab_active = true;
+					// register_code(KC_LALT);
+				// }
+				// alt_tab_timer = timer_read();
+				// register_code(KC_TAB);
+			// } else {
+				// unregister_code(KC_TAB);
+			// }
+			// break;
 	}
 	return true;
 }
@@ -1347,14 +1403,14 @@ tap_dance_action_t tap_dance_actions[] = {
 #define LED_OFF            0,   0,   0
 #define LED_TRANS          1,   1,   1
 #define LED_WHITE        255, 255, 255
-#define LED_GRAY          71,  71,  71
-#define LED_GOLDEN       158, 150,   0
-#define LED_RED           79,   0,   0
-#define LED_PURPLE        76,   0, 120
-#define LED_LIGHT_BLUE     0, 137, 171
-#define LED_DARK_BLUE      0,   0, 143
-#define LED_LIGHT_GREEN   83, 168,  49
-#define LED_DARK_GREEN    23,  79,   0
+#define LED_GRAY          56,  56,  56
+#define LED_GOLDEN       133, 128,  38
+#define LED_RED           56,   0,   0
+#define LED_PURPLE        51,   0,  89
+#define LED_LIGHT_BLUE     0,  78,  97
+#define LED_DARK_BLUE      0,   0,  89
+#define LED_LIGHT_GREEN   23,  79,   0
+#define LED_DARK_GREEN    10,  36,   0
 
 
 
@@ -1476,8 +1532,6 @@ bool rgb_matrix_indicators_user(void) {
 			if (host_keyboard_led_state().caps_lock) {
 				rgb_matrix_set_color(31, LED_WHITE);
 				rgb_matrix_set_color(68, LED_WHITE);
-				
-				
 			}
 			if (is_caps_word_on()) {
 				rgb_matrix_set_color(31, LED_WHITE);
@@ -1536,27 +1590,17 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 	if (alpha_b_on != IS_LAYER_ON_STATE(state, _ALPHA_B)) {
 		alpha_b_on = !alpha_b_on;
-		if (alpha_b_on) {  // Just entered the layer
-			rgb_matrix_set_color(11, LED_GOLDEN);
-			rgb_matrix_set_color(12, LED_GOLDEN);
-			rgb_matrix_set_color(48, LED_GOLDEN);
-			rgb_matrix_set_color(49, LED_GOLDEN);
-		} else {          // Just exited the layer
-			rgb_matrix_set_color(48, LED_OFF);
-			rgb_matrix_set_color(49, LED_OFF);
+		if (!alpha_b_on) { // Just exited the layer
 			rgb_matrix_set_color(11, LED_OFF);
 			rgb_matrix_set_color(12, LED_OFF);
+			rgb_matrix_set_color(48, LED_OFF);
+			rgb_matrix_set_color(49, LED_OFF);
 		}
 	}
 
 	if (symbols_on != IS_LAYER_ON_STATE(state, _SYMBOLS)) {
 		symbols_on = !symbols_on;
-		if (symbols_on) {  // Just entered the layer
-			// rgb_matrix_set_color(11, LED_DARK_BLUE);
-			// rgb_matrix_set_color(12, LED_DARK_BLUE);
-			// rgb_matrix_set_color(48, LED_DARK_BLUE);
-			// rgb_matrix_set_color(49, LED_DARK_BLUE);
-		} else {          // Just exited the layer
+		if (!symbols_on) { // Just exited the layer
 			rgb_matrix_set_color(48, LED_OFF);
 			rgb_matrix_set_color(49, LED_OFF);
 			rgb_matrix_set_color(11, LED_OFF);
