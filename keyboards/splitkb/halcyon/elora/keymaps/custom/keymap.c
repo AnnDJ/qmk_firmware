@@ -77,13 +77,11 @@ enum tap_dance_codes {
 #define DF_F5_F2 LT(8, KC_F5)
 #define DF_HOME  LT(8, KC_HOME)
 #define DF_END   LT(8, KC_END)
-#define MY_R     LT(8, KC_R)
-#define MY_S     LT(8, KC_S)
-#define MY_L     LT(8, KC_L)
 #define MY_ALTAB LT(8, A(KC_TAB))
 
 enum custom_keycodes {
 	MC_3DOTS = SAFE_RANGE,
+	MC_PH,
 	MC_CAO,
 	MC_COES,
 	MC_RS,
@@ -132,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * ,----------------------------------------------------------.                                   ,----------------------------------------------------.
 	 * |  Ctl+C* | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                   |    <    |   (   |   [   |   {   |   *   |   Alt    |
 	 * |---------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
-	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                   |    Y    |  R/´  |  S/^  |  L/~  |   W   |  AltGr   |
+	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                   |    Y    |   R   |   S   |   L   |   W   |  AltGr   |
 	 * |---------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
 	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                   |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
 	 * |---------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
@@ -146,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
     [_ALPHA_A] = LAYOUT_elora_hlc(
 		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
-		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , MY_R    , MY_S    , MY_L    , KC_W    , KC_RALT,
+		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_RALT,
 		MY_ALTAB, KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, THUMB_R5 ,
@@ -161,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+-----+-----+-----+-----+-----|                              |-----+-----+-----+------+-----+-----|
 	 * | _______ | ___ | ___ | ___ | ___ | ___ |                              | ___ |  C  |  K  |  X   | ___ | ___ |
 	 * |---------+-----+-----+-----------+-----|                              |-----+-----+-----+------+-----+-----|
-	 * | Sft+Tab | ___ |  Q  |  H  |  G  | ___ |                              | - _ | ing | ght |  Z   |  Ç  | ___ |
+	 * | Sft+Tab | ___ |  Q  | PH  |  Q  | ___ |                              | - _ | ing | ght |  Z   |  Ç  | ___ |
 	 * |---------+-----+-----+-----+-----+-----+-------------.  ,-------------+-----+-----+-----+------+-----+-----|
 	 * | Sft+Tab | ___ | ___ | ___ | ___ | ___ | ____ | ____ |  | ____ | ____ | ___ | ___ | ção | ções | ___ | ___ |
 	 * `---------------------+-----+-----+-----+------+------|  |------+------+-----+-----+-----+------------------'
@@ -174,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_ALPHA_B] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , KC_C    , KC_K    , KC_X    , _______ , _______ ,
-		MY_SFTAB, _______ , KC_Q    , KC_H    , KC_G    , _______ ,                                         KC_MINUS, MC_ING  , MC_GHT  , KC_Z    , BR_CCED , _______ ,
+		MY_SFTAB, _______ , KC_Q    , MC_PH   , KC_Q    , _______ ,                                         KC_MINUS, MC_ING  , MC_GHT  , KC_Z    , BR_CCED , _______ ,
 		MY_SFTAB, _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MC_CAO  , MC_COES , _______ , _______ ,
 							_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
@@ -192,7 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |-----+-----+-----+-----+-----+-----+------------.  ,------------+-----+-----+-----+-----+-----+-----|
 	 * | ___ |     |     |     |  À  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * `-----------------+-----+-----+-----+-----+------|  |------+-----+-----+-----+-----+-----------------'
-	 *                   | ___ | ___ |  Õ  |  Ã  | ____ |  | ____ | ___ | ___ | ___ | ___ |
+	 *                   | ___ | ___ |  Ã  |  Õ  | ____ |  | ____ | ___ | ___ | ___ | ___ |
 	 *                   `------------------------------'  `------------------------------'
 	 * ,-----------------------------------.                            ,-----------------------------------.
 	 * |      |      |       |      |      |                            |      |      |       |      |      |
@@ -203,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______ , _______ , MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , MC_Ucute, MC_Ocute, MC_Ecute, MC_Acute, MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Agrve, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-								      _______ , MC_Otlde, MC_Atlde, _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+								      _______ , _______ , MC_Atlde, MC_Otlde, _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -238,7 +236,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * NumPad: All things numbers
 	 *
 	 * ,----------------------------------------------------------.                                     ,---------------------------------------------.
-	 * | _______ | ______ | _______ | _______ |         |         |                                     |  _____  | ____  | ____  | ____  | ___ | ___ |
+	 * | _______ | ______ | _______ | _______ | _______ | _______ |                                     |  _____  | ____  | ____  | ____  | ___ | ___ |
 	 * |---------+--------+---------+---------+---------+---------|                                     |---------+-------+-------+-------+-----+-----|
 	 * | _______ | ______ |         |   px    |  R$_    | _______ |                                     |    *    |   7   |   8   |   9   |  +  | ___ |
 	 * |---------+--------+---------+---------+---------+---------|                                     |---------+-------+-------+-------+-----+-----|
@@ -253,7 +251,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * `-----------------------------------'                                                                      `-----------------------------------'
 	 */
 	[_NUMPAD] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , XXXXXXX , MC_PX   , MC_RS   , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
 		_______ , _______ , KC_PERC , KC_COLN , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
 		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , XXXXXXX , _______ ,
@@ -292,26 +290,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * Symbols
 	 *
 	 * ,-------------------------------------------.                                ,-------------------------------------------.
-	 * | ______ | ____ | ____ | ____ |      |      |                                |      |  ´   |  ^   |  ~   |      |        |
+	 * | ______ | ____ | ____ | ____ | ____ | ____ |                                |      |  ´   |  ^   |  ~   |      |        |
 	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
 	 * | ______ |  "   |  º   |  ª   |  $   |      |                                |  °   |  _   |  #   |  @   |      |        |
 	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
-	 * | ______ |  À   |  %   |  &   |  ;   |  |   |                                |  :   |  ?   |  !   |  /   |      |        |
+	 * | ______ |  À   |  %   |  *   |  ;   |  |   |                                |  :   |  ?   |  !   |  /   |      |        |
 	 * |--------+------+------+------+------+------+---------------.  ,-------------+------+------+------+------+------+--------|
-	 * |        |      |      |      |  *   |      |        |      |  |      |      |      |  +   |  =   |  \   |      |        |
+	 * |        |      |      |      |  &   |      |        |      |  |      |      |      |  +   |  =   |  \   |      |        |
 	 * `----------------------+------+------+------+--------+------|  |------+------+------+------+------+----------------------'
-	 *                        |      |      |      | L4/Del |      |  |      |      |      |      |      |
+	 *                        |      |      |      | L4/Del |      |  |      |  L0  |      |      |      |
 	 *                        `------------------------------------'  `----------------------------------'
 	 * ,-----------------------------------.                                                ,-----------------------------------.
 	 * |      |      |       |      |      |                                                |      |      |       |      |      |
 	 * `-----------------------------------'                                                `-----------------------------------'
 	 */
 	[_SYMBOLS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , XXXXXXX , XXXXXXX ,                                         XXXXXXX , BR_ACUT , BR_CIRC , BR_TILD , XXXXXXX , XXXXXXX ,
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         XXXXXXX , BR_ACUT , BR_CIRC , BR_TILD , XXXXXXX , XXXXXXX ,
 		_______ , BR_DQUO , BR_MORD , BR_FORD , KC_DLR  , XXXXXXX ,                                         BR_DEG  , KC_UNDS , KC_HASH , KC_AT   , XXXXXXX , XXXXXXX ,
-		_______ , MC_Agrve, KC_PERC , KC_AMPR , BR_SCLN , BR_PIPE ,                                         BR_COLN , BR_QUES , KC_EXLM , BR_SLSH , XXXXXXX , XXXXXXX ,
-		_______ , _______ , XXXXXXX , XXXXXXX , KC_ASTR , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , KC_PLUS , KC_EQUAL, BR_BSLS , XXXXXXX , XXXXXXX ,
-								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , MC_Agrve, KC_PERC , KC_ASTR , BR_SCLN , BR_PIPE ,                                         BR_COLN , BR_QUES , KC_EXLM , BR_SLSH , XXXXXXX , XXXXXXX ,
+		_______ , _______ , XXXXXXX , XXXXXXX , KC_AMPR , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , KC_PLUS , KC_EQUAL, BR_BSLS , XXXXXXX , XXXXXXX ,
+								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , MY_RETRN, _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -448,8 +446,8 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 //                         COMBOS                         //
 //--------------------------------------------------------//
 
-const uint16_t PROGMEM cmb_RS_Y[]     = { MY_R, MY_S, COMBO_END};
-const uint16_t PROGMEM cmb_LS_W[]     = { MY_L, MY_S, COMBO_END};
+const uint16_t PROGMEM cmb_RS_Y[]     = { KC_R, KC_S, COMBO_END};
+const uint16_t PROGMEM cmb_LS_W[]     = { KC_L, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
 const uint16_t PROGMEM cmb_DF_Z[]     = { KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM cmb_ET_H[]     = { MY_E, MY_T, COMBO_END};
@@ -462,8 +460,8 @@ const uint16_t PROGMEM cmb_Rparnts[]  = { KC_LPRN, BR_LBRC, COMBO_END};
 const uint16_t PROGMEM cmb_Rbracket[] = { BR_LBRC, BR_LCBR, COMBO_END};
 const uint16_t PROGMEM cmb_Rcrlybrc[] = { BR_LCBR, KC_ASTR, COMBO_END};
 const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END};
-const uint16_t PROGMEM cmb_RL_comma[] = { MY_R, MY_L, COMBO_END};
-const uint16_t PROGMEM cmb_RSL_dot[]  = { MY_R, MY_S, MY_L, COMBO_END};
+const uint16_t PROGMEM cmb_RL_comma[] = { KC_R, KC_L, COMBO_END};
+const uint16_t PROGMEM cmb_RSL_dot[]  = { KC_R, KC_S, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};
 const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};
 const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};
@@ -473,10 +471,10 @@ const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_56_equal[] = { KC_5, KC_6, COMBO_END};
 const uint16_t PROGMEM cmb_45_colon[] = { KC_4, KC_5, COMBO_END};
 
-const uint16_t PROGMEM cmb_2parntes[] = { KC_LPRN, MY_R, COMBO_END};
-const uint16_t PROGMEM cmb_2brackts[] = { BR_LBRC, MY_S, COMBO_END};
-const uint16_t PROGMEM cmb_2crlbrks[] = { BR_LCBR, MY_L, COMBO_END};
-const uint16_t PROGMEM cmb_2quotes[]  = { MY_S, MY_T, COMBO_END};
+const uint16_t PROGMEM cmb_2parntes[] = { KC_LPRN, KC_R, COMBO_END};
+const uint16_t PROGMEM cmb_2brackts[] = { BR_LBRC, KC_S, COMBO_END};
+const uint16_t PROGMEM cmb_2crlbrks[] = { BR_LCBR, KC_L, COMBO_END};
+const uint16_t PROGMEM cmb_2quotes[]  = { KC_S, MY_T, COMBO_END};
 
 const uint16_t PROGMEM cmb_ASS_shft[] = { MY_A, BR_SECT, COMBO_END};
 const uint16_t PROGMEM cmb_BI_shift[] = { KC_B, MY_I, COMBO_END};
@@ -565,6 +563,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case MC_TH:
 			if (record->event.pressed) {
 				macro_with_shift("th", "Th");
+			}
+			break;
+		case MC_PH:
+			if (record->event.pressed) {
+				macro_with_shift("ph", "Ph");
 			}
 			break;
 		case MC_ING:
@@ -752,7 +755,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			break;
 		case MC_squez:
 			if (record->event.pressed) { // >~<
-				send_string_with_delay(">" SS_TAP(X_QUOTE)  SS_TAP(X_QUOTE) "<", 10);
+				send_string_with_delay(">" SS_TAP(X_QUOTE) SS_TAP(X_QUOTE) "<", 10);
 			}
 			break;
 		case MC_tired:
@@ -922,52 +925,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 			}
 			return false;
-			
-		case MY_R:
-			if (record->tap.count > 0) {
-				if (record->event.pressed) {
-					register_code16(KC_R);
-				} else {
-					unregister_code16(KC_R);
-				}
-			} else {
-				if (record->event.pressed) {
-					register_code16(BR_ACUT);
-				} else {
-					unregister_code16(BR_ACUT);
-				}  
-			}  
-			return false;
-		case MY_S:
-			if (record->tap.count > 0) {
-				if (record->event.pressed) {
-					register_code16(KC_S);
-				} else {
-					unregister_code16(KC_S);
-				}
-			} else {
-				if (record->event.pressed) {
-					register_code16(BR_CIRC);
-				} else {
-					unregister_code16(BR_CIRC);
-				}
-			}
-			return false;
-		case MY_L:
-			if (record->tap.count > 0) {
-				if (record->event.pressed) {
-					register_code16(KC_L);
-				} else {
-					unregister_code16(KC_L);
-				}
-			} else {
-				if (record->event.pressed) {
-					register_code16(BR_TILD);
-				} else {
-					unregister_code16(BR_TILD);
-				}
-			}
-			return false;
+
 		case MY_ALTAB:
 			if (record->tap.count > 0) {
 				if (record->event.pressed) {
@@ -989,18 +947,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				}
 			}
 			return false;
-		// case MC_ALTAB:
-			// if (record->event.pressed) {
-				// if (!is_alt_tab_active) {
-					// is_alt_tab_active = true;
-					// register_code(KC_LALT);
-				// }
-				// alt_tab_timer = timer_read();
-				// register_code(KC_TAB);
-			// } else {
-				// unregister_code(KC_TAB);
-			// }
-			// break;
 	}
 	return true;
 }
@@ -1008,7 +954,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Timer for the Alt Tab function
 void matrix_scan_user(void) {
 	if (is_alt_tab_active) {
-		if (timer_elapsed(alt_tab_timer) > 1000) {
+		if (timer_elapsed(alt_tab_timer) > 1500) {
 			unregister_code(KC_LALT);
 			is_alt_tab_active = false;
 		}
@@ -1403,14 +1349,14 @@ tap_dance_action_t tap_dance_actions[] = {
 #define LED_OFF            0,   0,   0
 #define LED_TRANS          1,   1,   1
 #define LED_WHITE        255, 255, 255
-#define LED_GRAY          56,  56,  56
-#define LED_GOLDEN       133, 128,  38
-#define LED_RED           56,   0,   0
-#define LED_PURPLE        51,   0,  89
-#define LED_LIGHT_BLUE     0,  78,  97
-#define LED_DARK_BLUE      0,   0,  89
-#define LED_LIGHT_GREEN   23,  79,   0
-#define LED_DARK_GREEN    10,  36,   0
+#define LED_GRAY          38,  38,  38
+#define LED_GOLDEN       115, 110,  28
+#define LED_RED           50,   0,   0
+#define LED_PURPLE        36,  12,  66
+#define LED_LIGHT_BLUE     0,  59,  74
+#define LED_DARK_BLUE      6,   0,  74
+#define LED_LIGHT_GREEN   18,  61,   0
+#define LED_DARK_GREEN    17,  31,  11
 
 
 
@@ -1443,10 +1389,29 @@ void keyboard_post_init_user(void) {
  */
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
+	[_ALPHA_A] = { // reset
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_OFF}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+	},
 	[_NUMPAD] = {
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_GOLDEN}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_GRAY}, {LED_TRANS}, {LED_TRANS},
 		{LED_DARK_GREEN}, {LED_DARK_GREEN},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
@@ -1455,7 +1420,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_GRAY}, {LED_GRAY}, {LED_LIGHT_GREEN}, {LED_GRAY}, {LED_GRAY},
+		{LED_OFF}, {LED_OFF}, {LED_LIGHT_GREEN}, {LED_GRAY}, {LED_OFF},
 		{LED_DARK_GREEN}, {LED_DARK_GREEN},
 		{LED_OFF}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_OFF}, {LED_OFF},
 		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {LED_OFF},
@@ -1474,30 +1439,15 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_GRAY}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_GRAY}, {LED_OFF}, {LED_OFF},
 		{LED_GRAY}, {LED_GRAY},
-		{LED_OFF}, {LED_OFF}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_DARK_BLUE}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_RED}, {LED_RED},
+		{LED_OFF}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_RED},
+		{LED_OFF}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_OFF}, {LED_PURPLE},
+		{LED_OFF}, {LED_OFF}, {LED_DARK_BLUE}, {LED_OFF}, {LED_PURPLE}, {LED_PURPLE},
 	},
 };
 
-/* void set_layer_color(int layer) {
-	for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-		HSV hsv = {
-			.h = pgm_read_byte(&ledmap[layer][i][0]),
-			.s = pgm_read_byte(&ledmap[layer][i][1]),
-			.v = pgm_read_byte(&ledmap[layer][i][2]),
-		};
-		//if (hsv.h == 1 && hsv.s == 1) {
-		//	return; // LED_TRANS
-		//}
-		RGB rgb = hsv_to_rgb(hsv);
-		float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-		rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
-	}
-} */
 void set_layer_color(int layer) {
 	for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
 		RGB rgb = {
@@ -1523,24 +1473,30 @@ bool rgb_matrix_indicators_user(void) {
 				rgb_matrix_set_color(31, LED_WHITE);
 				rgb_matrix_set_color(68, LED_WHITE);
 			}
-			if (is_caps_word_on()) {
-				rgb_matrix_set_color(31, LED_WHITE);
-				rgb_matrix_set_color(68, LED_WHITE);
-			}
+			// if (is_caps_word_on()) {
+				// rgb_matrix_set_color(31, LED_WHITE);
+				// rgb_matrix_set_color(68, LED_WHITE);
+			// }
 			break;
 		case _ALPHA_B:
 			if (host_keyboard_led_state().caps_lock) {
 				rgb_matrix_set_color(31, LED_WHITE);
 				rgb_matrix_set_color(68, LED_WHITE);
 			}
-			if (is_caps_word_on()) {
-				rgb_matrix_set_color(31, LED_WHITE);
-				rgb_matrix_set_color(68, LED_WHITE);
-			}
+			// if (is_caps_word_on()) {
+				// rgb_matrix_set_color(31, LED_WHITE);
+				// rgb_matrix_set_color(68, LED_WHITE);
+			// }
 			rgb_matrix_set_color(11, LED_GOLDEN);
 			rgb_matrix_set_color(12, LED_GOLDEN);
 			rgb_matrix_set_color(48, LED_GOLDEN);
 			rgb_matrix_set_color(49, LED_GOLDEN);
+			break;
+		case _ACCENTS:
+			rgb_matrix_set_color(11, LED_LIGHT_BLUE);
+			rgb_matrix_set_color(12, LED_LIGHT_BLUE);
+			rgb_matrix_set_color(48, LED_LIGHT_BLUE);
+			rgb_matrix_set_color(49, LED_LIGHT_BLUE);
 			break;
 		case _NUMPAD:
 			set_layer_color(_NUMPAD);
@@ -1577,7 +1533,10 @@ bool rgb_matrix_indicators_user(void) {
 }
 
 void caps_word_set_user(bool active) {
-	if (!active) { //When Caps Word deactivates
+	if (active) {
+		rgb_matrix_set_color(31, LED_WHITE);
+		rgb_matrix_set_color(68, LED_WHITE);
+	} else { //When Caps Word deactivates
 		rgb_matrix_set_color(31, LED_OFF);
 		rgb_matrix_set_color(68, LED_OFF);
 	}
@@ -1587,6 +1546,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	// Use 'static' variable to remember the previous status
 	static bool alpha_b_on = false;
 	static bool symbols_on = false;
+	static bool navvol_on = false;
 
 	if (alpha_b_on != IS_LAYER_ON_STATE(state, _ALPHA_B)) {
 		alpha_b_on = !alpha_b_on;
@@ -1605,6 +1565,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 			rgb_matrix_set_color(49, LED_OFF);
 			rgb_matrix_set_color(11, LED_OFF);
 			rgb_matrix_set_color(12, LED_OFF);
+		}
+	}
+
+	if (navvol_on != IS_LAYER_ON_STATE(state, _NAVVOL)) {
+		navvol_on = !navvol_on;
+		if (!navvol_on) { // Just exited the layer
+			set_layer_color(_ALPHA_A);
 		}
 	}
 
