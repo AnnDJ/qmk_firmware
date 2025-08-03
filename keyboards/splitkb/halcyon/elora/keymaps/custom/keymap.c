@@ -55,6 +55,8 @@ enum tap_dance_codes {
 #define MY_O     C_S_T(KC_O)
 #define MY_I     LSFT_T(KC_I)
 #define MY_T     LCTL_T(KC_T)
+#define MY_H     LSFT_T(KC_H)
+#define MY_COLN  LCTL_T(KC_COLN)
 #define MY_RETRN TO(_ALPHA_A)
 
 #define THUMB_L4 OSL(_ALPHA_B)
@@ -136,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
 	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
 	 * `----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
-	 *                              | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| _____ |  L6   |
+	 *                              | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| ACNTS |  L6   |
 	 *                              `----------------------------------------------'  `-----------------------------------------'
 	 * ,-----------------------------------.                                                                           ,-----------------------------------.
 	 * | Mute |      |       |      |      |                                                                           |      |      |       |      |      |
@@ -188,9 +190,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
 	 * | ___ |  Ú  |  Ó  |  É  |  Á  |  Í  |                            | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * |-----+-----+-----+-----+-----+-----+------------.  ,------------+-----+-----+-----+-----+-----+-----|
-	 * | ___ |     |     |     |  À  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * | ___ |     |     |     |  Í  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * `-----------------+-----+-----+-----+-----+------|  |------+-----+-----+-----+-----+-----------------'
-	 *                   | ___ | ___ |  Ã  |  Õ  | ____ |  | ____ | ___ | ___ | ___ | ___ |
+	 *                   | ___ |  Õ  |  À  |  Ã  | ____ |  | ____ | ___ | ___ | ___ | ___ |
 	 *                   `------------------------------'  `------------------------------'
 	 * ,-----------------------------------.                            ,-----------------------------------.
 	 * |      |      |       |      |      |                            |      |      |       |      |      |
@@ -200,8 +202,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , MC_Ucute, MC_Ocute, MC_Ecute, MC_Acute, MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Agrve, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-								      _______ , _______ , MC_Atlde, MC_Otlde, _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Icute, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+								      _______ , MC_Otlde, MC_Agrve, MC_Atlde, _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -235,26 +237,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * NumPad: All things numbers
 	 *
-	 * ,----------------------------------------------------------.                                     ,---------------------------------------------.
-	 * | _______ | ______ | _______ | _______ | _______ | _______ |                                     |  _____  | ____  | ____  | ____  | ___ | ___ |
-	 * |---------+--------+---------+---------+---------+---------|                                     |---------+-------+-------+-------+-----+-----|
-	 * | _______ | ______ |         |   px    |  R$_    | _______ |                                     |    *    |   7   |   8   |   9   |  +  | ___ |
-	 * |---------+--------+---------+---------+---------+---------|                                     |---------+-------+-------+-------+-----+-----|
-	 * | _______ | ______ |    %    |    :    |    H    |   _e_   |                                     |    /    |   4   |   5   |   6   |  -  | ___ |
-	 * |---------+--------+---------+---------+---------+---------+---------------.  ,------------------+---------+-------+-------+-------+-----+-----|
-	 * | _______ |   K    |         |         |    X    | _______ | ______ | ____ |  | _____ | ________ |         |   1   |   2   |   3   |     | ___ |
-	 * `----------------------------+---------+---------+---------+--------+------|  |-------+----------+---------+-------+-------+-------------------'
-	 *                              | _______ |   ???   |   ???   | L4/Del |  ??  |  | Enter | L5/Enter | L6 / 0  | Space | _____ |
-	 *                              `---------------------------------------------'  `--------------------------------------------'
-	 * ,-----------------------------------.                                                                      ,-----------------------------------.
-	 * | ____ | ____ | _____ | ____ | ____ |                                                                      | ____ | ____ | _____ | ____ | ____ |
-	 * `-----------------------------------'                                                                      `-----------------------------------'
+	 * ,-------------------------------------------------.                                     ,------------------------------------------------.
+	 * | _______ | _____ | _____ | _____ | _____ | _____ |                                     | ______ | _____ | _____ | _____ | _____ | _____ |
+	 * |---------+-------+-------+-------+-------+-------|                                     |--------+-------+-------+-------+-------+-------|
+	 * | _______ | _____ |       |  px   |  R$_  | _____ |                                     |   *    |   7   |   8   |   9   |   +   | _____ |
+	 * |---------+-------+-------+-------+-------+-------|                                     |--------+-------+-------+-------+-------+-------|
+	 * | _______ |   K   |   %   | Ctl/: | Sft/H |  _e_  |                                     |   /    |   4   |   5   |   6   |   -   | _____ |
+	 * |---------+-------+-------+-------+-------+-------+---------------.  ,------------------+--------+-------+-------+-------+-------+-------|
+	 * | _______ | _____ |       |       |   X   | _____ | ______ | ____ |  | _____ | ________ |        |   1   |   2   |   3   |       | _____ |
+	 * `-------------------------+-------+-------+-------+--------+------|  |-------+----------+--------+-------+-------+-----------------------'
+	 *                           | _____ |  ???  |  ???  | L4/Del |  ??  |  | Enter | L5/Enter | L6 / 0 | Space | _____ |
+	 *                           `---------------------------------------'  `-------------------------------------------'
+	 * ,-----------------------------------.                                                                ,-----------------------------------.
+	 * | ____ | ____ | _____ | ____ | ____ |                                                                | ____ | ____ | _____ | ____ | ____ |
+	 * `-----------------------------------'                                                                `-----------------------------------'
 	 */
 	[_NUMPAD] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , XXXXXXX , MC_PX   , MC_RS   , _______ ,                                         KC_PAST , KC_7    , KC_8    , KC_9    , KC_PPLS , _______ ,
-		_______ , _______ , KC_PERC , KC_COLN , KC_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
-		_______ , KC_K    , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , XXXXXXX , _______ ,
+		_______ , KC_K    , KC_PERC , MY_COLN , MY_H    , MC_E    ,                                         KC_PSLS , KC_4    , KC_5    , KC_6    , KC_PMNS , _______ ,
+		_______ , _______ , XXXXXXX , XXXXXXX , KC_X    , _______ , _______ , _______ , _______ , _______ , XXXXXXX , KC_1    , KC_2    , KC_3    , XXXXXXX , _______ ,
 								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , _______ , THM_R3nm, KC_SPACE, _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -1351,12 +1353,11 @@ tap_dance_action_t tap_dance_actions[] = {
 #define LED_WHITE        255, 255, 255
 #define LED_GRAY          38,  38,  38
 #define LED_GOLDEN       115, 110,  28
-#define LED_RED           50,   0,   0
+#define LED_RED           40,   1,   1
 #define LED_PURPLE        36,  12,  66
-#define LED_LIGHT_BLUE     0,  59,  74
-#define LED_DARK_BLUE      6,   0,  74
-#define LED_LIGHT_GREEN   18,  61,   0
-#define LED_DARK_GREEN    17,  31,  11
+#define LED_BLUE           6,   0,  74
+#define LED_CYAN           4,  41,  51
+#define LED_GREEN          9,  26,   2
 
 
 
@@ -1390,17 +1391,17 @@ void keyboard_post_init_user(void) {
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 	[_ALPHA_A] = { // reset
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_OFF}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 		{LED_OFF}, {LED_OFF},
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_OFF},
 		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 		{LED_OFF}, {LED_OFF},
 		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
@@ -1412,7 +1413,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_GRAY}, {LED_TRANS}, {LED_TRANS},
-		{LED_DARK_GREEN}, {LED_DARK_GREEN},
+		{LED_GREEN}, {LED_GREEN},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
@@ -1420,11 +1421,11 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
-		{LED_OFF}, {LED_OFF}, {LED_LIGHT_GREEN}, {LED_GRAY}, {LED_OFF},
-		{LED_DARK_GREEN}, {LED_DARK_GREEN},
-		{LED_OFF}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_OFF}, {LED_OFF},
-		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {LED_OFF},
-		{LED_DARK_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_LIGHT_GREEN}, {LED_DARK_GREEN}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_GREEN}, {LED_GRAY}, {LED_OFF},
+		{LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_GREEN}, {LED_GREEN}, {LED_GREEN}, {LED_OFF}, {LED_OFF},
+		{LED_GOLDEN}, {LED_GREEN}, {LED_GREEN}, {LED_GREEN}, {LED_GOLDEN}, {LED_OFF},
+		{LED_GOLDEN}, {LED_GREEN}, {LED_GREEN}, {LED_GREEN}, {LED_GOLDEN}, {LED_OFF},
 		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 	},
 	[_NAVVOL] = {
@@ -1440,11 +1441,11 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_OFF}, {LED_OFF}, {LED_GRAY}, {LED_OFF}, {LED_OFF},
-		{LED_GRAY}, {LED_GRAY},
-		{LED_OFF}, {LED_OFF}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_RED}, {LED_RED},
-		{LED_OFF}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_LIGHT_BLUE}, {LED_OFF}, {LED_RED},
-		{LED_OFF}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_DARK_BLUE}, {LED_OFF}, {LED_PURPLE},
-		{LED_OFF}, {LED_OFF}, {LED_DARK_BLUE}, {LED_OFF}, {LED_PURPLE}, {LED_PURPLE},
+		{LED_OFF}, {LED_OFF},
+		{LED_OFF}, {LED_OFF}, {LED_CYAN}, {LED_OFF}, {LED_RED}, {LED_RED},
+		{LED_OFF}, {LED_CYAN}, {LED_CYAN}, {LED_CYAN}, {LED_OFF}, {LED_RED},
+		{LED_OFF}, {LED_BLUE}, {LED_BLUE}, {LED_BLUE}, {LED_OFF}, {LED_PURPLE},
+		{LED_OFF}, {LED_OFF}, {LED_BLUE}, {LED_OFF}, {LED_PURPLE}, {LED_PURPLE},
 	},
 };
 
@@ -1470,33 +1471,25 @@ bool rgb_matrix_indicators_user(void) {
 	switch (biton32(layer_state)) {
 		case _ALPHA_A:
 			if (host_keyboard_led_state().caps_lock) {
-				rgb_matrix_set_color(31, LED_WHITE);
 				rgb_matrix_set_color(68, LED_WHITE);
 			}
-			// if (is_caps_word_on()) {
-				// rgb_matrix_set_color(31, LED_WHITE);
-				// rgb_matrix_set_color(68, LED_WHITE);
-			// }
+			if (is_caps_word_on()) {
+				rgb_matrix_set_color(31, LED_WHITE);
+			}
 			break;
 		case _ALPHA_B:
 			if (host_keyboard_led_state().caps_lock) {
-				rgb_matrix_set_color(31, LED_WHITE);
 				rgb_matrix_set_color(68, LED_WHITE);
 			}
-			// if (is_caps_word_on()) {
-				// rgb_matrix_set_color(31, LED_WHITE);
-				// rgb_matrix_set_color(68, LED_WHITE);
-			// }
+			if (is_caps_word_on()) {
+				rgb_matrix_set_color(31, LED_WHITE);
+			}
 			rgb_matrix_set_color(11, LED_GOLDEN);
 			rgb_matrix_set_color(12, LED_GOLDEN);
-			rgb_matrix_set_color(48, LED_GOLDEN);
-			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
 		case _ACCENTS:
-			rgb_matrix_set_color(11, LED_LIGHT_BLUE);
-			rgb_matrix_set_color(12, LED_LIGHT_BLUE);
-			rgb_matrix_set_color(48, LED_LIGHT_BLUE);
-			rgb_matrix_set_color(49, LED_LIGHT_BLUE);
+			rgb_matrix_set_color(11, LED_CYAN);
+			rgb_matrix_set_color(12, LED_CYAN);
 			break;
 		case _NUMPAD:
 			set_layer_color(_NUMPAD);
@@ -1504,14 +1497,10 @@ bool rgb_matrix_indicators_user(void) {
 		case _SHORTCUTS:
 			rgb_matrix_set_color(11, LED_RED);
 			rgb_matrix_set_color(12, LED_RED);
-			rgb_matrix_set_color(48, LED_RED);
-			rgb_matrix_set_color(49, LED_RED);
 			break;
 		case _SYMBOLS:
 			rgb_matrix_set_color(11, LED_PURPLE);
 			rgb_matrix_set_color(12, LED_PURPLE);
-			rgb_matrix_set_color(48, LED_PURPLE);
-			rgb_matrix_set_color(49, LED_PURPLE);
 			break;
 		case _NAVVOL:
 			set_layer_color(_NAVVOL);
@@ -1519,14 +1508,10 @@ bool rgb_matrix_indicators_user(void) {
 		case _MACROS:
 			rgb_matrix_set_color(11, LED_GOLDEN);
 			rgb_matrix_set_color(12, LED_GOLDEN);
-			rgb_matrix_set_color(48, LED_GOLDEN);
-			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
 		case _OTHERS:
 			rgb_matrix_set_color(11, LED_GRAY);
 			rgb_matrix_set_color(12, LED_GRAY);
-			rgb_matrix_set_color(48, LED_GRAY);
-			rgb_matrix_set_color(49, LED_GRAY);
 			break;
 	}
 	return true;
@@ -1535,18 +1520,26 @@ bool rgb_matrix_indicators_user(void) {
 void caps_word_set_user(bool active) {
 	if (active) {
 		rgb_matrix_set_color(31, LED_WHITE);
-		rgb_matrix_set_color(68, LED_WHITE);
 	} else { //When Caps Word deactivates
 		rgb_matrix_set_color(31, LED_OFF);
-		rgb_matrix_set_color(68, LED_OFF);
 	}
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
 	// Use 'static' variable to remember the previous status
+	static bool alpha_a_on = false;
 	static bool alpha_b_on = false;
+	static bool numpad_on = false;
 	static bool symbols_on = false;
-	static bool navvol_on = false;
+	// static bool navvol_on = false;
+
+	if (alpha_a_on != IS_LAYER_ON_STATE(state, _ALPHA_A)) {
+		alpha_a_on = !alpha_a_on;
+		if (alpha_a_on) { // Just entered the layer
+			rgb_matrix_set_color(11, LED_OFF);
+			rgb_matrix_set_color(12, LED_OFF);
+		}
+	}
 
 	if (alpha_b_on != IS_LAYER_ON_STATE(state, _ALPHA_B)) {
 		alpha_b_on = !alpha_b_on;
@@ -1568,12 +1561,19 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 		}
 	}
 
-	if (navvol_on != IS_LAYER_ON_STATE(state, _NAVVOL)) {
-		navvol_on = !navvol_on;
-		if (!navvol_on) { // Just exited the layer
+	if (numpad_on != IS_LAYER_ON_STATE(state, _NUMPAD)) {
+		numpad_on = !numpad_on;
+		if (!numpad_on) { // Just exited the layer
 			set_layer_color(_ALPHA_A);
 		}
 	}
+	
+	// if (navvol_on != IS_LAYER_ON_STATE(state, _NAVVOL)) {
+		// navvol_on = !navvol_on;
+		// if (!navvol_on) { // Just exited the layer
+			// set_layer_color(_ALPHA_A);
+		// }
+	// }
 
 	return state;
 }
