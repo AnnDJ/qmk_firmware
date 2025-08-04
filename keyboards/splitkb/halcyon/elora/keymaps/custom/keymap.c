@@ -1468,8 +1468,25 @@ void set_layer_color(int layer) {
 }
 
 bool rgb_matrix_indicators_user(void) {
+	// Use 'static' variable to remember the previous status
+	static bool changed_layer = false;
+	static bool full_layer = false;
+
 	switch (biton32(layer_state)) {
 		case _ALPHA_A:
+			if (changed_layer) { // Runs only the first time after entering the layer
+				changed_layer = false;
+				// Turns off the "indicator" LEDs
+				rgb_matrix_set_color(11, LED_OFF);
+				rgb_matrix_set_color(12, LED_OFF);
+				rgb_matrix_set_color(48, LED_OFF);
+				rgb_matrix_set_color(49, LED_OFF);
+				// Resets the rest of the colors, if the previous layer changed them
+				if (full_layer) {
+					full_layer = false;
+					set_layer_color(_ALPHA_A); // Resets all of them
+				}
+			}
 			if (host_keyboard_led_state().caps_lock) {
 				rgb_matrix_set_color(68, LED_WHITE);
 			}
@@ -1478,6 +1495,7 @@ bool rgb_matrix_indicators_user(void) {
 			}
 			break;
 		case _ALPHA_B:
+			changed_layer = true;
 			if (host_keyboard_led_state().caps_lock) {
 				rgb_matrix_set_color(68, LED_WHITE);
 			}
@@ -1486,32 +1504,53 @@ bool rgb_matrix_indicators_user(void) {
 			}
 			rgb_matrix_set_color(11, LED_GOLDEN);
 			rgb_matrix_set_color(12, LED_GOLDEN);
+			rgb_matrix_set_color(48, LED_GOLDEN);
+			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
 		case _ACCENTS:
+			changed_layer = true;
 			rgb_matrix_set_color(11, LED_CYAN);
 			rgb_matrix_set_color(12, LED_CYAN);
+			rgb_matrix_set_color(48, LED_CYAN);
+			rgb_matrix_set_color(49, LED_CYAN);
 			break;
 		case _NUMPAD:
+			changed_layer = true;
+			full_layer = true;
 			set_layer_color(_NUMPAD);
 			break;
 		case _SHORTCUTS:
+			changed_layer = true;
 			rgb_matrix_set_color(11, LED_RED);
 			rgb_matrix_set_color(12, LED_RED);
+			rgb_matrix_set_color(48, LED_RED);
+			rgb_matrix_set_color(49, LED_RED);
 			break;
 		case _SYMBOLS:
+			changed_layer = true;
 			rgb_matrix_set_color(11, LED_PURPLE);
 			rgb_matrix_set_color(12, LED_PURPLE);
+			rgb_matrix_set_color(48, LED_PURPLE);
+			rgb_matrix_set_color(49, LED_PURPLE);
 			break;
 		case _NAVVOL:
+			changed_layer = true;
+			full_layer = true;
 			set_layer_color(_NAVVOL);
 			break;
 		case _MACROS:
+			changed_layer = true;
 			rgb_matrix_set_color(11, LED_GOLDEN);
 			rgb_matrix_set_color(12, LED_GOLDEN);
+			rgb_matrix_set_color(48, LED_GOLDEN);
+			rgb_matrix_set_color(49, LED_GOLDEN);
 			break;
 		case _OTHERS:
+			changed_layer = true;
 			rgb_matrix_set_color(11, LED_GRAY);
 			rgb_matrix_set_color(12, LED_GRAY);
+			rgb_matrix_set_color(48, LED_GRAY);
+			rgb_matrix_set_color(49, LED_GRAY);
 			break;
 	}
 	return true;
@@ -1525,6 +1564,7 @@ void caps_word_set_user(bool active) {
 	}
 }
 
+/*
 layer_state_t layer_state_set_user(layer_state_t state) {
 	// Use 'static' variable to remember the previous status
 	static bool alpha_a_on = false;
@@ -1577,3 +1617,4 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 	return state;
 }
+*/
