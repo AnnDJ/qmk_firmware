@@ -1391,17 +1391,17 @@ void keyboard_post_init_user(void) {
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 	[_ALPHA_A] = { // reset
-		{LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_OFF}, {LED_TRANS}, {LED_TRANS},
 		{LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 
-		{LED_OFF}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF}, {LED_OFF},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
+		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
 		{LED_OFF}, {LED_OFF},
 		{LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF}, {LED_OFF},
@@ -1422,7 +1422,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_OFF}, {LED_OFF}, {LED_GREEN}, {LED_GRAY}, {LED_OFF},
-		{LED_OFF}, {LED_OFF},
+		{LED_GREEN}, {LED_GREEN},
 		{LED_OFF}, {LED_GREEN}, {LED_GREEN}, {LED_GREEN}, {LED_OFF}, {LED_OFF},
 		{LED_GOLDEN}, {LED_GREEN}, {LED_GREEN}, {LED_GREEN}, {LED_GOLDEN}, {LED_OFF},
 		{LED_GOLDEN}, {LED_GREEN}, {LED_GREEN}, {LED_GREEN}, {LED_GOLDEN}, {LED_OFF},
@@ -1441,7 +1441,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_TRANS}, {LED_TRANS}, {LED_TRANS},
 		{LED_OFF}, {LED_OFF}, {LED_GRAY}, {LED_OFF}, {LED_OFF},
-		{LED_OFF}, {LED_OFF},
+		{LED_GRAY}, {LED_GRAY},
 		{LED_OFF}, {LED_OFF}, {LED_CYAN}, {LED_OFF}, {LED_RED}, {LED_RED},
 		{LED_OFF}, {LED_CYAN}, {LED_CYAN}, {LED_CYAN}, {LED_OFF}, {LED_RED},
 		{LED_OFF}, {LED_BLUE}, {LED_BLUE}, {LED_BLUE}, {LED_OFF}, {LED_PURPLE},
@@ -1467,6 +1467,29 @@ void set_layer_color(int layer) {
 	}
 }
 
+void set_indicator_leds(uint8_t r, uint8_t g, uint8_t b) {
+	rgb_matrix_set_color(11, r, g, b);
+	rgb_matrix_set_color(12, r, g, b);
+	rgb_matrix_set_color(48, r, g, b);
+	rgb_matrix_set_color(49, r, g, b);
+}
+
+void set_caps_indicators(void) {
+	static bool caps_on = false; // Flag for state change
+
+	if ((host_keyboard_led_state().caps_lock) || (is_caps_word_on())) {
+		rgb_matrix_set_color(31, LED_WHITE);
+		rgb_matrix_set_color(68, LED_WHITE);
+		caps_on = true;
+	} else {
+		if (caps_on) {
+			caps_on = false;
+			rgb_matrix_set_color(31, LED_OFF);
+			rgb_matrix_set_color(68, LED_OFF);
+		}
+	}
+}
+
 bool rgb_matrix_indicators_user(void) {
 	// Use 'static' variable to remember the previous status
 	static bool changed_layer = false;
@@ -1477,42 +1500,23 @@ bool rgb_matrix_indicators_user(void) {
 			if (changed_layer) { // Runs only the first time after entering the layer
 				changed_layer = false;
 				// Turns off the "indicator" LEDs
-				rgb_matrix_set_color(11, LED_OFF);
-				rgb_matrix_set_color(12, LED_OFF);
-				rgb_matrix_set_color(48, LED_OFF);
-				rgb_matrix_set_color(49, LED_OFF);
+				set_indicator_leds(LED_OFF);
 				// Resets the rest of the colors, if the previous layer changed them
 				if (full_layer) {
 					full_layer = false;
-					set_layer_color(_ALPHA_A); // Resets all of them
+					set_layer_color(_ALPHA_A); // Resets all of the right side
 				}
 			}
-			if (host_keyboard_led_state().caps_lock) {
-				rgb_matrix_set_color(68, LED_WHITE);
-			}
-			if (is_caps_word_on()) {
-				rgb_matrix_set_color(31, LED_WHITE);
-			}
+			set_caps_indicators();
 			break;
 		case _ALPHA_B:
 			changed_layer = true;
-			if (host_keyboard_led_state().caps_lock) {
-				rgb_matrix_set_color(68, LED_WHITE);
-			}
-			if (is_caps_word_on()) {
-				rgb_matrix_set_color(31, LED_WHITE);
-			}
-			rgb_matrix_set_color(11, LED_GOLDEN);
-			rgb_matrix_set_color(12, LED_GOLDEN);
-			rgb_matrix_set_color(48, LED_GOLDEN);
-			rgb_matrix_set_color(49, LED_GOLDEN);
+			set_indicator_leds(LED_GOLDEN);
+			set_caps_indicators();
 			break;
 		case _ACCENTS:
 			changed_layer = true;
-			rgb_matrix_set_color(11, LED_CYAN);
-			rgb_matrix_set_color(12, LED_CYAN);
-			rgb_matrix_set_color(48, LED_CYAN);
-			rgb_matrix_set_color(49, LED_CYAN);
+			set_indicator_leds(LED_CYAN);
 			break;
 		case _NUMPAD:
 			changed_layer = true;
@@ -1521,17 +1525,11 @@ bool rgb_matrix_indicators_user(void) {
 			break;
 		case _SHORTCUTS:
 			changed_layer = true;
-			rgb_matrix_set_color(11, LED_RED);
-			rgb_matrix_set_color(12, LED_RED);
-			rgb_matrix_set_color(48, LED_RED);
-			rgb_matrix_set_color(49, LED_RED);
+			set_indicator_leds(LED_RED);
 			break;
 		case _SYMBOLS:
 			changed_layer = true;
-			rgb_matrix_set_color(11, LED_PURPLE);
-			rgb_matrix_set_color(12, LED_PURPLE);
-			rgb_matrix_set_color(48, LED_PURPLE);
-			rgb_matrix_set_color(49, LED_PURPLE);
+			set_indicator_leds(LED_PURPLE);
 			break;
 		case _NAVVOL:
 			changed_layer = true;
@@ -1540,81 +1538,12 @@ bool rgb_matrix_indicators_user(void) {
 			break;
 		case _MACROS:
 			changed_layer = true;
-			rgb_matrix_set_color(11, LED_GOLDEN);
-			rgb_matrix_set_color(12, LED_GOLDEN);
-			rgb_matrix_set_color(48, LED_GOLDEN);
-			rgb_matrix_set_color(49, LED_GOLDEN);
+			set_indicator_leds(LED_GOLDEN);
 			break;
 		case _OTHERS:
 			changed_layer = true;
-			rgb_matrix_set_color(11, LED_GRAY);
-			rgb_matrix_set_color(12, LED_GRAY);
-			rgb_matrix_set_color(48, LED_GRAY);
-			rgb_matrix_set_color(49, LED_GRAY);
+			set_indicator_leds(LED_GRAY);
 			break;
 	}
 	return true;
 }
-
-void caps_word_set_user(bool active) {
-	if (active) {
-		rgb_matrix_set_color(31, LED_WHITE);
-	} else { //When Caps Word deactivates
-		rgb_matrix_set_color(31, LED_OFF);
-	}
-}
-
-/*
-layer_state_t layer_state_set_user(layer_state_t state) {
-	// Use 'static' variable to remember the previous status
-	static bool alpha_a_on = false;
-	static bool alpha_b_on = false;
-	static bool numpad_on = false;
-	static bool symbols_on = false;
-	// static bool navvol_on = false;
-
-	if (alpha_a_on != IS_LAYER_ON_STATE(state, _ALPHA_A)) {
-		alpha_a_on = !alpha_a_on;
-		if (alpha_a_on) { // Just entered the layer
-			rgb_matrix_set_color(11, LED_OFF);
-			rgb_matrix_set_color(12, LED_OFF);
-		}
-	}
-
-	if (alpha_b_on != IS_LAYER_ON_STATE(state, _ALPHA_B)) {
-		alpha_b_on = !alpha_b_on;
-		if (!alpha_b_on) { // Just exited the layer
-			rgb_matrix_set_color(11, LED_OFF);
-			rgb_matrix_set_color(12, LED_OFF);
-			rgb_matrix_set_color(48, LED_OFF);
-			rgb_matrix_set_color(49, LED_OFF);
-		}
-	}
-
-	if (symbols_on != IS_LAYER_ON_STATE(state, _SYMBOLS)) {
-		symbols_on = !symbols_on;
-		if (!symbols_on) { // Just exited the layer
-			rgb_matrix_set_color(48, LED_OFF);
-			rgb_matrix_set_color(49, LED_OFF);
-			rgb_matrix_set_color(11, LED_OFF);
-			rgb_matrix_set_color(12, LED_OFF);
-		}
-	}
-
-	if (numpad_on != IS_LAYER_ON_STATE(state, _NUMPAD)) {
-		numpad_on = !numpad_on;
-		if (!numpad_on) { // Just exited the layer
-			set_layer_color(_ALPHA_A);
-		}
-	}
-	
-	// if (navvol_on != IS_LAYER_ON_STATE(state, _NAVVOL)) {
-		// navvol_on = !navvol_on;
-		// if (!navvol_on) { // Just exited the layer
-			// set_layer_color(_ALPHA_A);
-		// }
-	// }
-
-	return state;
-}
-*/
