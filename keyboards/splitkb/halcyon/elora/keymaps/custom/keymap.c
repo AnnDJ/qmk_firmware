@@ -32,6 +32,7 @@ static tap dance_state[9];
 enum tap_dance_codes {
   DNC_CTRL_C,
   DNC_CTRL_V,
+  DNC_CTRL_Z,
   DNC_CTRL_H,
   DNC_CTRL_F,
   DNC_CTRL_T,
@@ -43,6 +44,7 @@ enum tap_dance_codes {
 
 #define MY_CTL_C TD(DNC_CTRL_C)
 #define MY_CTL_V TD(DNC_CTRL_V)
+#define MY_CTL_Z TD(DNC_CTRL_Z)
 #define MY_CTL_H TD(DNC_CTRL_H)
 #define MY_CTL_F TD(DNC_CTRL_F)
 #define MY_CTL_T TD(DNC_CTRL_T)
@@ -62,7 +64,7 @@ enum tap_dance_codes {
 #define THUMB_L4 OSL(_ALPHA_B)
 #define THUMB_L3 LT(_ALPHA_B, KC_BSPC)
 #define THUMB_L2 LT(_SHORTCUTS, KC_BSPC)
-#define THUMB_L1 TG(_NUMPAD)
+#define THUMB_L1 TT(_NUMPAD)
 #define THUMB_LA RM_TOGG
 #define THUMB_LB TG(_GIMP)
 #define THUMB_RB MS_BTN1
@@ -129,24 +131,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/*
 	 * Alpha A: Base layer
 	 *
-	 * ,----------------------------------------------------------.                                   ,----------------------------------------------------.
-	 * |  Ctl+C* | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                   |    <    |   (   |   [   |   {   |   *   |   Alt    |
-	 * |---------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
-	 * |  Ctl+Z  |  ' "   |    £    |    H    |    G    |    K    |                                   |    Y    |   R   |   S   |   L   |   W   |  AltGr   |
-	 * |---------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
-	 * | Alt+Tab |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                   |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
-	 * |---------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
-	 * |   Tab   | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
-	 * `----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
-	 *                              | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| ACNTS |  L6   |
-	 *                              `----------------------------------------------'  `-----------------------------------------'
-	 * ,-----------------------------------.                                                                           ,-----------------------------------.
-	 * | Mute |      |       |      |      |                                                                           |      |      |       |      |      |
-	 * `-----------------------------------'                                                                           `-----------------------------------'
+	 * ,-----------------------------------------------------------.                                   ,----------------------------------------------------.
+	 * |  Ctl+C*  | Ctl+V* |  F5/F2  |   Esc   |   Del   | Ctl+Bsp |                                   |    <    |   (   |   [   |   {   |   *   |  AltGr   |
+	 * |----------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
+	 * | Alt/Ct+Z |  ' "   |    £    |    H    |    G    |    K    |                                   |    Y    |   R   |   S   |   L   |   W   |   Alt    |
+	 * |----------+--------+---------+---------+---------+---------|                                   |---------+-------+-------+-------+-------+----------|
+	 * | Alt+Tab  |   P    | Ct+Sh/O |  Ctl/E  |  Sft/A  |    §    |                                   |    B    | Sft/I | Ctl/T |   N   |   C   |   - _    |
+	 * |----------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
+	 * |   Tab    | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
+	 * `-----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
+	 *                               | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| ACNTS |  L6   |
+	 *                               `----------------------------------------------'  `-----------------------------------------'
+	 * ,-----------------------------------.                                                                            ,-----------------------------------.
+	 * | Mute |      |       |      |      |                                                                            |      |      |       |      |      |
+	 * `-----------------------------------'                                                                            `-----------------------------------'
 	 */
     [_ALPHA_A] = LAYOUT_elora_hlc(
-		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_LALT,
-		C(KC_Z) , BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_RALT,
+		MY_CTL_C, MY_CTL_V, DF_F5_F2, KC_ESC  , KC_DEL  , C(KC_BSPC),                                       KC_LT   , KC_LPRN , BR_LBRC , BR_LCBR , KC_ASTR , KC_RALT,
+		MY_CTL_Z, BR_QUOT , BR_PND  , KC_H    , KC_G    , KC_K    ,                                         KC_Y    , KC_R    , KC_S    , KC_L    , KC_W    , KC_LALT,
 		MY_ALTAB, KC_P    , MY_O    , MY_E    , MY_A    , BR_SECT ,                                         KC_B    , MY_I    , MY_T    , KC_N    , KC_C    , KC_MINUS,
 		KC_TAB  , XXXXXXX , KC_J    , KC_Q    , KC_U    , KC_X    , THUMB_LA, THUMB_LB, THUMB_RB, THUMB_RA, KC_V    , KC_M    , KC_D    , KC_F    , KC_Z    , LGUI_T(KC_APP),
 		                              XXXXXXX , THUMB_L4, THUMB_L3, THUMB_L2, THUMB_L1, THUMB_R1, THUMB_R2, THUMB_R3, THUMB_R4, THUMB_R5 ,
@@ -161,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |---------+-----+-----+-----+-----+-----|                              |-----+-----+-----+------+-----+-----|
 	 * | _______ | ___ | ___ | ___ | ___ | ___ |                              | ___ |  C  |  K  |  X   | ___ | ___ |
 	 * |---------+-----+-----+-----------+-----|                              |-----+-----+-----+------+-----+-----|
-	 * | Sft+Tab | ___ |  Q  | PH  |  Q  | ___ |                              | - _ | ing | ght |  Z   |  Ç  | ___ |
+	 * | Sft+Tab | ___ |  X  | PH  |  Q  | ___ |                              | - _ | ing | ght |  Z   |  Ç  | ___ |
 	 * |---------+-----+-----+-----+-----+-----+-------------.  ,-------------+-----+-----+-----+------+-----+-----|
 	 * | Sft+Tab | ___ | ___ | ___ | ___ | ___ | ____ | ____ |  | ____ | ____ | ___ | ___ | ção | ções | ___ | ___ |
 	 * `---------------------+-----+-----+-----+------+------|  |------+------+-----+-----+-----+------------------'
@@ -174,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_ALPHA_B] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , KC_C    , KC_K    , KC_X    , _______ , _______ ,
-		MY_SFTAB, _______ , KC_Q    , MC_PH   , KC_Q    , _______ ,                                         KC_MINUS, MC_ING  , MC_GHT  , KC_Z    , BR_CCED , _______ ,
+		MY_SFTAB, _______ , KC_X    , MC_PH   , KC_Q    , _______ ,                                         KC_MINUS, MC_ING  , MC_GHT  , KC_Z    , BR_CCED , _______ ,
 		MY_SFTAB, _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , MC_CAO  , MC_COES , _______ , _______ ,
 							_______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
@@ -186,11 +188,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * ,-----------------------------------.                            ,-----------------------------------.
 	 * | ___ | ___ | ___ | ___ | ___ | ___ |                            | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
-	 * | ___ | ___ |  Ô  |  Ê  |  Â  |     |                            | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * | ___ |  Í  |  Ô  |  Ê  |  Â  |     |                            | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
 	 * | ___ |  Ú  |  Ó  |  É  |  Á  |  Í  |                            | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * |-----+-----+-----+-----+-----+-----+------------.  ,------------+-----+-----+-----+-----+-----+-----|
-	 * | ___ |     |     |     |  Í  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
+	 * | ___ |     |     |     |  Ú  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
 	 * `-----------------+-----+-----+-----+-----+------|  |------+-----+-----+-----+-----+-----------------'
 	 *                   | ___ |  Õ  |  À  |  Ã  | ____ |  | ____ | ___ | ___ | ___ | ___ |
 	 *                   `------------------------------'  `------------------------------'
@@ -200,9 +202,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 */
 	[_ACCENTS] = LAYOUT_elora_hlc(
 		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , _______ , MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , MC_Icute, MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
 		_______ , MC_Ucute, MC_Ocute, MC_Ecute, MC_Acute, MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Icute, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
+		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Ucute, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
 								      _______ , MC_Otlde, MC_Agrve, MC_Atlde, _______ , _______ , _______ , _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
@@ -1070,6 +1072,40 @@ void dnc_ctrl_v_reset(tap_dance_state_t *state, void *user_data) {
 
 //--------------------------------------------------------//
 
+void on_dnc_ctrl_z(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_z_finished(tap_dance_state_t *state, void *user_data);
+void dnc_ctrl_z_reset(tap_dance_state_t *state, void *user_data);
+
+void on_dnc_ctrl_z(tap_dance_state_t *state, void *user_data) {
+    if(state->count == 3) {
+        tap_code16(LCTL(KC_Z));
+        tap_code16(LCTL(KC_Z));
+        tap_code16(LCTL(KC_Z));
+    }
+    if(state->count > 3) {
+        tap_code16(LCTL(KC_Z));
+    }
+}
+
+void dnc_ctrl_z_finished(tap_dance_state_t *state, void *user_data) {
+    dance_state[1].step = dance_step(state);
+    switch (dance_state[1].step) {
+        case SINGLE_TAP: register_code16(LCTL(KC_Z)); break;
+        case SINGLE_HOLD: register_code16(KC_LALT); break;
+    }
+}
+
+void dnc_ctrl_z_reset(tap_dance_state_t *state, void *user_data) {
+    wait_ms(10);
+    switch (dance_state[1].step) {
+        case SINGLE_TAP: unregister_code16(LCTL(KC_Z)); break;
+        case SINGLE_HOLD: unregister_code16(KC_LALT); break;
+    }
+    dance_state[1].step = 0;
+}
+
+//--------------------------------------------------------//
+
 void on_dnc_ctrl_h(tap_dance_state_t *state, void *user_data);
 void dnc_ctrl_h_finished(tap_dance_state_t *state, void *user_data);
 void dnc_ctrl_h_reset(tap_dance_state_t *state, void *user_data);
@@ -1335,6 +1371,7 @@ void dance_12_reset(tap_dance_state_t *state, void *user_data) {
 tap_dance_action_t tap_dance_actions[] = {
         [DNC_CTRL_C] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_c, dnc_ctrl_c_finished, dnc_ctrl_c_reset),
         [DNC_CTRL_V] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_v, dnc_ctrl_v_finished, dnc_ctrl_v_reset),
+        [DNC_CTRL_Z] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_z, dnc_ctrl_z_finished, dnc_ctrl_z_reset),
         [DNC_CTRL_H] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_h, dnc_ctrl_h_finished, dnc_ctrl_h_reset),
         [DNC_CTRL_F] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_f, dnc_ctrl_f_finished, dnc_ctrl_f_reset),
         [DNC_CTRL_T] = ACTION_TAP_DANCE_FN_ADVANCED(on_dnc_ctrl_t, dnc_ctrl_t_finished, dnc_ctrl_t_reset),

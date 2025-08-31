@@ -1,6 +1,7 @@
 // #undef TAPPING_TERM
-// #define TAPPING_TERM 210
+#define TAPPING_TERM 220
 // #define TAPPING_TERM_PER_KEY
+#define TAPPING_TOGGLE 1
 
 #define COMBO_ALLOW_ACTION_KEYS
 
@@ -14,6 +15,7 @@
 
 
 
+// #undef ENABLE_RGB_MATRIX_SOLID_COLOR
 // #undef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN    // Static gradient top to bottom, speed controls how much gradient changes
 // #undef ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT // Static gradient left to right, speed controls how much gradient 
 
@@ -24,18 +26,16 @@
 // #undef ENABLE_RGB_MATRIX_RAINDROPS           // Randomly changes a single key's hue (red, yellow and green)
 // #undef ENABLE_RGB_MATRIX_JELLYBEAN_RAINDROPS // Randomly changes a single key's hue and saturation
 
-// #undef ENABLE_RGB_MATRIX_PIXEL_FRACTAL      ? // Single hue fractal filled keys pulsing horizontally out to edges
-// #undef ENABLE_RGB_MATRIX_PIXEL_FLOW         ? // Pulsing RGB flow along LED wiring with random hues
-// #undef ENABLE_RGB_MATRIX_PIXEL_RAIN         ? // Randomly light keys with random hues
+// #undef ENABLE_RGB_MATRIX_PIXEL_FRACTAL     ? // Single hue fractal filled keys pulsing horizontally out to edges
+// #undef ENABLE_RGB_MATRIX_PIXEL_FLOW        ? // Pulsing RGB flow along LED wiring with random hues
+// #undef ENABLE_RGB_MATRIX_PIXEL_RAIN        ? // Randomly light keys with random hues
 // #undef ENABLE_RGB_MATRIX_TYPING_HEATMAP      // How hot is your WPM!
 // #undef ENABLE_RGB_MATRIX_DIGITAL_RAIN        // That famous computer simulation
 
 #define ENABLE_RGB_MATRIX_STARLIGHT             // LEDs turn on and off at random at varying brightness, maintaining user set color
-#define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_SAT    // LEDs turn on and off at random at varying brightness, modifies user set saturation by +- 30
+#define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_HUE    // LEDs turn on and off at random at varying brightness, modifies user set hue by +- 30
 
 
-
-#undef ENABLE_RGB_MATRIX_SOLID_COLOR
 
 #undef ENABLE_RGB_MATRIX_BREATHING
 #undef ENABLE_RGB_MATRIX_BAND_SAT
@@ -74,6 +74,6 @@
 #undef ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
 
 // #define ENABLE_RGB_MATRIX_STARLIGHT_SMOOTH
-// #define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_HUE
+// #define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_SAT
 
 // #define ENABLE_RGB_MATRIX_RIVERFLOW
