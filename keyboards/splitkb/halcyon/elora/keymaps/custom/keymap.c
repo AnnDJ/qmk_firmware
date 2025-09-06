@@ -73,10 +73,10 @@ enum tap_dance_codes {
 #define THUMB_RB MS_BTN1
 #define THUMB_RA MS_BTN2
 #define THUMB_R1 KC_ENTER
-#define THUMB_R2 OSL(_SYMBOLS)
+#define THUMB_R2 OSL(_ACCENTS)
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
-#define THUMB_R4 OSL(_ACCENTS)
-#define THUMB_R5 TG(_NAVVOL)
+#define THUMB_R4 OSL(_SYMBOLS)
+#define THUMB_R5 XXXXXXX
 
 #define THM_L2nv LT(_SHORTCUTS, KC_DEL)
 #define THM_R3nm LT(_NAVVOL, KC_0)
@@ -138,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	 * |----------+--------+---------+---------+---------+---------+----------------.  ,---------------+---------+-------+-------+-------+-------+----------|
 	 * |   Tab    | ______ |    J    |    Q    |    U    |    X    |   RGB   |  L2  |  | Click | RClck |    V    |   M   |   D   |   F   |   Z   | Menu/GUI |
 	 * `-----------------------------+---------+---------+---------+---------+------|  |-------+-------+---------+-------+-------+--------------------------'
-	 *                               | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk |  L3  |  | Enter | SYMBL | L6/Space| ACNTS |  L6   |
+	 *                               | _______ | ALPHA_B | AL_B/Bk | SHCT/Bk | NUMS |  | Enter | ACNTS | L6/Space| SYMBL |       |
 	 *                               `----------------------------------------------'  `-----------------------------------------'
 	 * ,-----------------------------------.                                                                            ,-----------------------------------.
 	 * | Mute |      |       |      |      |                                                                            |      |      |       |      |      |
@@ -448,6 +448,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 //                         COMBOS                         //
 //--------------------------------------------------------//
 
+const uint16_t PROGMEM cmb_GH_K[]     = { KC_G, KC_H, COMBO_END};
 const uint16_t PROGMEM cmb_RS_Y[]     = { KC_R, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_LS_W[]     = { KC_L, KC_S, COMBO_END};
 const uint16_t PROGMEM cmb_MD_V[]     = { KC_M, KC_D, COMBO_END};
@@ -490,6 +491,7 @@ const uint16_t PROGMEM cmb_LBOOT[]    = { THUMB_LA, THUMB_LB, COMBO_END};
 const uint16_t PROGMEM cmb_NavVol[]   = { THUMB_RA, THUMB_RB, COMBO_END};
 
 combo_t key_combos[] = {
+    COMBO(cmb_GH_K,     KC_K),
     COMBO(cmb_RS_Y,     KC_Y),
     COMBO(cmb_LS_W,     KC_W),
     COMBO(cmb_MD_V,     KC_V),
