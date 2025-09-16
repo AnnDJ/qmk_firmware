@@ -13,11 +13,10 @@
 enum layers {
 	_ALPHA_A = 0,
 	_ALPHA_B,
-	_ACCENTS,
+	_SYMBACNT,
 	_GIMP,
 	_NUMPAD,
 	_SHORTCUTS,
-	_SYMBOLS,
 	_NAVVOL,
 	_MACROS,
 	_OTHERS,
@@ -73,9 +72,9 @@ enum tap_dance_codes {
 #define THUMB_RB MS_BTN1
 #define THUMB_RA MS_BTN2
 #define THUMB_R1 KC_ENTER
-#define THUMB_R2 OSL(_ACCENTS)
+#define THUMB_R2 OSL(_SYMBACNT)
 #define THUMB_R3 LT(_NAVVOL, KC_SPACE)
-#define THUMB_R4 OSL(_SYMBOLS)
+#define THUMB_R4 OSM(MOD_RSFT)
 #define THUMB_R5 XXXXXXX
 
 #define THM_L2nv LT(_SHORTCUTS, KC_DEL)
@@ -181,29 +180,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 	/*
-	 * ACCENTS: Accented letters
+	 * SymbAcnt: Symbols and accents
 	 *
-	 * ,-----------------------------------.                            ,-----------------------------------.
-	 * | ___ | ___ | ___ | ___ | ___ | ___ |                            | ___ | ___ | ___ | ___ | ___ | ___ |
-	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
-	 * | ___ |  Í  |  Ô  |  Ê  |  Â  |     |                            | ___ | ___ | ___ | ___ | ___ | ___ |
-	 * |-----+-----+-----+-----+-----+-----|                            |-----+-----+-----+-----+-----+-----|
-	 * | ___ |  Ú  |  Ó  |  É  |  Á  |  Í  |                            | ___ | ___ | ___ | ___ | ___ | ___ |
-	 * |-----+-----+-----+-----+-----+-----+------------.  ,------------+-----+-----+-----+-----+-----+-----|
-	 * | ___ |     |     |     |  Ú  |     | ___ | ____ |  | ____ | ___ | ___ | ___ | ___ | ___ | ___ | ___ |
-	 * `-----------------+-----+-----+-----+-----+------|  |------+-----+-----+-----+-----+-----------------'
-	 *                   | ___ |  Õ  |  À  |  Ã  | ____ |  | ____ | ___ | ___ | ___ | ___ |
-	 *                   `------------------------------'  `------------------------------'
-	 * ,-----------------------------------.                            ,-----------------------------------.
-	 * |      |      |       |      |      |                            |      |      |       |      |      |
-	 * `-----------------------------------'                            `-----------------------------------'
+	 * ,-----------------------------------.                           ,-----------------------------------.
+	 * | ___ | ___ |  º  | ___ |  ª  | ___ |                           |     |  ´  |  ^  |  ~  |     |     |
+	 * |-----+-----+-----+-----+-----+-----|                           |-----+-----+-----+-----+-----+-----|
+	 * | ___ |  Í  |  Ô  |  Ê  |  Â  |     |                           |  °  |  _  |  #  |  @  |     |     |
+	 * |-----+-----+-----+-----+-----+-----|                           |-----+-----+-----+-----+-----+-----|
+	 * | ___ |  Ú  |  Ó  |  É  |  Á  |  Í  |                           |  $  |  ?  |  !  |  /  |     |     |
+	 * |-----+-----+-----+-----+-----+-----+-----------.  ,------------+-----+-----+-----+-----+-----+-----|
+	 * | ___ |     |     |     |  Ú  |     |     |     |  |     |      |     |  &  |  |  |  \  |     |     |
+	 * `-----------------+-----+-----+-----+-----+-----|  |-----+------+-----+-----+-----+-----------------'
+	 *                   |     |  Õ  |  À  |  Ã  |     |  |     |  L0  |     |     |     |
+	 *                   `-----------------------------'  `------------------------------'
+	 * ,-----------------------------------.                           ,-----------------------------------.
+	 * |      |      |       |      |      |                           |      |      |       |      |      |
+	 * `-----------------------------------'                           `-----------------------------------'
 	 */
-	[_ACCENTS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , MC_Icute, MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , MC_Ucute, MC_Ocute, MC_Ecute, MC_Acute, MC_Icute,                                         _______ , _______ , _______ , _______ , _______ , _______ ,
-		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Ucute, XXXXXXX , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-								      _______ , MC_Otlde, MC_Agrve, MC_Atlde, _______ , _______ , _______ , _______ , _______ , _______ ,
+	[_SYMBACNT] = LAYOUT_elora_hlc(
+		_______ , _______ , _______ , _______ , _______ , _______ ,                                         XXXXXXX , BR_ACUT , BR_CIRC , BR_TILD , XXXXXXX , XXXXXXX ,
+		_______ , MC_Icute, MC_Ocirc, MC_Ecirc, MC_Acirc, XXXXXXX ,                                         BR_DEG  , KC_UNDS , KC_HASH , KC_AT   , XXXXXXX , XXXXXXX ,
+		_______ , MC_Ucute, MC_Ocute, MC_Ecute, MC_Acute, MC_Icute,                                         KC_DLR  , BR_QUES , KC_EXLM , BR_SLSH , XXXXXXX , XXXXXXX ,
+		_______ , XXXXXXX , XXXXXXX , XXXXXXX , MC_Ucute, XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , KC_AMPR , BR_PIPE , BR_BSLS , XXXXXXX , XXXXXXX ,
+								      _______ , MC_Otlde, MC_Agrve, MC_Atlde, _______ , _______ , MY_RETRN, _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -285,33 +284,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______ , MY_CTL_H, MY_CTL_F, C(KC_S) , C(KC_Z) , C(KC_Y) ,                                         XXXXXXX , C(KC_I) , C(KC_U) ,C(BR_SLSH),XXXXXXX , XXXXXXX ,
 		_______ , _______ , XXXXXXX , _______ , _______ , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , C(KC_B) , C(KC_T) , C(KC_8) , C(KC_9) , C(KC_0) ,
 								      _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ , _______ ,
-        _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
-    ),
-
-	/*
-	 * Symbols
-	 *
-	 * ,-------------------------------------------.                                ,-------------------------------------------.
-	 * | ______ | ____ | ____ | ____ | ____ | ____ |                                |      |  ´   |  ^   |  ~   |      |        |
-	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
-	 * | ______ |  "   |  º   |  ª   |  $   |      |                                |  °   |  _   |  #   |  @   |      |        |
-	 * |--------+------+------+------+------+------|                                |------+------+------+------+------+--------|
-	 * | ______ |  À   |  %   |  *   |  ;   |  |   |                                |  :   |  ?   |  !   |  /   |      |        |
-	 * |--------+------+------+------+------+------+---------------.  ,-------------+------+------+------+------+------+--------|
-	 * |        |      |      |      |  &   |      |        |      |  |      |      |      |  +   |  =   |  \   |      |        |
-	 * `----------------------+------+------+------+--------+------|  |------+------+------+------+------+----------------------'
-	 *                        |      |      |      | L4/Del |      |  |      |  L0  |      |      |      |
-	 *                        `------------------------------------'  `----------------------------------'
-	 * ,-----------------------------------.                                                ,-----------------------------------.
-	 * |      |      |       |      |      |                                                |      |      |       |      |      |
-	 * `-----------------------------------'                                                `-----------------------------------'
-	 */
-	[_SYMBOLS] = LAYOUT_elora_hlc(
-		_______ , _______ , _______ , _______ , _______ , _______ ,                                         XXXXXXX , BR_ACUT , BR_CIRC , BR_TILD , XXXXXXX , XXXXXXX ,
-		_______ , BR_DQUO , BR_MORD , BR_FORD , KC_DLR  , XXXXXXX ,                                         BR_DEG  , KC_UNDS , KC_HASH , KC_AT   , XXXXXXX , XXXXXXX ,
-		_______ , MC_Agrve, KC_PERC , KC_ASTR , BR_SCLN , BR_PIPE ,                                         BR_COLN , BR_QUES , KC_EXLM , BR_SLSH , XXXXXXX , XXXXXXX ,
-		_______ , _______ , XXXXXXX , XXXXXXX , KC_AMPR , XXXXXXX , _______ , _______ , _______ , _______ , XXXXXXX , KC_PLUS , KC_EQUAL, BR_BSLS , XXXXXXX , XXXXXXX ,
-								      _______ , _______ , _______ , THM_L2nv, _______ , _______ , MY_RETRN, _______ , _______ , _______ ,
         _______ , _______ , _______ , _______ , _______ ,                                                   _______ , _______ , _______ , _______ , _______
     ),
 
@@ -433,11 +405,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 	[_ALPHA_A]   = { ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(KC_WH_D, KC_WH_U), ENCODER_CCW_CW(XXXXXXX, XXXXXXX), ENCODER_CCW_CW(XXXXXXX, XXXXXXX) },
 	[_ALPHA_B]   = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-	[_ACCENTS]   = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+	[_SYMBACNT]  = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_GIMP]      = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_NUMPAD]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_SHORTCUTS] = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-	[_SYMBOLS]   = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_NAVVOL]    = { ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_MACROS]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
 	[_OTHERS]    = { ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) }
@@ -462,12 +433,17 @@ const uint16_t PROGMEM cmb_Ranglbrk[] = { KC_LT, KC_LPRN, COMBO_END};
 const uint16_t PROGMEM cmb_Rparnts[]  = { KC_LPRN, BR_LBRC, COMBO_END};
 const uint16_t PROGMEM cmb_Rbracket[] = { BR_LBRC, BR_LCBR, COMBO_END};
 const uint16_t PROGMEM cmb_Rcrlybrc[] = { BR_LCBR, KC_ASTR, COMBO_END};
-const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END};
+const uint16_t PROGMEM cmb_3dots[]    = { KC_LPRN, BR_LBRC, BR_LCBR, COMBO_END}; // ( + [ + { = ...
 const uint16_t PROGMEM cmb_RL_comma[] = { KC_R, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_RSL_dot[]  = { KC_R, KC_S, KC_L, COMBO_END};
-const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};
-const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};
-const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};
+const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};            // # + @     = +
+const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};          // ! + /     = =
+const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};          // ? + !     = :
+const uint16_t PROGMEM cmb_ndhs_scl[] = { KC_UNDS, KC_HASH, COMBO_END};          // _ + #     = ;
+const uint16_t PROGMEM cmb_ndat_and[] = { KC_UNDS, KC_AT, COMBO_END};            // _ + @     = &
+const uint16_t PROGMEM cmb_ndhs_prc[] = { KC_UNDS, KC_HASH, KC_AT, COMBO_END};   // _ + # + @ = %
+const uint16_t PROGMEM cmb_bang_pip[] = { BR_QUES, BR_SLSH, COMBO_END};          // ? + /     = |
+const uint16_t PROGMEM cmb_bngsl_st[] = { BR_QUES, KC_EXLM, BR_SLSH, COMBO_END}; // ? + ! + / = *
 const uint16_t PROGMEM cmb_79_comma[] = { KC_7, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
@@ -511,6 +487,11 @@ combo_t key_combos[] = {
     COMBO(cmb_hsat_pls, KC_PLUS),
     COMBO(cmb_excsl_eq, KC_EQUAL),
     COMBO(cmb_bang_cln, BR_COLN),
+    COMBO(cmb_ndhs_scl, BR_SCLN),
+    COMBO(cmb_ndat_and, KC_AMPR),
+    COMBO(cmb_ndhs_prc, KC_PERC),
+    COMBO(cmb_bang_pip, BR_PIPE),
+    COMBO(cmb_bngsl_st, KC_ASTR),
     COMBO(cmb_79_comma, KC_COMMA),
     COMBO(cmb_789_dot,  KC_DOT),
     COMBO(cmb_89_plus,  KC_KP_PLUS),
@@ -1530,9 +1511,9 @@ bool rgb_matrix_indicators_user(void) {
 			set_indicator_leds(LED_GOLDEN);
 			set_caps_indicators();
 			break;
-		case _ACCENTS:
+		case _SYMBACNT:
 			changed_layer = true;
-			set_indicator_leds(LED_CYAN);
+			set_indicator_leds(LED_PURPLE);
 			break;
 		case _NUMPAD:
 			changed_layer = true;
@@ -1542,10 +1523,6 @@ bool rgb_matrix_indicators_user(void) {
 		case _SHORTCUTS:
 			changed_layer = true;
 			set_indicator_leds(LED_RED);
-			break;
-		case _SYMBOLS:
-			changed_layer = true;
-			set_indicator_leds(LED_PURPLE);
 			break;
 		case _NAVVOL:
 			changed_layer = true;
