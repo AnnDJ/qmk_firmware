@@ -59,7 +59,7 @@ enum tap_dance_codes {
 #define MY_T     LCTL_T(KC_T)
 #define MY_H     LCTL_T(KC_H)
 #define MY_COLN  LSFT_T(KC_COLN)
-#define MY_QUES  LSFT_T(BR_QUES)
+#define MY_QUES  LT(8, BR_QUES)
 #define MY_HOME  LT(8, KC_HOME)
 #define MY_END   LT(8, KC_END)
 #define MY_RETRN TO(_ALPHA_A)
@@ -439,12 +439,12 @@ const uint16_t PROGMEM cmb_RL_comma[] = { KC_R, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_RSL_dot[]  = { KC_R, KC_S, KC_L, COMBO_END};
 const uint16_t PROGMEM cmb_hsat_pls[] = { KC_HASH, KC_AT, COMBO_END};            // # + @     = +
 const uint16_t PROGMEM cmb_excsl_eq[] = { KC_EXLM, BR_SLSH, COMBO_END};          // ! + /     = =
-const uint16_t PROGMEM cmb_bang_cln[] = { BR_QUES, KC_EXLM, COMBO_END};          // ? + !     = :
+const uint16_t PROGMEM cmb_bang_cln[] = { MY_QUES, KC_EXLM, COMBO_END};          // ? + !     = :
 const uint16_t PROGMEM cmb_ndhs_scl[] = { KC_UNDS, KC_HASH, COMBO_END};          // _ + #     = ;
 const uint16_t PROGMEM cmb_ndat_and[] = { KC_UNDS, KC_AT, COMBO_END};            // _ + @     = &
 const uint16_t PROGMEM cmb_ndhs_prc[] = { KC_UNDS, KC_HASH, KC_AT, COMBO_END};   // _ + # + @ = %
-const uint16_t PROGMEM cmb_bang_pip[] = { BR_QUES, BR_SLSH, COMBO_END};          // ? + /     = |
-const uint16_t PROGMEM cmb_bngsl_st[] = { BR_QUES, KC_EXLM, BR_SLSH, COMBO_END}; // ? + ! + / = *
+const uint16_t PROGMEM cmb_bang_pip[] = { MY_QUES, BR_SLSH, COMBO_END};          // ? + /     = |
+const uint16_t PROGMEM cmb_bngsl_st[] = { MY_QUES, KC_EXLM, BR_SLSH, COMBO_END}; // ? + ! + / = *
 const uint16_t PROGMEM cmb_79_comma[] = { KC_7, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_789_dot[]  = { KC_7, KC_8, KC_9, COMBO_END};
 const uint16_t PROGMEM cmb_89_plus[]  = { KC_8, KC_9, COMBO_END};
@@ -802,6 +802,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					register_code16(KC_LALT);
 				} else {
 					unregister_code16(KC_LALT);
+				}  
+			}  
+			return false;
+		case MY_QUES:
+			if (record->tap.count > 0) {
+				if (record->event.pressed) {
+					register_code16(BR_QUES);
+				} else {
+					unregister_code16(BR_QUES);
+				}
+			} else {
+				if (record->event.pressed) {
+					register_code16(KC_RIGHT_SHIFT);
+				} else {
+					unregister_code16(KC_RIGHT_SHIFT);
 				}  
 			}  
 			return false;
